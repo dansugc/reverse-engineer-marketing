@@ -74,6 +74,7 @@ export async function collectAppStore(ctx: Ctx): Promise<void> {
       title: `App Store: ${a.trackName} — ${Number(a.userRatingCount ?? 0).toLocaleString("en-US")} ratings, ${a.averageUserRating?.toFixed?.(2) ?? "?"}★`,
       url: a.trackViewUrl,
       data: {
+        appId: String(a.trackId),
         name: a.trackName,
         seller: a.sellerName,
         sellerUrl: a.sellerUrl,

@@ -119,6 +119,7 @@ async function metaAds(ctx: Ctx, brand: string, manual: string): Promise<void> {
         platforms: tally(ads.flatMap(a => a.publisher_platform ?? [])),
         landingPages: tally(ads.flatMap(links).map(landingKey).filter(Boolean) as string[]),
         utmCampaigns: tally(ads.flatMap(links).map(u => utm(u, "utm_campaign")).filter(Boolean) as string[]),
+        appStoreLinks: appStoreLinkStats(ads.flatMap(links)),
         // Ads that ran longest (active or paused) are the proven winners.
         longestRunning: [...ads].sort((x, y) => ranDays(y) - ranDays(x)).slice(0, 8).map(view),
         longestRunningActive: ads.filter(a => a.is_active).sort((x, y) => ranDays(y) - ranDays(x)).slice(0, 5).map(view),
@@ -219,6 +220,40 @@ async function linkedinAds(ctx: Ctx, brand: string, manual: string): Promise<voi
   } catch (err) {
     store.unknown({ channel: "paid_linkedin", reason: errMsg(err), manualCheck: manual });
   }
+}
+
+/**
+ * App Store links in ads leak the campaign setup: `ppid` = a custom product page
+ * (a tailored App Store page per audience/angle), `ct`/`pt` = App Analytics
+ * campaign / provider tokens, plus any attribution parameters.
+ */
+export function appStoreLinkStats(urls: unknown[]) {
+  const store = urls.filter((u): u is string => typeof u === "string" && /(apps|itunes)\.apple\.com/.test(u));
+  const param = (k: string) =>
+    store
+      .map(u => {
+        try {
+          return new URL(u).searchParams.get(k);
+        } catch {
+          return null;
+        }
+      })
+      .filter(Boolean) as string[];
+  const otherParams: string[] = [];
+  for (const u of store) {
+    try {
+      for (const k of new URL(u).searchParams.keys()) if (!["ppid", "ct", "pt", "mt", "l", "ls"].includes(k)) otherParams.push(k);
+    } catch {
+      // ignore
+    }
+  }
+  return {
+    linksToAppStore: store.length,
+    customProductPages: tally(param("ppid")),
+    campaignTokens: tally(param("ct")),
+    providerTokens: tally(param("pt")),
+    otherParams: tally(otherParams),
+  };
 }
 
 export function tally(xs: unknown[]): Record<string, number> {

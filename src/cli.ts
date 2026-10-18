@@ -24,7 +24,9 @@ Usage
   rem web                   open the local web app (uses your Claude Code / Codex plan)
   rem mcp                   run the MCP server (stdio) for Claude Code, Codex, Cursor…
   rem doctor                show which sources your keys unlock
-  rem setup                 print the commands to connect REM to your agent
+  rem setup                 connect REM to Claude Code / Codex (shows the plan, asks first)
+  rem diff <domain>         what changed since the previous run (or: rem diff <runA> <runB>)
+  rem demo                  open a recorded Cal AI teardown in the web app — no keys needed
 
 Options
   --no-ai                   skip the written strategy; evidence report only
@@ -35,6 +37,8 @@ Options
   --model <id>              Claude model for the report (default claude-opus-5)
   --max-credits <n>         Scrape Creators budget per run (default 50)
   --port <n>                web app port (default 4321)
+  --client <list>           setup: claude_code,codex (default: all detected)
+  --dry-run / --yes         setup: only show the plan / apply without asking
   --no-open                 don't open the browser for rem web
   -q, --quiet               no progress output
 
@@ -64,7 +68,12 @@ async function main(argv: string[]): Promise<number> {
     return -1;
   }
   if (cmd === "doctor") return doctor();
-  if (cmd === "setup") return setup();
+  if (cmd === "setup") {
+    const { setup } = await import("./setup.js");
+    return setup({ clients: args.client ? String(args.client).split(",") : [], yes: Boolean(args.yes), dryRun: Boolean(args["dry-run"]), json: Boolean(args.json) });
+  }
+  if (cmd === "diff") return diff(args._.slice(1), Boolean(args.json));
+  if (cmd === "demo") return demo(Boolean(args["no-open"]), Number(args.port ?? process.env.REM_PORT ?? 4321));
 
   const log = args.quiet || args.json ? () => {} : (m: string) => console.error(m);
   const only = args.only ? (String(args.only).split(",").map(s => s.trim()) as Area[]) : undefined;
@@ -122,19 +131,41 @@ function doctor(): number {
   return 0;
 }
 
-function setup(): number {
-  console.log(`Connect REM to your agent (stdio MCP server):
-
-  Claude Code   claude mcp add reverse-engineer-marketing -e SCRAPECREATORS_API_KEY=… -- npx -y reverse-engineer-marketing mcp
-  Codex         codex mcp add reverse-engineer-marketing --env SCRAPECREATORS_API_KEY=… -- npx -y reverse-engineer-marketing mcp
-  Cursor / any  add to your MCP config:
-                { "mcpServers": { "reverse-engineer-marketing": { "command": "npx", "args": ["-y", "reverse-engineer-marketing", "mcp"], "env": { "SCRAPECREATORS_API_KEY": "…" } } } }
-
-Skill (optional, teaches your agent the analysis playbook):
-  npx skills add dansugc/reverse-engineer-marketing     or copy skills/reverse-engineer-marketing into ~/.claude/skills/
-
-Then ask:  "Reverse engineer the marketing of linear.app and give me a playbook to copy."`);
+async function diff(refs: string[], asJson: boolean): Promise<number> {
+  const { diffRuns, renderDiff } = await import("./report/diff.js");
+  const { resolveRun, runsForDomain, loadRun } = await import("./runs.js");
+  let a, b;
+  if (refs.length === 1) {
+    const runs = await runsForDomain(refs[0]!);
+    if (runs.length < 2) throw new Error(`Need two saved runs of ${refs[0]} to diff (found ${runs.length}). Run \`rem ${refs[0]}\` again later.`);
+    [b, a] = [await loadRun(runs[0]!.id), await loadRun(runs[1]!.id)];
+  } else if (refs.length === 2) {
+    [a, b] = [await resolveRun(refs[0]!), await resolveRun(refs[1]!)];
+  } else throw new Error("usage: rem diff <domain>  |  rem diff <runA> <runB>");
+  const d = diffRuns(a, b);
+  console.log(asJson ? JSON.stringify(d, null, 2) : renderDiff(d));
   return 0;
+}
+
+/** Keyless demo: load the bundled Cal AI run (evidence + written report) and open it in the web app. */
+async function demo(noOpen: boolean, port: number): Promise<number> {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname } = await import("node:path");
+  const { saveReport, RUNS_DIR } = await import("./runs.js");
+  const root = join(dirname(fileURLToPath(import.meta.url)), "..", "examples");
+  const bundle = JSON.parse(await readFile(join(root, "calai.app.evidence.json"), "utf8"));
+  const report = (await readFile(join(root, "calai.app.md"), "utf8")).split(/\n---\n\n## Evidence/)[0]!;
+  const id = "demo-calai.app";
+  await mkdir(RUNS_DIR, { recursive: true });
+  await writeFile(join(RUNS_DIR, `${id}.json`), JSON.stringify(bundle, null, 2));
+  await saveReport(id, report, { engine: "claude-code", model: "recorded example" });
+  console.log(`Demo run saved (no keys used): ${id}`);
+  const { startWeb } = await import("./web/server.js");
+  const url = await startWeb(port);
+  console.log(`Open ${url}/#/run/${id}  (Ctrl+C to stop)`);
+  if (!noOpen) openBrowser(`${url}/#/run/${id}`);
+  return -1;
 }
 
 interface Args {
@@ -144,7 +175,7 @@ interface Args {
 
 function parseArgs(argv: string[]): Args {
   const out: Args = { _: [] };
-  const flags = new Set(["no-ai", "json", "quiet", "help", "version", "no-open"]);
+  const flags = new Set(["no-ai", "json", "quiet", "help", "version", "no-open", "yes", "dry-run"]);
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
     if (a === "-q") out.quiet = true;

@@ -49,6 +49,14 @@ export function scorecard(store: EvidenceStore): ChannelScore[] {
   if (li && liSample) set("paid_linkedin", "active", liSample >= 10 ? 2 : 1, `${liSample} ads by them in library sample`, [li]);
   else pixelOnly("paid_linkedin", "linkedin_insight", "LinkedIn Insight Tag installed", li);
 
+  const apple = store.bySource("apple_ads").filter(e => e.title.includes("App Store ads for") || e.title.includes("no ads for app"));
+  if (apple.length) {
+    const total = apple.reduce((n, e) => n + Number(d(e).totalAdsLastYear ?? 0), 0);
+    const live = apple.reduce((n, e) => n + Number(d(e).liveInSample ?? 0), 0);
+    if (total) set("paid_apple", live ? "active" : "dormant", total >= 200 ? 3 : total >= 30 ? 2 : 1, `${total.toLocaleString("en-US")} App Store ads in the EU last year, ${live} live in sample`, apple);
+    else set("paid_apple", "none", 0, "No App Store ads in Apple's EU Ad Repository (other regions unknown)", apple);
+  } else pixelOnly("paid_apple", "apple_search_ads", "Apple Search Ads attribution on site");
+
   pixelOnly("paid_tiktok", "tiktok_pixel", "TikTok Pixel installed");
   pixelOnly("paid_reddit", "reddit_pixel", "Reddit Pixel installed");
 

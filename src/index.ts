@@ -2,6 +2,7 @@ import { scorecard, type ChannelScore } from "./analyze/scorecard.js";
 import { runSource, skip, type Ctx } from "./context.js";
 import { EvidenceStore, type ContentItem, type Evidence, type SourceRun, type Unknown } from "./evidence.js";
 import { loadHarness } from "./harness.js";
+import { collectAppleAds } from "./sources/apple-ads.js";
 import { collectAppStore, collectHackerNews, collectWayback } from "./sources/free.js";
 import { collectPaid } from "./sources/paid.js";
 import type { LogoCandidate } from "./sources/html.js";
@@ -21,7 +22,7 @@ const RUN_LABELS: Record<Area, string[]> = {
   website: ["website"],
   seo: ["seo"],
   history: ["wayback"],
-  apps: ["appstore", "hackernews"],
+  apps: ["appstore", "apple_ads", "hackernews"],
   paid: ["paid"],
   social: ["social"],
   founders: ["founders"],
@@ -88,9 +89,9 @@ export async function reverseEngineer(input: string, opts: RunOptions = {}): Pro
   const jobs: [Area, string, () => Promise<void>][] = [
     ["seo", "seo", () => runSource(ctx, "seo", collectSeo)],
     ["history", "wayback", () => runSource(ctx, "wayback", collectWayback)],
-    ["apps", "appstore + hacker news", async () => {
+    ["apps", "appstore + apple search ads + hacker news", async () => {
       if (target.kind === "website") await runSource(ctx, "appstore", collectAppStore);
-      await runSource(ctx, "hackernews", collectHackerNews);
+      await Promise.all([runSource(ctx, "apple_ads", collectAppleAds), runSource(ctx, "hackernews", collectHackerNews)]);
     }],
     ["paid", "ad libraries", () => runSource(ctx, "paid", collectPaid)],
     ["social", "social accounts", () => runSource(ctx, "social", collectSocial)],

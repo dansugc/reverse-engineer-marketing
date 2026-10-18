@@ -427,7 +427,7 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
 <script>
 const $ = s => document.querySelector(s);
 const LABELS = {
-  paid_meta: "Paid · Meta", paid_google: "Paid · Google", paid_linkedin: "Paid · LinkedIn", paid_reddit: "Paid · Reddit", paid_tiktok: "Paid · TikTok",
+  paid_meta: "Paid · Meta", paid_google: "Paid · Google", paid_linkedin: "Paid · LinkedIn", paid_reddit: "Paid · Reddit", paid_tiktok: "Paid · TikTok", paid_apple: "Paid · Apple",
   organic_tiktok: "TikTok", organic_instagram: "Instagram", organic_youtube: "YouTube", organic_x: "X", organic_linkedin: "LinkedIn page",
   seo: "SEO", geo: "AI search", founder_led: "Founder-led", reddit_marketing: "Reddit marketing", community: "Community", launches: "Launches", app_store: "App stores",
   lifecycle: "Lifecycle", affiliate: "Affiliate", sales_led: "Sales-led",
@@ -435,7 +435,7 @@ const LABELS = {
 const STAGES = [["website", "Website & pixels"], ["seo", "SEO & AI search"], ["history", "Positioning history"], ["apps", "Apps & launches"], ["paid", "Ad libraries"], ["social", "Organic social"], ["founders", "Founders"], ["community", "Community"], ["write", "Writing the playbook"]];
 let status = null, engine = null, state = null, es = null;
 const PLATFORMS = {
-  meta_ads: ["Meta ads", "#1877f2"], tiktok: ["TikTok", "#ff0050"], instagram: ["Instagram", "#d62976"], youtube: ["YouTube", "#ff0000"],
+  meta_ads: ["Meta ads", "#1877f2"], apple_ads: ["Apple Search Ads", "#0071e3"], tiktok: ["TikTok", "#ff0050"], instagram: ["Instagram", "#d62976"], youtube: ["YouTube", "#ff0000"],
   x: ["X", "#6b7280"], linkedin: ["LinkedIn", "#0a66c2"], reddit: ["Reddit", "#ff4500"], google_ads: ["Google ads", "#34a853"], linkedin_ads: ["LinkedIn ads", "#004182"],
 };
 let tab = "report", filter = "all", sortBy = "top";

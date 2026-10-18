@@ -24,7 +24,8 @@ export type SourceName =
   | "reddit"
   | "hackernews"
   | "producthunt"
-  | "wikidata";
+  | "wikidata"
+  | "apple_ads";
 
 export type Channel =
   | "paid_meta"
@@ -32,6 +33,7 @@ export type Channel =
   | "paid_linkedin"
   | "paid_reddit"
   | "paid_tiktok"
+  | "paid_apple"
   | "organic_tiktok"
   | "organic_instagram"
   | "organic_youtube"
@@ -54,6 +56,7 @@ export const CHANNELS: Channel[] = [
   "paid_linkedin",
   "paid_reddit",
   "paid_tiktok",
+  "paid_apple",
   "organic_tiktok",
   "organic_instagram",
   "organic_youtube",
@@ -125,7 +128,7 @@ export class EvidenceStore {
 /** A concrete post / video / ad / thread for humans to review (web Content tab, MCP get_content). Not sent to the LLM. */
 export interface ContentItem {
   id: string;
-  platform: "meta_ads" | "google_ads" | "linkedin_ads" | "tiktok" | "instagram" | "youtube" | "x" | "linkedin" | "reddit";
+  platform: "meta_ads" | "google_ads" | "linkedin_ads" | "apple_ads" | "tiktok" | "instagram" | "youtube" | "x" | "linkedin" | "reddit";
   kind: "ad" | "video" | "post" | "thread" | "comment";
   url: string;
   title?: string;

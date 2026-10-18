@@ -151,6 +151,8 @@ describe("identity", () => {
     expect(extractFounderNames("Cal AI was founded by Zach Yadegari, Henry Langmack and Blake Anderson in 2024.", "Cal AI").map(f => f.name)).toEqual(["Zach Yadegari", "Henry Langmack", "Blake Anderson"]);
     expect(extractFounderNames("Ivan Zhao, Co-founder & CEO. Read More", "Notion")).toEqual([{ name: "Ivan Zhao", role: "Co-founder & CEO" }]);
     expect(looksLikeName("Our Team")).toBe(false);
+    expect(looksLikeName("I's Teen")).toBe(false);
+    expect(extractFounderNames("Cal AI's Teen Founder Zach Yadegari", "Cal AI").map(f => f.name)).not.toContain("I's Teen");
     expect(looksLikeName("Cal AI", "Cal AI")).toBe(false);
   });
   it("reads logos and JSON-LD founders", () => {
@@ -201,5 +203,46 @@ describe("security", () => {
   it("rejects model names that look like CLI flags", async () => {
     const { writeReport } = await import("../src/engines.js");
     await expect(writeReport("claude-code", {} as any, { model: "--dangerously-skip-permissions" })).rejects.toThrow("Invalid model name");
+  });
+});
+
+describe("app store link forensics", () => {
+  it("counts custom product pages and campaign tokens", async () => {
+    const { appStoreLinkStats } = await import("../src/sources/paid.js");
+    const st = appStoreLinkStats([
+      "https://apps.apple.com/app/id123?ppid=aaa-111&ct=meta_ugc_q4&pt=999",
+      "http://itunes.apple.com/app/id123?ppid=aaa-111",
+      "https://apps.apple.com/app/id123?ppid=bbb-222&trybe=x1",
+      "https://example.com/?utm_source=fb",
+      null,
+    ]);
+    expect(st.linksToAppStore).toBe(3);
+    expect(st.customProductPages).toEqual({ "aaa-111": 2, "bbb-222": 1 });
+    expect(st.campaignTokens).toEqual({ meta_ugc_q4: 1 });
+    expect(st.otherParams).toEqual({ trybe: 1 });
+  });
+});
+
+describe("diff", () => {
+  it("reports metric deltas, channel changes, repositioning and new content", async () => {
+    const { diffRuns } = await import("../src/report/diff.js");
+    const base = (at: string, total: number, live: number, h1: string, ids: string[], status: string) =>
+      ({
+        generatedAt: at,
+        brand: "Acme",
+        harness: { version: "2", sha: "x" },
+        evidence: [
+          { id: "E1", source: "meta_ads", kind: "observation", title: "Meta ads", data: { totalInLibrary: total, activeNow: live } },
+          { id: "E2", source: "website", kind: "observation", title: "Homepage positioning: x", data: { h1: [h1] } },
+        ],
+        scorecard: [{ channel: "paid_meta", status, strength: 2, signal: "", evidence: [] }],
+        content: ids.map(id => ({ id, platform: "meta_ads", kind: "ad", url: `https://x/${id}` })),
+      }) as any;
+    const d = diffRuns(base("2026-10-01", 100, 10, "old pitch", ["a", "b"], "dormant"), base("2026-10-18", 130, 25, "new pitch", ["b", "c", "d"], "active"));
+    expect(d.metrics.find(m => m.name === "Meta ads in library")).toMatchObject({ before: 100, after: 130, delta: 30 });
+    expect(d.channels[0]).toMatchObject({ before: "dormant 2/3", after: "active 2/3" });
+    expect(d.positioning).toEqual({ before: "old pitch", after: "new pitch" });
+    expect(d.content[0]).toMatchObject({ platform: "meta_ads", removed: 1 });
+    expect(d.content[0]!.added.map(a => a.url)).toEqual(["https://x/c", "https://x/d"]);
   });
 });

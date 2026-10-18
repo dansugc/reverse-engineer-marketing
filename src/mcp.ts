@@ -82,7 +82,7 @@ export function createServer(): McpServer {
       description: "Concrete items to quote or show the user: Meta/Google/LinkedIn ads (with media URLs, running days, active/paused), TikTok and Instagram videos/posts, YouTube videos, X and LinkedIn posts (company + founders), Reddit threads and brand/founder replies. Each item links to the original.",
       inputSchema: {
         run_id: z.string(),
-        platform: z.enum(["meta_ads", "google_ads", "linkedin_ads", "tiktok", "instagram", "youtube", "x", "linkedin", "reddit"]).optional(),
+        platform: z.enum(["meta_ads", "google_ads", "linkedin_ads", "apple_ads", "tiktok", "instagram", "youtube", "x", "linkedin", "reddit"]).optional(),
         sort: z.enum(["top", "newest", "longest_running"]).optional(),
         limit: z.number().int().min(1).max(100).optional(),
       },
@@ -141,6 +141,47 @@ export function createServer(): McpServer {
       return text(renderMarkdown(bundle, { narrative: res.markdown }));
     },
   );
+
+  server.registerTool(
+    "compare_runs",
+    {
+      title: "What changed since last time",
+      description: "Diff two saved runs of the same company (competitive monitoring): ad counts, live ads, follower growth, sitemap size, channel status changes, homepage repositioning, and which ads/posts are new or no longer seen. Pass a domain to diff its two latest runs, or two run_ids.",
+      inputSchema: { domain: z.string().optional(), run_a: z.string().optional(), run_b: z.string().optional() },
+    },
+    async ({ domain, run_a, run_b }) => {
+      const { diffRuns, renderDiff } = await import("./report/diff.js");
+      const { runsForDomain, resolveRun } = await import("./runs.js");
+      let a: EvidenceBundle;
+      let b: EvidenceBundle;
+      if (run_a && run_b) [a, b] = [await resolveRun(run_a), await resolveRun(run_b)];
+      else if (domain) {
+        const runs = await runsForDomain(domain);
+        if (runs.length < 2) throw new Error(`Need two saved runs of ${domain} (found ${runs.length}). Call reverse_engineer_marketing again later, then compare.`);
+        [a, b] = [await resolveRun(runs[1]!.id), await resolveRun(runs[0]!.id)];
+      } else throw new Error("Pass a domain, or run_a and run_b");
+      return text(renderDiff(diffRuns(a, b)));
+    },
+  );
+
+  // Guided workflows (REA-style named prompts): one click in clients that surface MCP prompts.
+  const prompt = (name: string, title: string, description: string, args: Record<string, z.ZodString | z.ZodOptional<z.ZodString>>, body: (a: Record<string, string | undefined>) => string) =>
+    server.registerPrompt(name, { title, description, argsSchema: args }, a => ({ messages: [{ role: "user" as const, content: { type: "text" as const, text: body(a as Record<string, string | undefined>) } }] }));
+
+  prompt("investigate_company", "Investigate a company", "Full teardown: collect evidence, read the playbook, write an evidence-cited report, validate it.", { url: z.string() }, ({ url }) =>
+    `Reverse engineer how ${url} gets customers. 1) Call reverse_engineer_marketing({url: "${url}"}). 2) Call get_playbook() and follow its report template and evidence rules. 3) Use get_evidence and get_content for the items you quote (longest-running ads, top posts, Apple Search Ads messages, Reddit threads, founders). 4) Write the report citing [E#] for every fact; label inferences "Likely". 5) Call validate_report and fix anything that fails before answering.`);
+
+  prompt("compare_competitors", "Compare competitors", "Side-by-side teardown of 2–4 companies in the same market.", { urls: z.string().describe("comma-separated domains") }, ({ urls }) =>
+    `Compare the marketing of: ${urls}. Run reverse_engineer_marketing on each. Then write one comparison: a channel-by-channel table (who wins each channel, with evidence ids per company), each company's engine in one line, the gaps none of them cover, and the single best play to copy from each. Cite evidence as company:E#.`);
+
+  prompt("what_changed", "What changed since last time", "Monitor a competitor: re-run and diff against the previous run.", { url: z.string() }, ({ url }) =>
+    `Run reverse_engineer_marketing({url: "${url}"}), then compare_runs({domain: "${url}"}). Explain what changed: new ad angles launched, ads killed, audience growth or decline, repositioning, new page families. Say what each change suggests about their strategy (label inferences), and what to watch next week.`);
+
+  prompt("steal_the_playbook", "Steal the playbook (spec → build)", "Investigate → spec → build: turn a competitor teardown into your own 30-day plan with real assets.", { url: z.string(), my_product: z.string().optional() }, ({ url, my_product }) =>
+    `Investigate → spec → build → verify, for marketing. 1) Investigate ${url} with reverse_engineer_marketing + get_playbook + get_content. 2) Spec: write the competitor's machine as a spec (channels, offer, funnel, cadence, creative angles) with [E#] citations. 3) Build for ${my_product ?? "my product"}: a 30-day plan — 10 ad hooks adapted (never copied) from their longest-running ads, 3 UGC video briefs (creator, hook, script beats, CTA), landing page outline, posting calendar per channel, SEO page template to start. Clean-room rule: copy the strategy and structure, never their exact copy, footage or brand. 4) Verify: list the metrics that prove it's working and when to re-run compare_runs.`);
+
+  prompt("audit_unknowns", "Audit unknowns", "List what REM could not see for a run and exactly how to check each by hand.", { run_id: z.string() }, ({ run_id }) =>
+    `For run ${run_id}: call get_evidence and read the unknowns. For each unknown channel, explain why it is unknown, how much it matters for this company, and the fastest manual check (use the manualCheck links). Then list which API keys or inputs (a handle, an app id) would close the most important gaps.`);
 
   return server;
 }

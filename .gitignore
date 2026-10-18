@@ -5,3 +5,6 @@ rem-reports/
 .env.local
 *.log
 .DS_Store
+
+# promo video project (rendered mp4 is copied to docs/)
+promo/

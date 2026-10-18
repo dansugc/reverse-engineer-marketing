@@ -25,6 +25,14 @@ Inspired by [REA (Reverse Engineer Anything)](https://github.com/morluto/rea), b
 
 ## Quick start
 
+Try it with zero setup, no keys: a recorded Cal AI teardown opens in the web app.
+
+```bash
+npx reverse-engineer-marketing demo
+```
+
+Then run it on any company:
+
 ```bash
 npx reverse-engineer-marketing linear.app
 ```
@@ -45,10 +53,12 @@ It also accepts App Store and Google Play links: `rem https://apps.apple.com/us/
 
 ```
 rem <url> [--no-ai] [--json] [--only paid,social,seo] [--handle tiktok=name] [--out dir]
-rem web        # local web app (Claude Code / Codex subscription)
-rem doctor     # which sources your keys unlock
-rem setup      # commands to connect REM to Claude Code / Codex / Cursor
-rem mcp        # run the MCP server
+rem web              # local web app (Claude Code / Codex subscription)
+rem demo             # recorded Cal AI teardown in the web app, no keys
+rem diff <domain>    # what changed since the last run: new/killed ads, growth, repositioning
+rem setup            # connect REM to Claude Code / Codex (shows the plan, asks before changing anything)
+rem doctor           # which sources your keys unlock
+rem mcp              # run the MCP server
 ```
 
 ## Web app: use your Claude Code or Codex plan
@@ -77,6 +87,8 @@ Subscription engines run the CLI you're already logged into. REM strips `ANTHROP
 | **Paid: Meta** | All ads incl. paused campaigns, active count, most-shown ads, ads launched in the last 30 days, **longest-running active ads (the proven winners)** with hooks, formats, CTAs, landing pages, UTM campaign names, variant counts | Scrape Creators |
 | **Paid: Google** | Ads pointing at the domain, formats, recency, and **other advertisers bidding on the brand** (affiliates/resellers) | Scrape Creators |
 | **Paid: LinkedIn** | Ads by the company, ad types, headlines, CTAs | Scrape Creators |
+| **Paid: Apple Search Ads** | From Apple's public Ad Repository (EU): App Store ads over the last year, how many still serve, placements, formats, the message each ad shows, markets, audience targeting, and **copycat apps advertising under the same name** | Free |
+| **App Store link forensics** | In Meta ads that point at the App Store: custom product pages (`ppid`), campaign tokens (`ct`/`pt`), attribution parameters | Scrape Creators |
 | **Pixels & stack** | Meta/Google/TikTok/LinkedIn/Reddit/X/Pinterest/Snap pixels with IDs, **including inside GTM containers**; attribution SDKs (AppsFlyer, Adjust, Branch); affiliate tools; email/CRM; visitor-ID tools (RB2B, Warmly, Koala, Clearbit) that reveal an outbound motion; A/B testing | Free |
 | **Organic social** | TikTok, Instagram, YouTube, X, LinkedIn: followers, posts/week, median reach, top posts and hooks, spark ads, days since last post. Finds TikTok even when the site doesn't link it | Scrape Creators |
 | **SEO** | Sitemap size and folders, **programmatic page families** (`/integrations/{app}`, `/{a}-vs-{b}`, `/templates/…`), comparison/alternatives pages, content cadence, locales, top Google results | Free (+1 credit) |
@@ -89,9 +101,28 @@ Subscription engines run the CLI you're already logged into. REM strips `ANTHROP
 | **Apps** | App Store ratings (download proxy), release age, update cadence, Play installs | Free |
 | **Positioning history** | Homepage title/H1/CTAs over time from the Wayback Machine: pivots and repositioning | Free |
 
+## Watch competitors over time
+
+Run REM on the same company again next week, then:
+
+```bash
+rem diff calai.app
+```
+
+You get the deltas: Meta ads in the library and live now, ads launched, Apple Search Ads volume, follower growth per platform, sitemap growth, channels that switched on or off, homepage repositioning, and which ads and posts are new or no longer running.
+
 ## Use it from your agent (MCP)
 
 REM is an MCP server, so Claude Code, Codex, Cursor, or any MCP client can run it. With MCP you don't need an Anthropic key: your agent writes the report itself.
+
+One command, with a plan you approve first (it backs up anything it replaces):
+
+```bash
+npx reverse-engineer-marketing setup        # detects Claude Code / Codex, shows the plan, asks
+npx reverse-engineer-marketing setup --dry-run
+```
+
+Or by hand:
 
 ```bash
 # Claude Code
@@ -124,8 +155,38 @@ Then ask:
 | `reverse_engineer_marketing` | Collects everything for a URL. Returns a compact scorecard + evidence index + unknowns (token-cheap) and a `run_id` |
 | `get_evidence` | Full data for specific evidence ids or a source (ad copy, top posts, sitemap families…) |
 | `get_playbook` | The analysis method: role, evidence rules, report template, lessons, and per-channel playbooks |
+| `get_content` | The actual ads, videos and posts (media URLs, run length, live/paused) to quote or show |
+| `compare_runs` | What changed between two runs of the same company |
 | `validate_report` | Checks the agent's report: citations resolve, sections exist, playbook grounded, no invented spend |
 | `write_report` | Optional server-side report (needs `ANTHROPIC_API_KEY` in the server env) |
+
+### Guided workflows
+
+Named MCP prompts your client can run in one click (the REA pattern: investigate → spec → build → verify):
+
+| Prompt | What it does |
+|---|---|
+| `investigate_company` | Full teardown: evidence → playbook → cited report → validation |
+| `compare_competitors` | 2–4 companies side by side: who wins each channel, gaps, the best play to copy from each |
+| `what_changed` | Re-run + diff against last time: new angles, killed ads, growth, repositioning |
+| `steal_the_playbook` | Investigate → spec → **build**: a 30-day plan for your product with ad hooks, UGC briefs, landing outline, posting calendar, SEO template |
+| `audit_unknowns` | What REM couldn't see and the fastest way to check each by hand |
+
+### Prompt pack
+
+Paste into Claude Code / Codex once REM is connected:
+
+```text
+Reverse engineer the marketing of calai.app. Lead with their longest-running ads and quote the hooks.
+
+Compare notion.so, coda.io and clickup.com: which channel does each one win, and what's the one play I should copy from each?
+
+What changed at linear.app since my last run? New ad angles, ads they killed, audience growth.
+
+Steal the playbook: reverse engineer calai.app, then build a 30-day plan for my app (myapp.com) with 10 ad hooks adapted from their winners and 3 UGC video briefs.
+
+Which competitors bid on App Store search in Europe for "calorie tracker"-type apps, and what message does each show?
+```
 
 Install the bundled skill to teach your agent the workflow: copy `skills/reverse-engineer-marketing/` into `~/.claude/skills/` (or your agent's skills folder).
 
@@ -154,8 +215,15 @@ link ──► website scan ──► discovers socials, apps, people, brand
 
 **Cost per full run:** about 25–50 Scrape Creators credits plus one Claude call (default `claude-opus-5`, override with `REM_MODEL`). Scrape Creators responses are cached for 24h in `~/.cache/reverse-engineer-marketing` so agents can re-run without paying twice.
 
+## Use it responsibly
+
+REM reads **public** information only: public web pages, public ad transparency libraries (Meta, Google, LinkedIn, Apple), public social profiles. It never logs in as anyone, never touches private data, and never runs anything on the target.
+
+Same rule as clean-room engineering: **study the strategy, ship your own.** Learn which angles, offers, channels and page templates work, then make your own creatives and copy. Don't republish competitors' ads, footage, copy or brand assets; that's their IP. Respect each site's terms and your local laws.
+
 ## Limits (honest)
 
+- **Apple Search Ads** are only visible for the EU (Apple's DSA repository); other regions are unknown.
 - **TikTok and X ads** have no global public library; REM reports the pixel and gives you the manual library link. **Reddit's** ad library was shut down.
 - Ad library counts come from samples (first pages); REM says "in the sample".
 - Founder, TikTok-handle and Product Hunt matches come from search and can be wrong; weak matches are flagged.

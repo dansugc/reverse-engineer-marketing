@@ -303,6 +303,8 @@ export function looksLikeName(s: string, brand = ""): boolean {
   const words = t.split(/\s+/);
   if (words.length < 2 || words.length > 4) return false;
   if (!words.every(w => /^[A-ZÀ-Ý][a-zà-ÿ'’.-]+$|^[A-Z]\.$|^(?:van|de|von|der|da|di|le|la|bin|al)$/.test(w))) return false;
+  // Possessives and fragments ("AI's Teen" from "Cal AI's teen founder") are not names.
+  if (words.some(w => /['’]s$/i.test(w) || (w.replace(/[^A-Za-zÀ-ÿ]/g, "").length < 2 && !/^[A-Z]\.$/.test(w)))) return false;
   if (words.some(w => NOT_NAME.has(w.toLowerCase().replace(/[.’']/g, "")))) return false;
   const b = brand.toLowerCase().replace(/[^a-z0-9]/g, "");
   return !b || !t.toLowerCase().replace(/[^a-z0-9]/g, "").includes(b);

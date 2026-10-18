@@ -77,3 +77,21 @@ export async function listRuns(limit = 50): Promise<RunSummary[]> {
   }
   return out;
 }
+
+/** Saved runs for a domain, newest first (for `rem diff <domain>`). */
+export async function runsForDomain(domain: string): Promise<RunSummary[]> {
+  const d = domain.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").toLowerCase();
+  return (await listRuns(500)).filter(r => (r.domain ?? "").toLowerCase() === d).sort((a, b) => b.at.localeCompare(a.at));
+}
+
+/** A run id, a path to an evidence bundle JSON, or a domain (latest run). */
+export async function resolveRun(ref: string): Promise<EvidenceBundle> {
+  if (/\.json$/i.test(ref)) return JSON.parse(await readFile(ref, "utf8")) as EvidenceBundle;
+  try {
+    return await loadRun(ref);
+  } catch {
+    const latest = (await runsForDomain(ref))[0];
+    if (!latest) throw new Error(`No saved run for "${ref}". Run \`rem ${ref}\` first.`);
+    return loadRun(latest.id);
+  }
+}

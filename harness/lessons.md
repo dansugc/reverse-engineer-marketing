@@ -19,3 +19,5 @@ Format: **cue** → lesson. (Evidence that taught us.) Add lessons when an eval 
 - **Founder named only by one weak source (site text regex, App Store seller)** → present as "possibly"; high confidence needs Wikidata/JSON-LD or two independent sources.
 - **Brand-named account or "I'm the founder" replies in "what should I use" threads** → deliberate Reddit marketing; it's cheap, copyable and compounds via Google. Lead the Reddit section with it.
 - **Reddit threads ranking on Google for the brand** → Reddit is part of their SEO surface (and AI-search citations); note whether those threads are positive or negative.
+- **Thousands of Apple Search Ads across every EU market with one subtitle** → App Store search is a scaled, settled channel; the App Store listing (not the website) is the landing page. Pair it with Meta ads → App Store links to describe the full install machine.
+- **Same-name apps advertising on the App Store** → copycats drafting off the brand's demand; a sign the brand is big enough to be worth copying. Never claim they bid on the brand keyword (not public).
