@@ -14,7 +14,7 @@ export interface SynthesisResult {
  * Writes the strategy report from the evidence bundle with the harness as the
  * system prompt. The harness is stable across runs, so it is cached.
  */
-export async function synthesize(bundle: EvidenceBundle, opts: { model?: string } = {}): Promise<SynthesisResult> {
+export async function synthesize(bundle: EvidenceBundle, opts: { model?: string; onText?: (delta: string) => void } = {}): Promise<SynthesisResult> {
   const harness = loadHarness();
   const client = new Anthropic();
   const model = opts.model ?? process.env.REM_MODEL ?? DEFAULT_MODEL;
@@ -30,6 +30,7 @@ export async function synthesize(bundle: EvidenceBundle, opts: { model?: string 
     system: [{ type: "text", text: systemPrompt(harness), cache_control: { type: "ephemeral" } }],
     messages: [{ role: "user", content: userPrompt(bundle) }],
   });
+  if (opts.onText) stream.on("text", opts.onText);
   const msg = await stream.finalMessage();
   if (msg.stop_reason === "refusal") throw new Error("The model declined to write this report.");
   const markdown = msg.content

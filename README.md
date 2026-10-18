@@ -8,7 +8,7 @@
 
 <code>npx reverse-engineer-marketing notion.so</code>
 
-[Quick start](#quick-start) · [What it finds](#what-it-finds) · [Use it from your agent (MCP)](#use-it-from-your-agent-mcp) · [Example report](examples/calai.app.md) · [How it works](#how-it-works)
+[Quick start](#quick-start) · [Web app](#web-app-use-your-claude-code-or-codex-plan) · [What it finds](#what-it-finds) · [Use it from your agent (MCP)](#use-it-from-your-agent-mcp) · [Example report](examples/calai.app.md) · [How it works](#how-it-works)
 
 </div>
 
@@ -42,10 +42,28 @@ It also accepts App Store and Google Play links: `rem https://apps.apple.com/us/
 
 ```
 rem <url> [--no-ai] [--json] [--only paid,social,seo] [--handle tiktok=name] [--out dir]
+rem web        # local web app (Claude Code / Codex subscription)
 rem doctor     # which sources your keys unlock
 rem setup      # commands to connect REM to Claude Code / Codex / Cursor
 rem mcp        # run the MCP server
 ```
+
+## Web app: use your Claude Code or Codex plan
+
+```bash
+npx reverse-engineer-marketing web
+```
+
+Opens a local web app at `http://localhost:4321`. Paste a link, pick who writes the report, and watch the evidence come in and the playbook stream out. Every `E12` citation opens the raw evidence behind it.
+
+| Report writer | How it runs | Cost |
+|---|---|---|
+| **Claude Code** | your installed `claude` CLI, headless, no tools | your Claude subscription |
+| **Codex** | your installed `codex exec`, read-only sandbox | your ChatGPT subscription |
+| Anthropic API | `ANTHROPIC_API_KEY` | per token |
+| Evidence only | no AI | free |
+
+Subscription engines run the CLI you're already logged into. REM strips `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` from their environment so your plan is used, not an API key, and runs them in a scratch folder with your MCP servers and hooks disabled. The server listens on `127.0.0.1` only and rejects other hosts and origins. Add your Scrape Creators key from the top-right pill; it's saved to `~/.config/reverse-engineer-marketing/config.json` (mode 600). Past runs are listed on the home page.
 
 ## What it finds
 

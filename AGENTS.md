@@ -17,6 +17,8 @@ REM (Reverse Engineer Marketing) collects public evidence of how a company acqui
 - `src/report/` deterministic Markdown + the validator (`validate.ts`) used by evals and the `validate_report` tool.
 - `harness/` versioned analyst bundle (role, guardrails, template, lessons, playbooks). Listed in `manifest.json`; the loader fails if a file is missing and hashes the bundle into every report.
 - `evals/` recorded evidence fixtures + `run.ts`.
+- `src/engines.ts` report writers: Claude Code (`claude -p` stream-json), Codex (`codex exec --json`), Anthropic API. Subscription engines must never inherit API-key env vars.
+- `src/web/server.ts` + `web/index.html` local web app (`rem web`): no framework, SSE job events, 127.0.0.1 + Host/Origin guard. `src/runs.ts` stores runs for web + MCP.
 
 ## Changing the harness
 

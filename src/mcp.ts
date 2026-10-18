@@ -1,6 +1,3 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { homedir } from "node:os";
-import { join } from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -9,26 +6,11 @@ import { loadHarness, playbook } from "./harness.js";
 import { AREAS, reverseEngineer, VERSION, type EvidenceBundle } from "./index.js";
 import { renderMarkdown, scorecardTable } from "./report/markdown.js";
 import { validateReport } from "./report/validate.js";
-
-const RUNS_DIR = join(process.env.REM_CACHE_DIR || join(homedir(), ".cache", "reverse-engineer-marketing"), "runs");
-const runs = new Map<string, EvidenceBundle>();
-
-async function saveRun(bundle: EvidenceBundle): Promise<{ id: string; path: string }> {
-  const id = `${(bundle.target.domain ?? bundle.brand).replace(/[^a-z0-9.-]/gi, "_")}-${bundle.generatedAt.replace(/[-:T]/g, "").slice(0, 12)}`;
-  runs.set(id, bundle);
-  await mkdir(RUNS_DIR, { recursive: true });
-  const path = join(RUNS_DIR, `${id}.json`);
-  await writeFile(path, JSON.stringify(bundle, null, 2));
-  return { id, path };
-}
+import { loadRun as loadSavedRun, saveRun } from "./runs.js";
 
 async function loadRun(id: string): Promise<EvidenceBundle> {
-  const hit = runs.get(id);
-  if (hit) return hit;
   try {
-    const bundle = JSON.parse(await readFile(join(RUNS_DIR, `${id.replace(/[^a-z0-9._-]/gi, "")}.json`), "utf8")) as EvidenceBundle;
-    runs.set(id, bundle);
-    return bundle;
+    return await loadSavedRun(id);
   } catch {
     throw new Error(`Unknown run_id "${id}". Call reverse_engineer_marketing first.`);
   }

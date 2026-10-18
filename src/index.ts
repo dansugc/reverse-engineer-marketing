@@ -14,6 +14,18 @@ import { parseTarget, type Target } from "./target.js";
 export type Area = "website" | "seo" | "history" | "apps" | "paid" | "social" | "founders" | "community";
 export const AREAS: Area[] = ["website", "seo", "history", "apps", "paid", "social", "founders", "community"];
 
+/** runSource labels that belong to each area (for stage error reporting). */
+const RUN_LABELS: Record<Area, string[]> = {
+  website: ["website"],
+  seo: ["seo"],
+  history: ["wayback"],
+  apps: ["appstore", "hackernews"],
+  paid: ["paid"],
+  social: ["social"],
+  founders: ["founders"],
+  community: ["community"],
+};
+
 export interface RunOptions {
   /** Limit to some areas (website always runs: it discovers handles for the rest). */
   only?: Area[];
@@ -21,6 +33,8 @@ export interface RunOptions {
   /** Override discovered handles, e.g. { tiktok: "notionhq" }. */
   handles?: Ctx["found"]["socials"];
   log?: (msg: string) => void;
+  /** Structured progress for UIs: website first, then the areas in parallel. */
+  onStage?: (stage: "website" | Area, state: "start" | "done" | "error", detail?: string) => void;
 }
 
 export interface EvidenceBundle {
@@ -46,15 +60,23 @@ export async function reverseEngineer(input: string, opts: RunOptions = {}): Pro
   const log = opts.log ?? (() => {});
   const ctx: Ctx = { target, store, sc, log, found: { socials: { ...opts.handles }, people: [], appStoreIds: [], playIds: [] } };
   const want = (a: Area) => !opts.only?.length || opts.only.includes(a);
+  const stage = opts.onStage ?? (() => {});
+  const timed = async (name: "website" | Area, labels: string[], fn: () => Promise<void>) => {
+    stage(name, "start");
+    const before = store.runs.length;
+    await fn();
+    const failed = store.runs.slice(before).filter(r => r.status === "error" && labels.includes(r.source));
+    stage(name, failed.length ? "error" : "done", failed.map(f => f.reason).join("; ") || undefined);
+  };
 
   // App-store links: resolve the developer website first, then scan it like any site.
   if (target.kind !== "website") {
     log("→ app store");
-    await runSource(ctx, "appstore", collectAppStore);
+    await timed("apps", ["appstore"], () => runSource(ctx, "appstore", collectAppStore));
   }
   if (target.url) {
     log(`→ website ${target.url}`);
-    await runSource(ctx, "website", collectWebsite);
+    await timed("website", ["website"], () => runSource(ctx, "website", collectWebsite));
   } else skip(ctx, "website", "no website found for this app");
 
   const jobs: [Area, string, () => Promise<void>][] = [
@@ -69,7 +91,12 @@ export async function reverseEngineer(input: string, opts: RunOptions = {}): Pro
     ["founders", "founders", () => runSource(ctx, "founders", collectFounders)],
     ["community", "community", () => runSource(ctx, "community", collectCommunity)],
   ];
-  await Promise.all(jobs.filter(([a]) => want(a) && target.url).map(([, label, fn]) => (log(`→ ${label}`), fn())));
+  await Promise.all(
+    jobs.filter(([a]) => want(a) && target.url).map(([area, label, fn]) => {
+      log(`→ ${label}`);
+      return timed(area, RUN_LABELS[area], fn);
+    }),
+  );
 
   const harness = loadHarness();
   return {

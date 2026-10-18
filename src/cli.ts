@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import { mkdir, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
+import { spawn } from "node:child_process";
 import { synthesize } from "./analyze/synthesize.js";
+import { applyConfig } from "./config.js";
 import { AREAS, reverseEngineer, VERSION, type Area } from "./index.js";
 import { renderMarkdown } from "./report/markdown.js";
 import { validateReport } from "./report/validate.js";
@@ -11,6 +13,7 @@ try {
 } catch {
   // no .env in cwd
 }
+applyConfig();
 
 const HELP = `reverse-engineer-marketing v${VERSION}
 
@@ -18,6 +21,7 @@ Reverse engineer any company's marketing from one link.
 
 Usage
   rem <url>                 website, App Store or Google Play link
+  rem web                   open the local web app (uses your Claude Code / Codex plan)
   rem mcp                   run the MCP server (stdio) for Claude Code, Codex, Cursor…
   rem doctor                show which sources your keys unlock
   rem setup                 print the commands to connect REM to your agent
@@ -30,6 +34,8 @@ Options
   --handle <platform=name>  override a discovered handle, e.g. --handle tiktok=notionhq
   --model <id>              Claude model for the report (default claude-opus-5)
   --max-credits <n>         Scrape Creators budget per run (default 40)
+  --port <n>                web app port (default 4321)
+  --no-open                 don't open the browser for rem web
   -q, --quiet               no progress output
 
 Keys (all optional): SCRAPECREATORS_API_KEY, ANTHROPIC_API_KEY — see .env.example`;
@@ -49,6 +55,13 @@ async function main(argv: string[]): Promise<number> {
     const { startMcp } = await import("./mcp.js");
     await startMcp();
     return -1; // keep running
+  }
+  if (cmd === "web") {
+    const { startWeb } = await import("./web/server.js");
+    const url = await startWeb(Number(args.port ?? process.env.REM_PORT ?? 4321));
+    console.log(`REM is running at ${url}  (Ctrl+C to stop)`);
+    if (!args["no-open"]) openBrowser(url);
+    return -1;
   }
   if (cmd === "doctor") return doctor();
   if (cmd === "setup") return setup();
@@ -91,6 +104,12 @@ async function main(argv: string[]): Promise<number> {
   return 0;
 }
 
+function openBrowser(url: string): void {
+  const cmd = process.platform === "darwin" ? "open" : process.platform === "win32" ? "cmd" : "xdg-open";
+  const argv = process.platform === "win32" ? ["/c", "start", "", url] : [url];
+  spawn(cmd, argv, { stdio: "ignore", detached: true }).on("error", () => {}).unref();
+}
+
 function doctor(): number {
   const sc = Boolean(process.env.SCRAPECREATORS_API_KEY || process.env.SCRAPE_CREATORS_API_KEY);
   const ai = Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
@@ -124,7 +143,7 @@ interface Args {
 
 function parseArgs(argv: string[]): Args {
   const out: Args = { _: [] };
-  const flags = new Set(["no-ai", "json", "quiet", "help", "version"]);
+  const flags = new Set(["no-ai", "json", "quiet", "help", "version", "no-open"]);
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
     if (a === "-q") out.quiet = true;
