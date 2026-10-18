@@ -1,0 +1,63 @@
+{
+  "name": "reverse-engineer-marketing",
+  "version": "0.1.0",
+  "description": "Reverse engineer any company's marketing from one link: paid ads, organic social, SEO, founders, funnel. Evidence-backed CLI + MCP server for your agent.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "rem": "dist/cli.js",
+    "reverse-engineer-marketing": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "harness",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/cli.js",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "eval": "tsx evals/run.ts",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "keywords": [
+    "marketing",
+    "reverse-engineering",
+    "growth",
+    "competitor-analysis",
+    "ad-library",
+    "seo",
+    "mcp",
+    "mcp-server",
+    "agents",
+    "claude-code",
+    "codex"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dansugc/reverse-engineer-marketing.git"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "node-html-parser": "^9.0.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

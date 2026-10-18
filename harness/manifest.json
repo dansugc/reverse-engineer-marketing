@@ -1,0 +1,20 @@
+{
+  "name": "rem-harness",
+  "version": "1",
+  "description": "Versioned analyst bundle for Reverse Engineer Marketing. Every report records this version and the bundle SHA so results are reproducible and evals compare like with like.",
+  "files": [
+    "system.md",
+    "guardrails.md",
+    "report-template.md",
+    "lessons.md",
+    "playbooks/paid-meta.md",
+    "playbooks/paid-search.md",
+    "playbooks/paid-b2b.md",
+    "playbooks/organic-short-form.md",
+    "playbooks/founder-led.md",
+    "playbooks/seo-geo.md",
+    "playbooks/community-launches.md",
+    "playbooks/funnel-monetization.md",
+    "playbooks/apps.md"
+  ]
+}

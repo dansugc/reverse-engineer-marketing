@@ -1,0 +1,154 @@
+#!/usr/bin/env node
+import { mkdir, writeFile } from "node:fs/promises";
+import { join, resolve } from "node:path";
+import { synthesize } from "./analyze/synthesize.js";
+import { AREAS, reverseEngineer, VERSION, type Area } from "./index.js";
+import { renderMarkdown } from "./report/markdown.js";
+import { validateReport } from "./report/validate.js";
+
+try {
+  process.loadEnvFile(".env");
+} catch {
+  // no .env in cwd
+}
+
+const HELP = `reverse-engineer-marketing v${VERSION}
+
+Reverse engineer any company's marketing from one link.
+
+Usage
+  rem <url>                 website, App Store or Google Play link
+  rem mcp                   run the MCP server (stdio) for Claude Code, Codex, Cursor…
+  rem doctor                show which sources your keys unlock
+  rem setup                 print the commands to connect REM to your agent
+
+Options
+  --no-ai                   skip the written strategy; evidence report only
+  --json                    print the evidence bundle as JSON to stdout
+  --out <dir>               output folder (default ./rem-reports/<domain>-<date>)
+  --only <areas>            comma list: ${AREAS.join(",")}
+  --handle <platform=name>  override a discovered handle, e.g. --handle tiktok=notionhq
+  --model <id>              Claude model for the report (default claude-opus-5)
+  --max-credits <n>         Scrape Creators budget per run (default 40)
+  -q, --quiet               no progress output
+
+Keys (all optional): SCRAPECREATORS_API_KEY, ANTHROPIC_API_KEY — see .env.example`;
+
+async function main(argv: string[]): Promise<number> {
+  const args = parseArgs(argv);
+  const cmd = args._[0];
+  if (!cmd || args.help) {
+    console.log(HELP);
+    return cmd ? 0 : 1;
+  }
+  if (args.version) {
+    console.log(VERSION);
+    return 0;
+  }
+  if (cmd === "mcp") {
+    const { startMcp } = await import("./mcp.js");
+    await startMcp();
+    return -1; // keep running
+  }
+  if (cmd === "doctor") return doctor();
+  if (cmd === "setup") return setup();
+
+  const log = args.quiet || args.json ? () => {} : (m: string) => console.error(m);
+  const only = args.only ? (String(args.only).split(",").map(s => s.trim()) as Area[]) : undefined;
+  const bad = only?.filter(a => !AREAS.includes(a));
+  if (bad?.length) throw new Error(`Unknown area(s): ${bad.join(", ")}. Use: ${AREAS.join(", ")}`);
+  const handles = Object.fromEntries(([] as string[]).concat(args.handle ?? []).map(h => h.split("=") as [string, string]).filter(([k, v]) => k && v));
+
+  const t0 = Date.now();
+  const bundle = await reverseEngineer(cmd, { only, handles, maxCredits: args["max-credits"] ? Number(args["max-credits"]) : undefined, log });
+  log(`✓ ${bundle.evidence.length} evidence items, ${bundle.unknowns.length} unknowns in ${((Date.now() - t0) / 1000).toFixed(1)}s${bundle.credits.scrapecreators != null ? ` (${bundle.credits.scrapecreators} credits)` : ""}`);
+
+  if (args.json) {
+    process.stdout.write(`${JSON.stringify(bundle, null, 2)}\n`);
+    return 0;
+  }
+
+  let narrative: string | undefined;
+  if (!args["no-ai"]) {
+    if (process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN) {
+      log("→ writing strategy report with Claude…");
+      try {
+        const res = await synthesize(bundle, { model: args.model });
+        narrative = res.markdown;
+        const v = validateReport(narrative, bundle);
+        log(`✓ report by ${res.model} (${res.usage.output} output tokens) · validation ${Math.round(v.score * 100)}%${v.ok ? "" : ` — ${v.checks.filter(c => !c.ok).map(c => `${c.name}: ${c.detail}`).join("; ")}`}`);
+      } catch (err) {
+        log(`! synthesis failed: ${err instanceof Error ? err.message : err} — writing evidence report instead`);
+      }
+    } else log("· ANTHROPIC_API_KEY not set — writing the evidence report (use MCP to let your agent write the strategy)");
+  }
+
+  const dir = resolve(args.out ?? join("rem-reports", `${(bundle.target.domain ?? bundle.brand).replace(/[^a-z0-9.-]/gi, "_")}-${bundle.generatedAt.slice(0, 10)}`));
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, "evidence.json"), JSON.stringify(bundle, null, 2));
+  await writeFile(join(dir, "report.md"), renderMarkdown(bundle, { narrative }));
+  console.log(join(dir, "report.md"));
+  return 0;
+}
+
+function doctor(): number {
+  const sc = Boolean(process.env.SCRAPECREATORS_API_KEY || process.env.SCRAPE_CREATORS_API_KEY);
+  const ai = Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
+  const row = (ok: boolean, name: string, what: string) => console.log(`${ok ? "✓" : "·"} ${name.padEnd(24)} ${what}`);
+  console.log(`reverse-engineer-marketing v${VERSION} · node ${process.version}\n`);
+  row(true, "free sources", "website, pixels + GTM, SEO/sitemaps, AI-crawler stance, Wayback history, App Store/Play, Hacker News");
+  row(sc, "SCRAPECREATORS_API_KEY", sc ? "Meta/Google/LinkedIn ad libraries, TikTok/IG/YouTube/X/LinkedIn stats, founders, Reddit, Product Hunt" : "not set — paid/social/founders become manual-check links (https://scrapecreators.com)");
+  row(ai, "ANTHROPIC_API_KEY", ai ? `written strategy report (${process.env.REM_MODEL ?? "claude-opus-5"})` : "not set — CLI writes the evidence report; via MCP your agent writes the strategy");
+  return 0;
+}
+
+function setup(): number {
+  console.log(`Connect REM to your agent (stdio MCP server):
+
+  Claude Code   claude mcp add reverse-engineer-marketing -e SCRAPECREATORS_API_KEY=… -- npx -y reverse-engineer-marketing mcp
+  Codex         codex mcp add reverse-engineer-marketing --env SCRAPECREATORS_API_KEY=… -- npx -y reverse-engineer-marketing mcp
+  Cursor / any  add to your MCP config:
+                { "mcpServers": { "reverse-engineer-marketing": { "command": "npx", "args": ["-y", "reverse-engineer-marketing", "mcp"], "env": { "SCRAPECREATORS_API_KEY": "…" } } } }
+
+Skill (optional, teaches your agent the analysis playbook):
+  npx skills add dansugc/reverse-engineer-marketing     or copy skills/reverse-engineer-marketing into ~/.claude/skills/
+
+Then ask:  "Reverse engineer the marketing of linear.app and give me a playbook to copy."`);
+  return 0;
+}
+
+interface Args {
+  _: string[];
+  [k: string]: any;
+}
+
+function parseArgs(argv: string[]): Args {
+  const out: Args = { _: [] };
+  const flags = new Set(["no-ai", "json", "quiet", "help", "version"]);
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i]!;
+    if (a === "-q") out.quiet = true;
+    else if (a === "-h") out.help = true;
+    else if (a === "-v") out.version = true;
+    else if (a.startsWith("--")) {
+      const [k, inline] = a.slice(2).split(/=(.*)/s) as [string, string | undefined];
+      if (flags.has(k)) out[k] = true;
+      else {
+        const v = inline ?? argv[++i];
+        if (v === undefined) throw new Error(`--${k} needs a value`);
+        out[k] = k === "handle" ? [...(out.handle ?? []), v] : v;
+      }
+    } else out._.push(a);
+  }
+  return out;
+}
+
+main(process.argv.slice(2)).then(
+  code => {
+    if (code >= 0) process.exitCode = code;
+  },
+  err => {
+    console.error(`error: ${err instanceof Error ? err.message : err}`);
+    process.exitCode = 1;
+  },
+);
