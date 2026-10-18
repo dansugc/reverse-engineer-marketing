@@ -46,6 +46,8 @@ function bundleView(b: EvidenceBundle) {
     credits: b.credits,
     harness: b.harness,
     generatedAt: b.generatedAt,
+    identity: b.identity ?? { logos: [], founders: [] },
+    content: b.content ?? [],
   };
 }
 

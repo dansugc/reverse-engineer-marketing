@@ -65,6 +65,9 @@ export async function collectAppStore(ctx: Ctx): Promise<void> {
       }
     }
     if (!target.brand) target.brand = a.trackName;
+    if (a.artworkUrl512) found.logos.push({ url: a.artworkUrl512, source: "appstore", size: 512 });
+    // Indie apps are often published under the founder's own name.
+    if (a.sellerName && /^[A-Z][a-z]+ [A-Z][a-z]+$/.test(a.sellerName)) found.founderHints.push({ name: a.sellerName, role: "App Store seller", source: "appstore_seller", url: a.trackViewUrl });
     store.add({
       source: "appstore",
       kind: "observation",

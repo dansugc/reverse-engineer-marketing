@@ -30,8 +30,12 @@ export function scorecard(store: EvidenceStore): ChannelScore[] {
   const meta = store.bySource("meta_ads")[0];
   if (meta) {
     const m = d(meta);
-    const a = m.activeInSample ?? 0;
-    set("paid_meta", a > 0 ? "active" : "none", a >= 30 ? 3 : a >= 8 ? 2 : a > 0 ? 1 : 0, `${m.totalInLibrary} ads in library, ${a} active in sample, ${m.launchedLast30d} new in 30d; top run ${m.longestRunningActive?.[0]?.runningDays ?? 0}d`, [meta]);
+    const a = Number(m.activeNow ?? m.activeInSample ?? 0);
+    const total = Number(m.totalInLibrary ?? 0);
+    const longest = m.longestRunning?.[0]?.runningDays ?? m.longestRunningActive?.[0]?.runningDays ?? 0;
+    if (a > 0) set("paid_meta", "active", a >= 30 ? 3 : a >= 8 ? 2 : 1, `${a} active now, ${total} in library, ${m.launchedLast30d} new in 30d; longest ran ${longest}d`, [meta]);
+    else if (total > 0) set("paid_meta", "dormant", total >= 30 ? 2 : 1, `${total} ads in library, all paused (last ran ${m.lastRan ?? "?"}); longest ran ${longest}d`, [meta]);
+    else set("paid_meta", "none", 0, "Meta page found, no ads in library", [meta]);
   } else pixelOnly("paid_meta", "meta_pixel", "Meta Pixel installed");
 
   const google = store.bySource("google_ads")[0];
@@ -105,16 +109,33 @@ export function scorecard(store: EvidenceStore): ChannelScore[] {
   const fo = store.bySource("founders")[0];
   if (fo) {
     const list: any[] = Array.isArray(fo.data) ? (fo.data as any[]) : [];
+    const checked = list.some(f => f.linkedinFollowers != null || f.x?.followers != null);
     const best = Math.max(0, ...list.map(f => Math.max(Number(f.linkedinFollowers ?? 0), Number(f.x?.followers ?? 0))));
     const posting = list.some(f => f.postsRecently);
-    set("founder_led", list.length ? (posting ? "active" : best ? "dormant" : "none") : "unknown", best >= 25_000 && posting ? 3 : best >= 5_000 && posting ? 2 : posting ? 1 : 0, fo.title.replace(/^[^:]+:\s*/, ""), [fo]);
+    const names = list.slice(0, 3).map(f => f.name).join(", ");
+    if (!list.length) set("founder_led", "unknown", 0, "No founder names found", [fo]);
+    else if (!checked) set("founder_led", "unknown", 0, `Founders: ${names} (audience not checked)`, [fo]);
+    else set("founder_led", posting ? "active" : best ? "dormant" : "none", best >= 25_000 && posting ? 3 : best >= 5_000 && posting ? 2 : posting ? 1 : 0, fo.title.replace(/^[^:]+:\s*/, ""), [fo]);
   } else set("founder_led", "unknown", 0, unknown("founder_led")?.reason ?? "Not checked", []);
 
-  const rd = store.bySource("reddit")[0];
-  if (rd) {
-    const threads: any[] = d(rd).threads ?? [];
+  const rm = store.find("reddit", "Reddit marketing");
+  const rmen = store.find("reddit", "Reddit mentions");
+  const rseo = store.find("reddit", "Reddit threads ranking");
+  if (rm) {
+    const x = d(rm);
+    const affiliated = (x.affiliatedPosts?.length ?? 0) + (x.affiliatedComments?.length ?? 0);
+    const wau = Number(x.ownSubreddit?.weeklyActive ?? 0);
+    const owned = Boolean(x.ownSubreddit?.linkedFromSite) || /brand-named/.test(x.ownSubreddit?.note ?? "");
+    const strength = affiliated >= 5 || (owned && wau >= 5_000) ? 3 : affiliated >= 2 || (owned && wau >= 500) ? 2 : affiliated || owned ? 1 : 0;
+    set("reddit_marketing", strength ? "active" : has("reddit_pixel") ? "likely" : "none", strength || (has("reddit_pixel") ? 1 : 0), `${affiliated} brand/founder posts+replies${owned ? `, r/${x.ownSubreddit.name} ${wau.toLocaleString("en-US")} weekly active` : ""}${has("reddit_pixel") ? ", Reddit pixel" : ""}`, [rm, rseo, tracking]);
+  } else set("reddit_marketing", has("reddit_pixel") ? "likely" : "unknown", has("reddit_pixel") ? 1 : 0, unknown("reddit_marketing")?.reason ?? "Not checked", [tracking]);
+
+  if (rmen) {
+    const x = d(rmen);
+    const threads: any[] = x.topThreads ?? [];
     const hot = threads.filter(t => t.score >= 50).length;
-    set("community", threads.length ? "active" : "none", hot >= 3 ? 2 : threads.length >= 3 ? 1 : 0, rd.title.replace(/^Reddit:\s*/, ""), [rd]);
+    const ranking = (d(rseo) as any[]).length ?? 0;
+    set("community", threads.length ? "active" : "none", hot >= 3 || ranking >= 5 ? 2 : threads.length >= 3 ? 1 : 0, `${rmen.title.replace(/^Reddit mentions:\s*/, "")}${ranking ? `; ${ranking} Reddit threads rank on Google` : ""}`, [rmen, rseo]);
   } else set("community", "unknown", 0, unknown("community")?.reason ?? "Not checked", []);
 
   const hn = store.bySource("hackernews")[0];

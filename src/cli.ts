@@ -33,7 +33,7 @@ Options
   --only <areas>            comma list: ${AREAS.join(",")}
   --handle <platform=name>  override a discovered handle, e.g. --handle tiktok=notionhq
   --model <id>              Claude model for the report (default claude-opus-5)
-  --max-credits <n>         Scrape Creators budget per run (default 40)
+  --max-credits <n>         Scrape Creators budget per run (default 50)
   --port <n>                web app port (default 4321)
   --no-open                 don't open the browser for rem web
   -q, --quiet               no progress output

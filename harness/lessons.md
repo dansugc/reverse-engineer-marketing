@@ -16,3 +16,6 @@ Format: **cue** → lesson. (Evidence that taught us.) Add lessons when an eval 
 - **Homepage repositioned between snapshots** → note the pivot and the new ICP; ads and SEO usually follow within months.
 - **Reddit threads asking "X vs Y" or complaining** → community demand exists; check if the company replies (founder accounts) or runs Reddit ads.
 - **No evidence for a channel** → it's unknown, not absent. Never write "they don't do X" without a negative observation (e.g. ad library checked and empty).
+- **Founder named only by one weak source (site text regex, App Store seller)** → present as "possibly"; high confidence needs Wikidata/JSON-LD or two independent sources.
+- **Brand-named account or "I'm the founder" replies in "what should I use" threads** → deliberate Reddit marketing; it's cheap, copyable and compounds via Google. Lead the Reddit section with it.
+- **Reddit threads ranking on Google for the brand** → Reddit is part of their SEO surface (and AI-search citations); note whether those threads are positive or negative.

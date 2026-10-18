@@ -1,5 +1,6 @@
-import type { Ctx } from "../context.js";
+import { addContent, type Ctx } from "../context.js";
 import { clip, median, perWeek } from "../http.js";
+import { extractSocials } from "./html.js";
 
 const num = (x: unknown) => (typeof x === "number" ? x : typeof x === "string" && x.trim() !== "" ? Number(x.replace(/,/g, "")) : NaN);
 
@@ -17,6 +18,11 @@ export async function collectSocial(ctx: Ctx): Promise<void> {
     for (const [channel, url] of Object.entries(manual))
       store.unknown({ channel, reason: url ? "Account found but SCRAPECREATORS_API_KEY not set — no stats" : "No account linked from the site", manualCheck: url });
     return;
+  }
+  await discoverMissing(ctx).catch(() => {});
+  for (const k of ["x", "instagram", "linkedin", "youtube"] as const) {
+    const ch = { x: "organic_x", instagram: "organic_instagram", linkedin: "organic_linkedin", youtube: "organic_youtube" }[k];
+    if (s[k] && !manual[ch]) manual[ch] = { x: `https://x.com/${s.x}`, instagram: `https://www.instagram.com/${s.instagram}/`, linkedin: `https://www.linkedin.com/company/${s.linkedin}`, youtube: `https://www.youtube.com/${s.youtube}` }[k];
   }
   // TikTok is often not linked from the site: search for it, accept only strong matches.
   let tiktokMatch: string | undefined;
@@ -36,6 +42,26 @@ export async function collectSocial(ctx: Ctx): Promise<void> {
     s.x && x(ctx, s.x),
     s.linkedin && linkedinCompany(ctx, s.linkedin),
   ]);
+}
+
+/** Accounts the site doesn't link: one Google query, keep handles that carry the brand. */
+async function discoverMissing(ctx: Ctx): Promise<void> {
+  const s = ctx.found.socials;
+  const missing = (["x", "instagram", "linkedin", "youtube"] as const).filter(k => !s[k]);
+  if (!missing.length || !ctx.sc?.can(8)) return;
+  const brand = ctx.found.brandName ?? ctx.target.brand ?? "";
+  const n = (x: unknown) => String(x ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const keys = [n(brand), n(ctx.target.domain?.split(".")[0])].filter(k => k.length >= 3);
+  const sites = { x: "site:x.com", instagram: "site:instagram.com", linkedin: "site:linkedin.com/company", youtube: "site:youtube.com" };
+  const res = await ctx.sc.get<any>("/v1/google/search", { query: `"${brand}" (${missing.map(k => sites[k]).join(" OR ")})` });
+  const found = extractSocials(((res?.results ?? []) as any[]).map(r => String(r.url)));
+  const added: Record<string, string> = {};
+  for (const k of missing) {
+    const h = found[k];
+    if (h && keys.some(key => n(h).includes(key))) added[k] = s[k] = h;
+  }
+  if (Object.keys(added).length)
+    ctx.store.add({ source: "website", kind: "observation", title: `Accounts found by search (not linked from site): ${Object.entries(added).map(([k, v]) => `${k} ${v}`).join(", ")}`, url: `https://www.google.com/search?q=${encodeURIComponent(brand)}`, data: added });
 }
 
 async function findTikTok(ctx: Ctx): Promise<{ handle: string; reason: string } | null> {
@@ -60,10 +86,10 @@ async function tiktok(ctx: Ctx, handle: string, matchedBy?: string): Promise<voi
     sc.get<any>("/v3/tiktok/profile/videos", { handle }).catch(() => null),
     sc.get<any>("/v3/tiktok/profile/videos", { handle, sort_by: "popular" }).catch(() => null),
   ]);
-  const map = (v: any) => ({ views: num(v.statistics?.play_count), likes: num(v.statistics?.digg_count), shares: num(v.statistics?.share_count), saves: num(v.statistics?.collect_count), created: v.create_time as number, hook: clip(v.desc, 160), isAd: Boolean(v.is_ads), url: v.share_url?.split("?")[0] });
+  const map = (v: any) => ({ id: String(v.aweme_id), views: num(v.statistics?.play_count), likes: num(v.statistics?.digg_count), comments: num(v.statistics?.comment_count), shares: num(v.statistics?.share_count), saves: num(v.statistics?.collect_count), created: v.create_time as number, hook: clip(v.desc, 160), isAd: Boolean(v.is_ads), url: v.share_url?.split("?")[0] ?? `https://www.tiktok.com/@${handle}/video/${v.aweme_id}`, cover: v.video?.cover?.url_list?.[0] ?? v.video?.origin_cover?.url_list?.[0] ?? v.video?.dynamic_cover?.url_list?.[0], play: v.video?.play_addr?.url_list?.[0] });
   const recent = ((latest?.aweme_list ?? []) as any[]).map(map);
   const top = ((popular?.aweme_list ?? []) as any[]).map(map).sort((a, b) => b.views - a.views);
-  ctx.store.add({
+  const te = ctx.store.add({
     source: "tiktok",
     kind: "derivation",
     title: `TikTok @${handle}: ${fmt(profile?.stats?.followerCount)} followers, ${fmt(profile?.stats?.videoCount)} videos, ${perWeek(recent.map(r => r.created)) ?? "?"} posts/wk, median ${fmt(median(recent.map(r => r.views)))} views (recent)`,
@@ -78,15 +104,20 @@ async function tiktok(ctx: Ctx, handle: string, matchedBy?: string): Promise<voi
       medianViewsRecent: median(recent.map(r => r.views)),
       lastPostDaysAgo: recent[0]?.created ? Math.round((Date.now() / 1000 - Math.max(...recent.map(r => r.created))) / 86_400) : null,
       sparkAdsInRecent: recent.filter(r => r.isAd).length,
-      topVideos: top.slice(0, 6),
-      recentVideos: recent.slice(0, 6),
+      topVideos: top.slice(0, 6).map(({ cover, play, ...v }) => v),
+      recentVideos: recent.slice(0, 6).map(({ cover, play, ...v }) => v),
     },
   });
+  const topIds = new Set(top.slice(0, 5).map(v => v.id));
+  addContent(ctx, [...top, ...recent].map(v => ({ id: `tiktok:${v.id}`, platform: "tiktok" as const, kind: "video" as const, url: v.url, text: v.hook || undefined, thumb: v.cover, video: v.play, author: `@${handle}`, date: v.created ? new Date(v.created * 1000).toISOString().slice(0, 10) : undefined, metrics: { views: v.views, likes: v.likes, comments: v.comments, shares: v.shares }, tags: [topIds.has(v.id) ? "top" : "", v.isAd ? "spark ad" : ""].filter(Boolean) })), te.id);
 }
 
 async function instagram(ctx: Ctx, handle: string): Promise<void> {
   const res = await ctx.sc!.get<any>("/v2/instagram/user/posts", { handle });
   const posts = ((res?.items ?? []) as any[]).map(p => ({
+    id: String(p.pk ?? p.id ?? p.code),
+    thumb: p.display_uri ?? p.image_versions2?.candidates?.[0]?.url ?? p.thumbnail_url,
+    video: p.video_url ?? p.video_versions?.[0]?.url,
     type: p.product_type === "clips" ? "reel" : p.product_type === "carousel_container" ? "carousel" : "image",
     likes: num(p.like_count),
     comments: num(p.comment_count),
@@ -96,7 +127,9 @@ async function instagram(ctx: Ctx, handle: string): Promise<void> {
     url: p.url ?? (p.code ? `https://www.instagram.com/p/${p.code}/` : undefined),
   }));
   const followers = num(res?.user?.follower_count);
-  ctx.store.add({
+  const avatar = res?.user?.hd_profile_pic_url_info?.url ?? res?.user?.profile_pic_url;
+  if (avatar) ctx.found.logos.push({ url: avatar, source: "instagram", size: 320 });
+  const ie = ctx.store.add({
     source: "instagram",
     kind: "derivation",
     title: `Instagram @${handle}: ${fmt(followers)} followers, ${perWeek(posts.map(p => p.created)) ?? "?"} posts/wk, median ${fmt(median(posts.map(p => p.likes)))} likes`,
@@ -108,9 +141,11 @@ async function instagram(ctx: Ctx, handle: string): Promise<void> {
       formatMix: posts.reduce<Record<string, number>>((m, p) => ((m[p.type] = (m[p.type] ?? 0) + 1), m), {}),
       medianLikes: median(posts.map(p => p.likes)),
       engagementRate: followers > 0 ? Math.round(((median(posts.map(p => p.likes + p.comments)) ?? 0) / followers) * 10_000) / 100 : null,
-      topPosts: [...posts].sort((a, b) => b.likes - a.likes).slice(0, 5),
+      topPosts: [...posts].sort((a, b) => b.likes - a.likes).slice(0, 5).map(({ thumb, video, ...p }) => p),
     },
   });
+  const topIg = new Set([...posts].sort((a, b) => b.likes - a.likes).slice(0, 3).map(p => p.id));
+  addContent(ctx, posts.map(p => ({ id: `ig:${p.id}`, platform: "instagram" as const, kind: p.type === "reel" ? ("video" as const) : ("post" as const), url: p.url ?? `https://www.instagram.com/${handle}/`, text: p.hook || undefined, thumb: p.thumb, video: p.video, author: `@${handle}`, date: p.created ? new Date(p.created * 1000).toISOString().slice(0, 10) : undefined, metrics: { views: Number.isFinite(p.views) ? p.views : undefined, likes: p.likes, comments: p.comments }, tags: [p.type, topIg.has(p.id) ? "top" : ""].filter(Boolean) })), ie.id);
 }
 
 async function youtube(ctx: Ctx, ref: string): Promise<void> {
@@ -121,19 +156,22 @@ async function youtube(ctx: Ctx, ref: string): Promise<void> {
   const ch = await sc.get<any>("/v1/youtube/channel", params);
   const vids = await sc.get<any>("/v1/youtube/channel-videos", { ...params, sort: "popular" }).catch(() => null);
   const top = ((vids?.videos ?? []) as any[]).slice(0, 6).map(v => ({ title: clip(v.title, 140), views: v.viewCountInt, published: v.publishedTime?.slice(0, 10), lengthSeconds: v.lengthSeconds, url: v.url }));
-  ctx.store.add({
+  const ye = ctx.store.add({
     source: "youtube",
     kind: "observation",
     title: `YouTube ${ch?.handle ?? ref}: ${fmt(num(ch?.subscriberCount))} subscribers, ${fmt(num(ch?.videoCount))} videos, ${fmt(num(ch?.viewCount))} total views`,
     url: ch?.channel ?? `https://www.youtube.com/${ref}`,
     data: { subscribers: ch?.subscriberCount, videos: ch?.videoCount, views: ch?.viewCount, description: clip(ch?.description, 400), topVideos: top },
   });
+  addContent(ctx, ((vids?.videos ?? []) as any[]).slice(0, 12).map(v => ({ id: `yt:${v.id}`, platform: "youtube" as const, kind: "video" as const, url: v.url, title: clip(v.title, 160), thumb: v.thumbnail, author: ch?.handle, date: v.publishedTime?.slice(0, 10), metrics: { views: v.viewCountInt }, tags: [v.lengthSeconds && v.lengthSeconds <= 60 ? "short" : "long-form"] })), ye.id);
 }
 
 async function x(ctx: Ctx, handle: string): Promise<void> {
   const sc = ctx.sc!;
   const [profile, tl] = await Promise.all([sc.get<any>("/v1/twitter/profile", { handle }), sc.get<any>("/v1/twitter/user-tweets", { handle }).catch(() => null)]);
   const tweets = ((tl?.tweets ?? []) as any[]).map(t => ({
+    id: String(t.rest_id ?? t.legacy?.id_str),
+    media: t.legacy?.extended_entities?.media?.[0] ?? t.legacy?.entities?.media?.[0],
     text: clip(t.legacy?.full_text, 240),
     likes: num(t.legacy?.favorite_count),
     reposts: num(t.legacy?.retweet_count),
@@ -141,7 +179,7 @@ async function x(ctx: Ctx, handle: string): Promise<void> {
     created: Date.parse(t.legacy?.created_at) / 1000,
     url: t.url,
   }));
-  ctx.store.add({
+  const xe = ctx.store.add({
     source: "x",
     kind: "derivation",
     title: `X @${handle}: ${fmt(profile?.legacy?.followers_count)} followers, ${perWeek(tweets.map(t => t.created)) ?? "?"} posts/wk, median ${fmt(median(tweets.map(t => t.views)))} views`,
@@ -152,15 +190,19 @@ async function x(ctx: Ctx, handle: string): Promise<void> {
       verified: profile?.is_blue_verified,
       postsPerWeek: perWeek(tweets.map(t => t.created)),
       medianViews: median(tweets.map(t => t.views)),
-      topPosts: [...tweets].sort((a, b) => b.views - a.views).slice(0, 5),
+      topPosts: [...tweets].sort((a, b) => b.views - a.views).slice(0, 5).map(({ media, ...t }) => t),
     },
   });
+  addContent(ctx, tweets.map(t => ({ id: `x:${t.id}`, platform: "x" as const, kind: "post" as const, url: t.url ?? `https://x.com/${handle}/status/${t.id}`, text: t.text || undefined, thumb: t.media?.media_url_https, video: bestMp4(t.media), author: `@${handle}`, date: Number.isFinite(t.created) ? new Date(t.created * 1000).toISOString().slice(0, 10) : undefined, metrics: { views: Number.isFinite(t.views) ? t.views : undefined, likes: t.likes, shares: t.reposts } })), xe.id);
 }
 
 async function linkedinCompany(ctx: Ctx, slug: string): Promise<void> {
   const res = await ctx.sc!.get<any>("/v1/linkedin/company", { url: `https://www.linkedin.com/company/${slug}` });
   if (!res) return;
-  ctx.store.add({
+  if (res.logo) ctx.found.logos.push({ url: res.logo, source: "linkedin", size: 200 });
+  const n = (x: unknown) => String(x ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (res.name && n(res.name) === n(ctx.found.brandName) && res.name !== ctx.found.brandName) ctx.found.brandName = ctx.target.brand = res.name;
+  const lie = ctx.store.add({
     source: "linkedin",
     kind: "observation",
     title: `LinkedIn ${res.name}: ${fmt(res.followers)} followers, ${fmt(res.employeeCount)} employees on LinkedIn, founded ${res.founded ?? "?"}`,
@@ -178,6 +220,7 @@ async function linkedinCompany(ctx: Ctx, slug: string): Promise<void> {
       recentPosts: (res.posts ?? []).slice(0, 5).map((p: any) => ({ date: p.datePublished?.slice(0, 10), text: clip(p.text, 240), url: p.url })),
     },
   });
+  addContent(ctx, ((res.posts ?? []) as any[]).map(p => ({ id: `li:${p.id ?? p.url}`, platform: "linkedin" as const, kind: "post" as const, url: p.url, text: clip(p.text, 600), author: res.name, date: p.datePublished?.slice(0, 10), tags: ["company page"] })), lie.id);
 }
 
 function fmt(n: unknown): string {
@@ -186,4 +229,9 @@ function fmt(n: unknown): string {
   if (v >= 1e6) return `${(v / 1e6).toFixed(1)}M`;
   if (v >= 1e4) return `${Math.round(v / 1e3)}K`;
   return v.toLocaleString("en-US");
+}
+
+function bestMp4(media: any): string | undefined {
+  const variants = (media?.video_info?.variants ?? []) as any[];
+  return variants.filter(v => v.content_type === "video/mp4").sort((a, b) => (b.bitrate ?? 0) - (a.bitrate ?? 0))[0]?.url;
 }

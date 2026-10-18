@@ -16,6 +16,16 @@ export interface PageFacts {
   rating?: { value: number; count: number };
   lang?: string;
   wordCount: number;
+  /** Brand image candidates: apple-touch-icon, icons, JSON-LD logo, og:image. */
+  logos: LogoCandidate[];
+  /** People from JSON-LD `founder` / Person with a founder job title. */
+  jsonLdFounders: { name: string; role?: string; url?: string }[];
+}
+
+export interface LogoCandidate {
+  url: string;
+  source: "apple-touch-icon" | "icon" | "jsonld" | "og-image" | "linkedin" | "appstore" | "wikidata" | "instagram" | "favicon";
+  size?: number;
 }
 
 export function pageFacts(html: string, baseUrl: string): PageFacts {
@@ -45,6 +55,19 @@ export function pageFacts(html: string, baseUrl: string): PageFacts {
 
   const jsonLdTypes = new Set<string>();
   const sameAs = new Set<string>();
+  const logos: LogoCandidate[] = [];
+  const jsonLdFounders: PageFacts["jsonLdFounders"] = [];
+  const abs = (u: unknown) => {
+    try {
+      return typeof u === "string" && u.trim() ? new URL(u.trim(), baseUrl).toString() : null;
+    } catch {
+      return null;
+    }
+  };
+  const person = (p: any, role?: string) => {
+    const name = typeof p === "string" ? p : p?.name;
+    if (typeof name === "string" && looksLikeName(name.trim())) jsonLdFounders.push({ name: name.trim(), role: role ?? p?.jobTitle, url: typeof p?.url === "string" ? p.url : undefined });
+  };
   let rating: PageFacts["rating"];
   for (const s of root.querySelectorAll('script[type="application/ld+json"]')) {
     try {
@@ -53,6 +76,12 @@ export function pageFacts(html: string, baseUrl: string): PageFacts {
         for (const x of Array.isArray(t) ? t : [t]) if (typeof x === "string") jsonLdTypes.add(x);
         const sa = node.sameAs;
         for (const x of Array.isArray(sa) ? sa : [sa]) if (typeof x === "string") sameAs.add(x);
+        if (/Organization|Corporation|Brand|SoftwareApplication|WebSite/.test(String(node["@type"]))) {
+          const l = abs(typeof node.logo === "object" ? node.logo?.url ?? node.logo?.contentUrl : node.logo);
+          if (l) logos.push({ url: l, source: "jsonld" });
+        }
+        for (const f of [node.founder ?? []].flat()) person(f, "Founder");
+        if (node["@type"] === "Person" && /founder|ceo/i.test(String(node.jobTitle ?? ""))) person(node);
         const ar = node.aggregateRating;
         if (ar && !rating) {
           const value = Number(ar.ratingValue);
@@ -64,6 +93,17 @@ export function pageFacts(html: string, baseUrl: string): PageFacts {
       // invalid JSON-LD is common
     }
   }
+
+  for (const l of root.querySelectorAll("link[rel][href]")) {
+    const rel = (l.getAttribute("rel") ?? "").toLowerCase();
+    if (!/\bicon\b|apple-touch-icon/.test(rel) || /mask-icon/.test(rel)) continue;
+    const url = abs(l.getAttribute("href"));
+    if (!url) continue;
+    const size = Number((l.getAttribute("sizes") ?? "").split(/x/i)[0]) || (/\.svg(\?|$)/i.test(url) ? 512 : rel.includes("apple") ? 180 : 32);
+    logos.push({ url, source: rel.includes("apple-touch-icon") ? "apple-touch-icon" : "icon", size });
+  }
+  const og = abs(meta('meta[property="og:image"]'));
+  if (og) logos.push({ url: og, source: "og-image" });
 
   const scripts = root
     .querySelectorAll("script[src]")
@@ -85,6 +125,8 @@ export function pageFacts(html: string, baseUrl: string): PageFacts {
     rating,
     lang: root.querySelector("html")?.getAttribute("lang") ?? undefined,
     wordCount: bodyText.split(/\s+/).filter(Boolean).length,
+    logos,
+    jsonLdFounders,
   };
 }
 
@@ -248,4 +290,38 @@ export function pricingSignals(text: string): PricingSignals {
 export function visibleText(html: string): string {
   const root = parse(html, { comment: false, blockTextElements: { script: false, style: false, noscript: false } });
   return (root.querySelector("body") ?? root).text.replace(/\s+/g, " ").trim();
+}
+
+const NOT_NAME = new Set(
+  "the our meet about team founder founders cofounder co-founder ceo cto coo cmo chief officer head of and inc llc ltd gmbh app apps ai labs studio studios company product products technologies technology software group partners capital ventures we us you my your his her their read more learn join contact today new free pro january february march april may june july august september october november december".split(" "),
+);
+
+/** "Zach Yadegari" yes; "Our Team", "Read More", "Cal AI" no. */
+export function looksLikeName(s: string, brand = ""): boolean {
+  const t = s.trim();
+  if (t.length < 5 || t.length > 40 || /\d|@|\//.test(t)) return false;
+  const words = t.split(/\s+/);
+  if (words.length < 2 || words.length > 4) return false;
+  if (!words.every(w => /^[A-ZÀ-Ý][a-zà-ÿ'’.-]+$|^[A-Z]\.$|^(?:van|de|von|der|da|di|le|la|bin|al)$/.test(w))) return false;
+  if (words.some(w => NOT_NAME.has(w.toLowerCase().replace(/[.’']/g, "")))) return false;
+  const b = brand.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return !b || !t.toLowerCase().replace(/[^a-z0-9]/g, "").includes(b);
+}
+
+const NAME = "[A-ZÀ-Ý][a-zà-ÿ'’-]+(?: (?:[A-Z]\\.|[A-ZÀ-Ý][a-zà-ÿ'’-]+)){1,2}";
+const ROLE = "(?:[Cc]o-?[Ff]ounder|[Ff]ounder|CEO|CTO|Chief Executive Officer)(?:\\s*(?:&|and|,|/)\\s*(?:CEO|CTO|COO|CPO|President|Chief [A-Z][a-z]+ Officer))?";
+
+/** Founder names in free text ("founded by A and B", "A, Co-founder & CEO"). */
+export function extractFounderNames(text: string, brand = ""): { name: string; role?: string }[] {
+  const out = new Map<string, { name: string; role?: string }>();
+  const add = (name: string, role?: string) => {
+    const n = name.trim().replace(/[’']s$/, "");
+    if (looksLikeName(n, brand) && !out.has(n.toLowerCase())) out.set(n.toLowerCase(), { name: n, role: role?.trim() });
+  };
+  const t = text.replace(/\s+/g, " ");
+  for (const m of t.matchAll(new RegExp(`(?:[Ff]ounded|[Ss]tarted|[Cc]reated|[Bb]uilt) (?:in \\d{4} )?by ((?:${NAME})(?:(?:, | and | & |, and )(?:${NAME}))*)`, "g")))
+    for (const n of m[1]!.split(/, and |, | and | & /)) add(n, "Founder");
+  for (const m of t.matchAll(new RegExp(`(${NAME}),? (?:[-–—|·(] ?)?(?:the |our |is the |is our )?(${ROLE})`, "g"))) add(m[1]!, m[2]);
+  for (const m of t.matchAll(new RegExp(`(${ROLE})(?: of [A-Z][\\w.]*(?: [A-Z][\\w.]*)?)?(?:,|:| -| –| —)? (${NAME})`, "g"))) add(m[2]!, m[1]);
+  return [...out.values()].slice(0, 8);
 }

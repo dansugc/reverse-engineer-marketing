@@ -1,4 +1,4 @@
-import type { Ctx } from "../context.js";
+import { addContent, type Ctx } from "../context.js";
 import { clip, daysAgo } from "../http.js";
 
 export function adLibraryLinks(brand: string, domain?: string) {
@@ -31,76 +31,124 @@ export async function collectPaid(ctx: Ctx): Promise<void> {
   await Promise.allSettled([metaAds(ctx, brand, links.meta), googleAds(ctx, links.google), linkedinAds(ctx, brand, links.linkedin)]);
 }
 
+/** First image / video in a Meta ad snapshot (incl. carousel cards). */
+export function metaMedia(snap: any): { thumb?: string; video?: string } {
+  const cards: any[] = [snap ?? {}, ...((snap?.cards ?? []) as any[])];
+  let thumb: string | undefined;
+  let video: string | undefined;
+  for (const c of cards) {
+    const v = (c.videos ?? [])[0] ?? c;
+    video ??= v?.video_hd_url ?? v?.video_sd_url ?? undefined;
+    thumb ??= v?.video_preview_image_url ?? c.images?.[0]?.resized_image_url ?? c.images?.[0]?.original_image_url ?? c.resized_image_url ?? c.original_image_url ?? undefined;
+  }
+  return { thumb: thumb || undefined, video: video || undefined };
+}
+
 async function metaAds(ctx: Ctx, brand: string, manual: string): Promise<void> {
   const sc = ctx.sc!;
   const { store, found } = ctx;
   try {
-    const search = await sc.get<any>("/v1/facebook/adLibrary/search/companies", { query: brand });
-    const pages = (search?.searchResults ?? []) as any[];
+    const norm = (s: string) => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
     const ig = found.socials.instagram?.toLowerCase();
     const fb = found.socials.facebook?.toLowerCase();
-    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
-    const page =
-      pages.find(p => ig && p.ig_username?.toLowerCase() === ig) ??
-      pages.find(p => fb && p.page_alias?.toLowerCase() === fb) ??
-      pages.find(p => norm(p.name ?? "") === norm(brand)) ??
-      null;
+    const queries = [...new Set([brand, found.socials.instagram, ctx.target.domain?.split(".")[0]].filter(Boolean) as string[])];
+    let page: any = null;
+    let candidates: any[] = [];
+    for (const q of queries.slice(0, 2)) {
+      const search = await sc.get<any>("/v1/facebook/adLibrary/search/companies", { query: q });
+      candidates = (search?.searchResults ?? []) as any[];
+      page =
+        candidates.find(p => ig && p.ig_username?.toLowerCase() === ig) ??
+        candidates.find(p => fb && (p.page_alias?.toLowerCase() === fb || norm(p.page_alias) === norm(fb))) ??
+        candidates.find(p => norm(p.name) === norm(brand)) ??
+        null;
+      if (page) break;
+    }
     if (!page) {
-      store.unknown({ channel: "paid_meta", reason: `No Meta page matched "${brand}" with confidence (candidates: ${pages.slice(0, 4).map(p => p.name).join(", ") || "none"})`, manualCheck: manual });
+      store.unknown({ channel: "paid_meta", reason: `No Meta page matched "${brand}" with confidence (candidates: ${candidates.slice(0, 4).map(p => p.name).join(", ") || "none"})`, manualCheck: manual });
       return;
     }
-    const first = await sc.get<any>("/v1/facebook/adLibrary/company/ads", { pageId: page.page_id });
-    let ads = (first?.results ?? []) as any[];
-    if (first?.cursor && sc.can(3)) {
-      const more = await sc.get<any>("/v1/facebook/adLibrary/company/ads", { pageId: page.page_id, cursor: first.cursor }).catch(() => null);
-      ads = ads.concat(more?.results ?? []);
-    }
-    const total = Number(first?.searchResultsCount ?? ads.length);
-    const active = ads.filter(a => a.is_active);
-    const formats = tally(ads.map(a => a.snapshot?.display_format));
-    const ctas = tally(ads.map(a => a.snapshot?.cta_text));
-    const platforms = tally(ads.flatMap(a => a.publisher_platform ?? []));
-    const landing = tally(ads.flatMap(a => [a.snapshot?.link_url, ...(a.snapshot?.extra_links ?? [])]).map(landingKey).filter(Boolean) as string[]);
-    const utmCampaigns = tally(ads.flatMap(a => [a.snapshot?.link_url, ...(a.snapshot?.extra_links ?? [])]).map(u => utm(u, "utm_campaign")).filter(Boolean) as string[]);
-    // Long-running active ads are the proven winners — nobody pays for losers for 60+ days.
-    const winners = active
-      .map(a => ({ a, days: a.start_date ? daysAgo(a.start_date) : 0 }))
-      .sort((x, y) => y.days - x.days)
-      .slice(0, 8)
-      .map(({ a, days }) => ({
-        runningDays: days,
-        started: a.start_date_string?.slice(0, 10),
-        format: a.snapshot?.display_format,
-        variants: a.collation_count ?? 1,
-        title: clip(a.snapshot?.title, 140),
-        body: clip(a.snapshot?.body?.text ?? a.snapshot?.cards?.[0]?.body, 400),
-        cta: a.snapshot?.cta_text,
-        landing: a.snapshot?.link_url,
-        hasVideo: Boolean(a.snapshot?.videos?.length || a.snapshot?.cards?.some((c: any) => c.video_hd_url || c.video_sd_url)),
-        url: a.url,
-      }));
-    const newest = [...ads].sort((x, y) => (y.start_date ?? 0) - (x.start_date ?? 0)).slice(0, 5).map(a => ({ started: a.start_date_string?.slice(0, 10), format: a.snapshot?.display_format, title: clip(a.snapshot?.title, 120), body: clip(a.snapshot?.body?.text, 200), url: a.url }));
-    const launchedLast30d = ads.filter(a => a.start_date && daysAgo(a.start_date) <= 30).length;
-    store.add({
+    // status=ALL: paused/finished campaigns are strategy too (the default is ACTIVE only).
+    // Three samples: most-shown ever (the winners), newest, and what's live now.
+    const [winners, all, activeOnly] = await Promise.all([
+      sc.get<any>("/v1/facebook/adLibrary/company/ads", { pageId: page.page_id, status: "ALL", sort_by: "total_impressions" }).catch(() => null),
+      sc.get<any>("/v1/facebook/adLibrary/company/ads", { pageId: page.page_id, status: "ALL" }),
+      sc.get<any>("/v1/facebook/adLibrary/company/ads", { pageId: page.page_id, status: "ACTIVE" }).catch(() => null),
+    ]);
+    // Second page of the full library widens the sample (the first pages often overlap).
+    const page2 = all?.cursor && sc.can(4) ? await sc.get<any>("/v1/facebook/adLibrary/company/ads", { pageId: page.page_id, status: "ALL", cursor: all.cursor }).catch(() => null) : null;
+    const topIds = new Set(((winners?.results ?? []) as any[]).slice(0, 10).map(a => a.ad_archive_id));
+    const seen = new Set<string>();
+    const ads = ([...(winners?.results ?? []), ...(all?.results ?? []), ...(page2?.results ?? []), ...(activeOnly?.results ?? [])] as any[]).filter(a => a?.ad_archive_id && !seen.has(a.ad_archive_id) && seen.add(a.ad_archive_id));
+
+    const total = Number(all?.searchResultsCount ?? ads.length);
+    const activeTotal = Number(activeOnly?.searchResultsCount ?? ads.filter(a => a.is_active).length);
+    const now = Date.now() / 1000;
+    const ranDays = (a: any) => (a.start_date ? Math.max(1, Math.round(((a.is_active || !a.end_date ? now : a.end_date) - a.start_date) / 86_400)) : 0);
+    const links = (a: any) => [a.snapshot?.link_url, ...(a.snapshot?.extra_links ?? [])];
+    const view = (a: any) => ({
+      runningDays: ranDays(a),
+      active: Boolean(a.is_active),
+      started: a.start_date_string?.slice(0, 10),
+      ended: a.is_active ? undefined : a.end_date_string?.slice(0, 10),
+      format: a.snapshot?.display_format,
+      variants: a.collation_count ?? 1,
+      title: clip(a.snapshot?.title ?? a.snapshot?.cards?.[0]?.title, 140),
+      body: clip(a.snapshot?.body?.text ?? a.snapshot?.cards?.[0]?.body, 400),
+      cta: a.snapshot?.cta_text,
+      landing: a.snapshot?.link_url,
+      hasVideo: Boolean(metaMedia(a.snapshot).video),
+      url: a.url,
+    });
+    const lastRan = ads.map(a => (a.is_active ? now : a.end_date ?? 0)).reduce((m, x) => Math.max(m, x), 0);
+    const e = store.add({
       source: "meta_ads",
       kind: "observation",
-      title: `Meta ads: ${total} ads in library (${active.length} active in sample of ${ads.length}), ${launchedLast30d} launched in last 30d`,
+      title: `Meta ads: ${total} ads in library, ${activeTotal} active now${activeTotal === 0 && total ? ` (paused — last ran ${new Date(lastRan * 1000).toISOString().slice(0, 10)})` : ""}, ${ads.filter(a => a.start_date && daysAgo(a.start_date) <= 30).length} launched in last 30d (sample of ${ads.length})`,
       url: `https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=${page.page_id}`,
       data: {
         page: { id: page.page_id, name: page.name, likes: page.likes, igUsername: page.ig_username, igFollowers: page.ig_followers },
         totalInLibrary: total,
+        activeNow: activeTotal,
         sampled: ads.length,
-        activeInSample: active.length,
-        launchedLast30d,
-        formats,
-        ctas,
-        platforms,
-        landingPages: landing,
-        utmCampaigns,
-        longestRunningActive: winners,
-        newest,
+        activeInSample: ads.filter(a => a.is_active).length,
+        lastRan: lastRan ? new Date(lastRan * 1000).toISOString().slice(0, 10) : null,
+        launchedLast30d: ads.filter(a => a.start_date && daysAgo(a.start_date) <= 30).length,
+        formats: tally(ads.map(a => a.snapshot?.display_format)),
+        ctas: tally(ads.map(a => a.snapshot?.cta_text)),
+        platforms: tally(ads.flatMap(a => a.publisher_platform ?? [])),
+        landingPages: tally(ads.flatMap(links).map(landingKey).filter(Boolean) as string[]),
+        utmCampaigns: tally(ads.flatMap(links).map(u => utm(u, "utm_campaign")).filter(Boolean) as string[]),
+        // Ads that ran longest (active or paused) are the proven winners.
+        longestRunning: [...ads].sort((x, y) => ranDays(y) - ranDays(x)).slice(0, 8).map(view),
+        longestRunningActive: ads.filter(a => a.is_active).sort((x, y) => ranDays(y) - ranDays(x)).slice(0, 5).map(view),
+        mostShown: ((winners?.results ?? []) as any[]).slice(0, 8).map(view),
+        newest: [...ads].sort((x, y) => (y.start_date ?? 0) - (x.start_date ?? 0)).slice(0, 5).map(view),
       },
     });
+    addContent(
+      ctx,
+      ads.map(a => {
+        const v = view(a);
+        const m = metaMedia(a.snapshot);
+        return {
+          id: `meta:${a.ad_archive_id}`,
+          platform: "meta_ads" as const,
+          kind: "ad" as const,
+          url: a.url ?? `https://www.facebook.com/ads/library/?id=${a.ad_archive_id}`,
+          title: v.title || undefined,
+          text: v.body || undefined,
+          thumb: m.thumb,
+          video: m.video,
+          author: a.page_name,
+          date: v.started,
+          status: a.is_active ? ("active" as const) : ("inactive" as const),
+          metrics: { runningDays: v.runningDays, variants: v.variants },
+          tags: [topIds.has(a.ad_archive_id) ? "top by impressions" : "", v.runningDays >= 60 ? "proven (60d+)" : "", v.format, v.cta].filter(Boolean) as string[],
+        };
+      }),
+      e.id,
+    );
   } catch (err) {
     store.unknown({ channel: "paid_meta", reason: errMsg(err), manualCheck: manual });
   }
@@ -122,7 +170,7 @@ async function googleAds(ctx: Ctx, manual: string): Promise<void> {
     const advertisers = tally(ads.map(a => a.advertiserName));
     const lastShown = ads.map(a => Date.parse(a.lastShown)).filter(Number.isFinite);
     const recent = lastShown.filter(t => Date.now() - t < 30 * 86_400_000).length;
-    store.add({
+    const ge = store.add({
       source: "google_ads",
       kind: "observation",
       title: `Google ads: ~${res?.number_of_ads_estimate ?? ads.length} ads pointing at ${domain} (${recent} shown in last 30d), formats ${Object.keys(tally(ads.map(a => a.format))).join("/") || "n/a"}`,
@@ -137,6 +185,7 @@ async function googleAds(ctx: Ctx, manual: string): Promise<void> {
         sample: ads.slice(0, 8).map(a => ({ advertiser: a.advertiserName, format: a.format, firstShown: a.firstShown?.slice(0, 10), lastShown: a.lastShown?.slice(0, 10), url: a.adUrl, image: a.imageUrl })),
       },
     });
+    addContent(ctx, ads.map(a => ({ id: `google:${a.creativeId}`, platform: "google_ads" as const, kind: "ad" as const, url: a.adUrl, title: `${a.format ?? "ad"} by ${a.advertiserName ?? "?"}`, thumb: a.imageUrl, author: a.advertiserName, date: a.firstShown?.slice(0, 10), status: Date.now() - Date.parse(a.lastShown) < 30 * 86_400_000 ? ("active" as const) : ("inactive" as const), tags: [a.format].filter(Boolean) })), ge.id);
   } catch (err) {
     store.unknown({ channel: "paid_google", reason: errMsg(err), manualCheck: manual });
   }
@@ -155,7 +204,7 @@ async function linkedinAds(ctx: Ctx, brand: string, manual: string): Promise<voi
       store.add({ source: "linkedin_ads", kind: "observation", title: `LinkedIn ads: none found for advertiser "${brand}"`, url: manual, data: { otherAdvertisersMatched: Object.keys(tally(all.map(a => a.advertiser))).slice(0, 8) } });
       return;
     }
-    store.add({
+    const le = store.add({
       source: "linkedin_ads",
       kind: "observation",
       title: `LinkedIn ads: ${ads.length} ads by ${ads[0].advertiser} in first page (${res?.totalAds ?? "?"} fuzzy matches)`,
@@ -166,6 +215,7 @@ async function linkedinAds(ctx: Ctx, brand: string, manual: string): Promise<voi
         sample: ads.slice(0, 8).map(a => ({ headline: clip(a.headline, 140), body: clip(a.description, 300), type: a.adType, cta: a.cta, url: a.url, impressions: a.totalImpressions, targeting: a.targeting })),
       },
     });
+    addContent(ctx, ads.map(a => ({ id: `liad:${a.id}`, platform: "linkedin_ads" as const, kind: "ad" as const, url: a.url, title: clip(a.headline, 140) || undefined, text: clip(a.description, 500) || undefined, thumb: a.image ?? a.imageSources?.[0] ?? a.thumbnailSources?.[0], video: a.videoSources?.[0], author: a.advertiser, date: a.startDate ?? undefined, tags: [a.adType, a.cta].filter(Boolean) })), le.id);
   } catch (err) {
     store.unknown({ channel: "paid_linkedin", reason: errMsg(err), manualCheck: manual });
   }

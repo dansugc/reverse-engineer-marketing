@@ -1,10 +1,12 @@
 import { scorecard, type ChannelScore } from "./analyze/scorecard.js";
 import { runSource, skip, type Ctx } from "./context.js";
-import { EvidenceStore, type Evidence, type SourceRun, type Unknown } from "./evidence.js";
+import { EvidenceStore, type ContentItem, type Evidence, type SourceRun, type Unknown } from "./evidence.js";
 import { loadHarness } from "./harness.js";
 import { collectAppStore, collectHackerNews, collectWayback } from "./sources/free.js";
 import { collectPaid } from "./sources/paid.js";
-import { collectCommunity, collectFounders } from "./sources/people.js";
+import type { LogoCandidate } from "./sources/html.js";
+import { rankLogos } from "./sources/identity.js";
+import { collectCommunity, collectFounders, mergeFounders, type Founder } from "./sources/people.js";
 import { scrapeCreatorsFromEnv } from "./sources/scrapecreators.js";
 import { collectSeo } from "./sources/seo.js";
 import { collectSocial } from "./sources/social.js";
@@ -49,6 +51,10 @@ export interface EvidenceBundle {
   unknowns: Unknown[];
   sources: SourceRun[];
   credits: { scrapecreators: number | null };
+  /** Posts, videos, ads and threads to review (not sent to the LLM). */
+  content: ContentItem[];
+  /** Brand logo (best first, UI falls through on load errors) and ranked founders. */
+  identity: { logo?: string; logos: LogoCandidate[]; founders: Founder[] };
 }
 
 export const VERSION = "0.1.0";
@@ -56,9 +62,9 @@ export const VERSION = "0.1.0";
 export async function reverseEngineer(input: string, opts: RunOptions = {}): Promise<EvidenceBundle> {
   const target = parseTarget(input);
   const store = new EvidenceStore();
-  const sc = scrapeCreatorsFromEnv(opts.maxCredits ?? Number(process.env.REM_MAX_CREDITS ?? 40));
+  const sc = scrapeCreatorsFromEnv(opts.maxCredits ?? Number(process.env.REM_MAX_CREDITS ?? 50));
   const log = opts.log ?? (() => {});
-  const ctx: Ctx = { target, store, sc, log, found: { socials: { ...opts.handles }, people: [], appStoreIds: [], playIds: [] } };
+  const ctx: Ctx = { target, store, sc, log, content: [], found: { socials: { ...opts.handles }, people: [], appStoreIds: [], playIds: [], logos: [], founderHints: [] } };
   const want = (a: Area) => !opts.only?.length || opts.only.includes(a);
   const stage = opts.onStage ?? (() => {});
   const timed = async (name: "website" | Area, labels: string[], fn: () => Promise<void>) => {
@@ -99,6 +105,7 @@ export async function reverseEngineer(input: string, opts: RunOptions = {}): Pro
   );
 
   const harness = loadHarness();
+  const logos = rankLogos(ctx.found.logos, target.domain);
   return {
     tool: { name: "reverse-engineer-marketing", version: VERSION },
     harness: { version: harness.version, sha: harness.sha },
@@ -111,6 +118,12 @@ export async function reverseEngineer(input: string, opts: RunOptions = {}): Pro
     unknowns: store.unknowns,
     sources: store.runs,
     credits: { scrapecreators: sc ? sc.spent : null },
+    content: ctx.content,
+    identity: {
+      logo: logos[0]?.url,
+      logos,
+      founders: (store.bySource("founders")[0]?.data as Founder[] | undefined) ?? mergeFounders(ctx.found.founderHints),
+    },
   };
 }
 

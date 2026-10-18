@@ -52,6 +52,7 @@ export interface RunSummary {
   at: string;
   evidence: number;
   hasReport: boolean;
+  logo?: string;
 }
 
 export async function listRuns(limit = 50): Promise<RunSummary[]> {
@@ -69,7 +70,7 @@ export async function listRuns(limit = 50): Promise<RunSummary[]> {
     try {
       const b = JSON.parse(await readFile(join(RUNS_DIR, f), "utf8")) as EvidenceBundle;
       const hasReport = await stat(join(RUNS_DIR, `${id}.md`)).then(() => true, () => false);
-      out.push({ id, brand: b.brand, domain: b.target.domain, at: b.generatedAt, evidence: b.evidence.length, hasReport });
+      out.push({ id, brand: b.brand, domain: b.target.domain, at: b.generatedAt, evidence: b.evidence.length, hasReport, logo: b.identity?.logo });
     } catch {
       // skip unreadable
     }

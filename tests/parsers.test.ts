@@ -144,3 +144,48 @@ describe("scorecard + validator", () => {
     expect(v.checks.find(c => c.name === "no invented spend")?.ok).toBe(false);
   });
 });
+
+describe("identity", () => {
+  it("extracts founder names from prose and rejects non-names", async () => {
+    const { extractFounderNames, looksLikeName } = await import("../src/sources/html.js");
+    expect(extractFounderNames("Cal AI was founded by Zach Yadegari, Henry Langmack and Blake Anderson in 2024.", "Cal AI").map(f => f.name)).toEqual(["Zach Yadegari", "Henry Langmack", "Blake Anderson"]);
+    expect(extractFounderNames("Ivan Zhao, Co-founder & CEO. Read More", "Notion")).toEqual([{ name: "Ivan Zhao", role: "Co-founder & CEO" }]);
+    expect(looksLikeName("Our Team")).toBe(false);
+    expect(looksLikeName("Cal AI", "Cal AI")).toBe(false);
+  });
+  it("reads logos and JSON-LD founders", () => {
+    const f = pageFacts(
+      `<head><link rel="apple-touch-icon" sizes="180x180" href="/apple.png"><link rel="icon" href="/favicon.ico"><meta property="og:image" content="https://a.com/og.png">
+       <script type="application/ld+json">{"@type":"Organization","logo":"https://a.com/logo.png","founder":[{"@type":"Person","name":"Jane Doe"}]}</script></head><body></body>`,
+      "https://a.com",
+    );
+    expect(f.logos.map(l => l.source)).toEqual(expect.arrayContaining(["apple-touch-icon", "icon", "og-image", "jsonld"]));
+    expect(f.jsonLdFounders).toEqual([{ name: "Jane Doe", role: "Founder", url: undefined }]);
+  });
+  it("ranks square marks above banners and merges founder sources", async () => {
+    const { rankLogos } = await import("../src/sources/identity.js");
+    const { mergeFounders } = await import("../src/sources/people.js");
+    const ranked = rankLogos([{ url: "og", source: "og-image" }, { url: "touch", source: "apple-touch-icon", size: 180 }, { url: "li", source: "linkedin" }], "a.com");
+    expect(ranked.map(l => l.source)).toEqual(["apple-touch-icon", "linkedin", "og-image", "favicon"]);
+    const merged = mergeFounders([
+      { name: "Zach Yadegari", source: "google_snippet", role: "Founder" },
+      { name: "Zach Yadegari", source: "linkedin_search", role: "Co-Founder & CEO", linkedin: "https://linkedin.com/in/z" },
+      { name: "Some Person", source: "website_text" },
+    ]);
+    expect(merged[0]).toMatchObject({ name: "Zach Yadegari", role: "Co-Founder & CEO", confidence: "high", linkedin: "https://linkedin.com/in/z" });
+    expect(merged[1]?.confidence).toBe("low");
+  });
+});
+
+describe("reddit", () => {
+  it("matches the brand on word boundaries and flags affiliated posts", async () => {
+    const { mentions, classifyPost } = await import("../src/sources/reddit.js");
+    expect(mentions("I tried Cal AI for a month", "Cal AI")).toBe(true);
+    expect(mentions("local airport delays", "Cal AI")).toBe(false);
+    expect(mentions("check calai.app", "Cal AI", "calai.app")).toBe(true);
+    const p = classifyPost({ id: "1", subreddit: "SideProject", title: "I built Cal AI, an app that counts calories from a photo", selftext: "", author: "zach", score: 40, num_comments: 12, url: "https://reddit.com/r/x/1" }, "Cal AI");
+    expect(p).toMatchObject({ selfPromo: true, affiliated: true });
+    expect(classifyPost({ id: "2", subreddit: "x", title: "MyFitnessPal vs Cal AI?", selftext: "", author: "u", url: "u" }, "Cal AI")).toMatchObject({ comparison: true, affiliated: false });
+    expect(classifyPost({ id: "3", subreddit: "x", title: "unrelated", selftext: "", author: "u", url: "u" }, "Cal AI")).toBeNull();
+  });
+});

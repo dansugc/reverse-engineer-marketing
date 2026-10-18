@@ -31,7 +31,7 @@ That works with **no API keys**: website, tracking pixels (including pixels hidd
 Add keys to unlock the rest:
 
 ```bash
-export SCRAPECREATORS_API_KEY=...   # ad libraries, social stats, founders, Reddit (~20–40 credits per run)
+export SCRAPECREATORS_API_KEY=...   # ad libraries, social stats, founders, Reddit (~25–50 credits per run)
 export ANTHROPIC_API_KEY=...        # the written strategy report (Claude)
 npx reverse-engineer-marketing calai.app
 ```
@@ -56,6 +56,8 @@ npx reverse-engineer-marketing web
 
 Opens a local web app at `http://localhost:4321`. Paste a link, pick who writes the report, and watch the evidence come in and the playbook stream out. Every `E12` citation opens the raw evidence behind it.
 
+The **Posts & ads** tab is a review library of everything collected: Meta ads (active *and* paused, with creatives, inline video, run length, variants, top-by-impressions), Google and LinkedIn ads, TikTok and Instagram videos, YouTube, X and LinkedIn posts (company and founders), and Reddit threads and brand/founder replies. Filter by platform, sort by top / newest / longest running, open any original. The rail shows the brand logo and the founders with photos, roles, LinkedIn/X audience and a confidence badge.
+
 | Report writer | How it runs | Cost |
 |---|---|---|
 | **Claude Code** | your installed `claude` CLI, headless, no tools | your Claude subscription |
@@ -69,14 +71,16 @@ Subscription engines run the CLI you're already logged into. REM strips `ANTHROP
 
 | Area | What REM pulls | Needs a key? |
 |---|---|---|
-| **Paid: Meta** | Ads in library, active count, ads launched in the last 30 days, **longest-running active ads (the proven winners)** with hooks, formats, CTAs, landing pages, UTM campaign names, variant counts | Scrape Creators |
+| **Paid: Meta** | All ads incl. paused campaigns, active count, most-shown ads, ads launched in the last 30 days, **longest-running active ads (the proven winners)** with hooks, formats, CTAs, landing pages, UTM campaign names, variant counts | Scrape Creators |
 | **Paid: Google** | Ads pointing at the domain, formats, recency, and **other advertisers bidding on the brand** (affiliates/resellers) | Scrape Creators |
 | **Paid: LinkedIn** | Ads by the company, ad types, headlines, CTAs | Scrape Creators |
 | **Pixels & stack** | Meta/Google/TikTok/LinkedIn/Reddit/X/Pinterest/Snap pixels with IDs, **including inside GTM containers**; attribution SDKs (AppsFlyer, Adjust, Branch); affiliate tools; email/CRM; visitor-ID tools (RB2B, Warmly, Koala, Clearbit) that reveal an outbound motion; A/B testing | Free |
 | **Organic social** | TikTok, Instagram, YouTube, X, LinkedIn: followers, posts/week, median reach, top posts and hooks, spark ads, days since last post. Finds TikTok even when the site doesn't link it | Scrape Creators |
 | **SEO** | Sitemap size and folders, **programmatic page families** (`/integrations/{app}`, `/{a}-vs-{b}`, `/templates/…`), comparison/alternatives pages, content cadence, locales, top Google results | Free (+1 credit) |
 | **AI search (GEO)** | llms.txt, which AI crawlers are blocked or allowed | Free |
-| **Founders** | Founders/leaders, LinkedIn and X audience, whether they post, what they post about | Scrape Creators |
+| **Founders** | Names from Wikidata, the site's JSON-LD and about page (free), plus LinkedIn and Google search; ranked by confidence; LinkedIn/X audience, photo, recent posts | Free names; enrichment Scrape Creators |
+| **Reddit marketing** | Brand/founder posts and replies, owned subreddit activity, comparison and "what should I use" threads, organic recommendations, Reddit threads ranking on Google | Scrape Creators |
+| **Brand logo** | apple-touch-icon, LinkedIn logo, App Store icon, JSON-LD, Wikidata, Instagram avatar (best first, with fallbacks) | Free |
 | **Community & launches** | Reddit threads and subreddits, Hacker News launches and points, Product Hunt | HN free; rest Scrape Creators |
 | **Funnel & monetization** | Positioning, CTAs, pricing model, free plan/trial, per-seat/usage, sales-led signals, affiliate program and commission, social proof | Free |
 | **Apps** | App Store ratings (download proxy), release age, update cadence, Play installs | Free |
@@ -145,7 +149,7 @@ link ──► website scan ──► discovers socials, apps, people, brand
 
 **The harness is a versioned file bundle** ([`harness/`](harness)): analyst role, guardrails, report template, a cue → lesson library, and one playbook per channel. Every report records the harness version and SHA. Change a playbook, run `npm run eval`, and compare scores. Recorded evidence bundles in `evals/fixtures/` let you iterate on the prompt without re-scraping.
 
-**Cost per full run:** about 20–40 Scrape Creators credits plus one Claude call (default `claude-opus-5`, override with `REM_MODEL`). Scrape Creators responses are cached for 24h in `~/.cache/reverse-engineer-marketing` so agents can re-run without paying twice.
+**Cost per full run:** about 25–50 Scrape Creators credits plus one Claude call (default `claude-opus-5`, override with `REM_MODEL`). Scrape Creators responses are cached for 24h in `~/.cache/reverse-engineer-marketing` so agents can re-run without paying twice.
 
 ## Limits (honest)
 

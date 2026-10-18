@@ -23,7 +23,8 @@ export type SourceName =
   | "founders"
   | "reddit"
   | "hackernews"
-  | "producthunt";
+  | "producthunt"
+  | "wikidata";
 
 export type Channel =
   | "paid_meta"
@@ -39,6 +40,7 @@ export type Channel =
   | "seo"
   | "geo"
   | "founder_led"
+  | "reddit_marketing"
   | "community"
   | "launches"
   | "app_store"
@@ -60,6 +62,7 @@ export const CHANNELS: Channel[] = [
   "seo",
   "geo",
   "founder_led",
+  "reddit_marketing",
   "community",
   "launches",
   "app_store",
@@ -117,4 +120,22 @@ export class EvidenceStore {
   find(source: SourceName, titlePrefix: string): Evidence | undefined {
     return this.items.find(e => e.source === source && e.title.startsWith(titlePrefix));
   }
+}
+
+/** A concrete post / video / ad / thread for humans to review (web Content tab, MCP get_content). Not sent to the LLM. */
+export interface ContentItem {
+  id: string;
+  platform: "meta_ads" | "google_ads" | "linkedin_ads" | "tiktok" | "instagram" | "youtube" | "x" | "linkedin" | "reddit";
+  kind: "ad" | "video" | "post" | "thread" | "comment";
+  url: string;
+  title?: string;
+  text?: string;
+  thumb?: string;
+  video?: string;
+  author?: string;
+  date?: string;
+  status?: "active" | "inactive";
+  metrics?: { views?: number; likes?: number; comments?: number; shares?: number; score?: number; runningDays?: number; variants?: number };
+  tags?: string[];
+  evidence?: string;
 }

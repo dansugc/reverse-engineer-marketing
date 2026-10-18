@@ -25,10 +25,13 @@ Per platform: cadence, reach, formats, the hooks that win (quote top posts), whe
 Site size, programmatic page families and their templates, content cadence, money pages (top Google results), comparison/alternative pages, AI-crawler stance and llms.txt.
 
 ## Founders & people
-Who the founders are, their audience size, whether they post, what they post about, and how that feeds the company.
+Who the founders are (name, role, confidence and where the name came from), their audience size, whether they post, what they post about, and how that feeds the company. Never present a low-confidence name as fact.
+
+## Reddit
+Is Reddit worked on purpose? Brand/founder posts and replies (quote them, name subreddits), owned subreddit and its activity, comparison and "what should I use" threads they appear in, organic recommendations, Reddit threads ranking on Google, Reddit pixel, sentiment.
 
 ## Community & launches
-Reddit footprint (and sentiment if visible), HN / Product Hunt launches, owned communities.
+HN / Product Hunt launches, owned communities (Discord, Slack), ambassador programs.
 
 ## Funnel & monetization
 Pricing model, entry offer, trial/free plan, sales-led vs self-serve, lifecycle/email stack, affiliate/referral program and terms, social proof used.

@@ -1,4 +1,5 @@
-import type { EvidenceStore } from "./evidence.js";
+import type { ContentItem, EvidenceStore } from "./evidence.js";
+import type { LogoCandidate } from "./sources/html.js";
 import type { ScrapeCreators } from "./sources/scrapecreators.js";
 import type { Target } from "./target.js";
 
@@ -11,6 +12,19 @@ export interface Discovered {
   playIds: string[];
   /** Brand name as the company writes it (og:site_name / JSON-LD / title). */
   brandName?: string;
+  logos: LogoCandidate[];
+  founderHints: FounderHint[];
+}
+
+/** A founder/leader name seen somewhere; merged and ranked in people.ts. */
+export interface FounderHint {
+  name: string;
+  role?: string;
+  source: "wikidata" | "jsonld" | "website_text" | "google_snippet" | "linkedin_search" | "site_link" | "appstore_seller";
+  url?: string;
+  linkedin?: string;
+  x?: string;
+  photo?: string;
 }
 
 export interface Ctx {
@@ -18,7 +32,16 @@ export interface Ctx {
   store: EvidenceStore;
   sc: ScrapeCreators | null;
   found: Discovered;
+  content: ContentItem[];
   log: (msg: string) => void;
+}
+
+/** Attach items to the evidence that summarizes them, dropping duplicates. */
+export function addContent(ctx: Ctx, items: ContentItem[], evidenceId?: string): void {
+  for (const it of items) {
+    if (!it.url || ctx.content.some(c => c.id === it.id)) continue;
+    ctx.content.push({ ...it, evidence: evidenceId });
+  }
 }
 
 export type Collector = (ctx: Ctx) => Promise<void>;

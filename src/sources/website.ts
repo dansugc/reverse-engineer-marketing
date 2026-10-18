@@ -1,7 +1,7 @@
 import type { Ctx } from "../context.js";
 import { clip, fetchText } from "../http.js";
 import { brandFromDomain } from "../target.js";
-import { extractAppIds, extractPeople, extractSocials, extractUtms, pageFacts, pickKeyPages, pricingSignals, visibleText } from "./html.js";
+import { extractAppIds, extractFounderNames, extractPeople, extractSocials, extractUtms, pageFacts, pickKeyPages, pricingSignals, visibleText } from "./html.js";
 import { detectTags, mergeTags, type DetectedTag } from "./tracking.js";
 
 const PROOF = [
@@ -32,8 +32,15 @@ export async function collectWebsite(ctx: Ctx): Promise<void> {
 
   // Brand name: og:site_name > JSON-LD Organization name > first title segment.
   const titleBrand = facts.title.split(/\s[|–—:-]\s/)[0]?.trim();
-  ctx.found.brandName = facts.siteName || (titleBrand && titleBrand.length <= 30 ? titleBrand : undefined) || target.brand || brandFromDomain(target.domain!);
+  // The way the site itself writes the domain label ("DansUGC", not "Dansugc") beats our guess.
+  const label = target.domain!.split(".")[0]!;
+  const written = `${facts.title} ${facts.siteName ?? ""} ${facts.description} ${text.slice(0, 4000)}`.match(new RegExp(`(?<![A-Za-z0-9])${label.replace(/[^a-z0-9-]/gi, "")}(?![A-Za-z0-9])`, "i"))?.[0];
+  ctx.found.brandName = facts.siteName || (titleBrand && titleBrand.length <= 30 ? titleBrand : undefined) || (written && /[A-Z]/.test(written) ? written : undefined) || target.brand || brandFromDomain(target.domain!);
   target.brand = ctx.found.brandName;
+
+  ctx.found.logos.push(...facts.logos);
+  for (const f of facts.jsonLdFounders) ctx.found.founderHints.push({ name: f.name, role: f.role, source: "jsonld", url: finalUrl, linkedin: f.url?.includes("linkedin.com/in/") ? f.url : undefined });
+  for (const f of extractFounderNames(text, ctx.found.brandName)) ctx.found.founderHints.push({ ...f, source: "website_text", url: finalUrl });
 
   const allLinks = [...facts.links, ...facts.sameAs];
   ctx.found.socials = { ...extractSocials(allLinks), ...ctx.found.socials };
@@ -101,6 +108,8 @@ export async function collectWebsite(ctx: Ctx): Promise<void> {
     if (kind === "pricing") pricingText = body;
     if (kind === "about") {
       ctx.found.people = [...new Set([...ctx.found.people, ...extractPeople(pf.links)])];
+      for (const f of pf.jsonLdFounders) ctx.found.founderHints.push({ name: f.name, role: f.role, source: "jsonld", url: p.value.finalUrl });
+      for (const f of extractFounderNames(body, ctx.found.brandName)) ctx.found.founderHints.push({ ...f, source: "website_text", url: p.value.finalUrl });
       store.add({ source: "website", kind: "observation", title: "About/team page", url: p.value.finalUrl, data: { h1: pf.h1, h2: pf.h2, excerpt: clip(body, 1200), linkedinPeople: extractPeople(pf.links) } });
     }
     if (kind === "affiliate")

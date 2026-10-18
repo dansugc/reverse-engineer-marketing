@@ -20,7 +20,7 @@ If the `reverse_engineer_marketing` tool is available, use it. If not:
 
 ## Workflow
 
-1. `reverse_engineer_marketing({ url })`. One call collects everything (~20–40s, ~20–40 Scrape Creators credits). If you already know a handle the site doesn't link, pass `handles: { tiktok: "…" }`.
+1. `reverse_engineer_marketing({ url })`. One call collects everything (~20–40s, ~25–50 Scrape Creators credits). If you already know a handle the site doesn't link, pass `handles: { tiktok: "…" }`.
 2. Read the returned scorecard and evidence index. The scorecard is deterministic: don't contradict it, explain it.
 3. `get_playbook()` once for the analyst role, evidence rules, report template and lesson library. Pull a channel playbook (`paid-meta`, `seo-geo`, `organic-short-form`, `founder-led`, …) when that channel matters.
 4. `get_evidence({ run_id, ids })` for the items you'll quote: Meta longest-running ads, top TikTok/IG/X posts, sitemap families, founders, pricing.
@@ -33,5 +33,6 @@ If the `reverse_engineer_marketing` tool is available, use it. If not:
 - A pixel means intent or past use. Only the ad library confirms current ads.
 - No dollar spend figures unless a source states them; use spend proxies (active ads, ad longevity, launch rate).
 - Ads running 60+ days are the proven winners. Lead with them and quote their hooks exactly.
-- Search-based matches (founders, TikTok handle, Product Hunt) can be wrong; say so when a match is weak.
+- Founders carry a confidence (high = Wikidata/JSON-LD or two sources). Never state a low-confidence name as fact. Search-based matches (TikTok handle, Product Hunt) can be wrong too.
+- Reddit affiliation ("brand/founder posts") is inferred from usernames and "I'm the founder"-style phrases; say "likely".
 - Finish with "Steal this playbook": 5–10 concrete steps with numbers, each tied to evidence.

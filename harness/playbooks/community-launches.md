@@ -1,6 +1,6 @@
 # Playbook: Community and launches
 
-- **Reddit:** how many threads mention the domain, which subreddits, top-scoring threads (titles reveal sentiment: "why so much X hate", "X vs Y", "is X worth it"). Founders replying in threads = community-led growth.
+- **Reddit:** see the Reddit playbook.
 - **Owned community:** subreddit, Discord, Slack, forum linked from the site.
 - **Hacker News:** Show HN launches and points. 100+ points = meaningful developer/tech audience spike.
 - **Product Hunt:** product page / badge on site = launch playbook.

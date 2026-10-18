@@ -2,7 +2,7 @@
 // citation resolves, the required sections exist, and the playbook is grounded.
 import type { EvidenceBundle } from "../index.js";
 
-const REQUIRED = ["TL;DR", "Channel scorecard", "The engine", "Paid", "Organic social", "SEO", "Founders", "Funnel", "Steal this playbook", "Unknowns"];
+const REQUIRED = ["TL;DR", "Channel scorecard", "The engine", "Paid", "Organic social", "SEO", "Founders", "Reddit", "Funnel", "Steal this playbook", "Unknowns"];
 
 export interface ValidationResult {
   ok: boolean;

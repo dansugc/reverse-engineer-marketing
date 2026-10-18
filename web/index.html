@@ -132,7 +132,7 @@ h1 { font-size: clamp(32px, 6vw, 52px); line-height: 1.04; letter-spacing: -1.6p
   transition: background .12s var(--ease);
 }
 .recent a:hover { background: var(--surface-2); }
-.recent .favicon { width: 20px; height: 20px; border-radius: 5px; background: var(--surface-2); flex: none; }
+.recent .favicon { width: 22px; height: 22px; border-radius: 6px; background: var(--surface-2); flex: none; object-fit: contain; }
 .recent .when { margin-left: auto; color: var(--faint); font-size: 13px; }
 .recent .tag { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; }
 
@@ -141,7 +141,7 @@ h1 { font-size: clamp(32px, 6vw, 52px); line-height: 1.04; letter-spacing: -1.6p
 .rail { position: sticky; top: 84px; align-self: start; display: grid; gap: 16px; max-height: calc(100vh - 100px); overflow: auto; padding-bottom: 8px; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand img { width: 36px; height: 36px; border-radius: 9px; background: var(--surface-2); }
+
 .brand h2 { margin: 0; font-size: 18px; letter-spacing: -.4px; }
 .brand p { margin: 0; color: var(--muted); font-size: 13px; }
 .stages { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
@@ -165,6 +165,19 @@ h1 { font-size: clamp(32px, 6vw, 52px); line-height: 1.04; letter-spacing: -1.6p
 .bars { display: inline-flex; gap: 3px; }
 .bars i { width: 14px; height: 6px; border-radius: 3px; background: var(--border); }
 .bars i.on { background: var(--accent); }
+.logo-img { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); object-fit: contain; flex: none; border: 1px solid var(--border); }
+.logo-fallback { width: 40px; height: 40px; border-radius: 10px; flex: none; display: grid; place-items: center; font-weight: 700; background: var(--accent-soft); color: var(--accent); }
+.founders { display: grid; gap: 10px; }
+.founder { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; }
+.founder img, .founder .initials { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; background: var(--surface-2); }
+.founder .initials { display: grid; place-items: center; font-size: 12px; font-weight: 650; color: var(--muted); }
+.founder b { font-weight: 600; font-size: 13.5px; }
+.founder .role { color: var(--muted); font-size: 12px; line-height: 1.35; }
+.founder .links { display: flex; gap: 8px; font-size: 12px; margin-top: 2px; color: var(--faint); }
+.founder .links a { color: var(--muted); text-decoration: none; }
+.founder .links a:hover { color: var(--accent); }
+.conf { font-size: 10.5px; border: 1px solid var(--border); border-radius: 5px; padding: 0 4px; margin-left: 4px; color: var(--faint); vertical-align: 1px; }
+.conf.high { color: var(--ok); }
 .meta-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
 .meta-row b { color: var(--text); font-weight: 600; }
 
@@ -213,6 +226,48 @@ h1 { font-size: clamp(32px, 6vw, 52px); line-height: 1.04; letter-spacing: -1.6p
 .cite:hover { transform: translateY(-1px); }
 .caret::after { content: ""; display: inline-block; width: 8px; height: 16px; background: var(--accent); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+
+/* Tabs + content library */
+.tabs { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); }
+.tabs button { height: 28px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; cursor: pointer; font-size: 13px; font-weight: 550; color: var(--muted); transition: background .15s var(--ease), color .15s var(--ease); }
+.tabs button[aria-selected="true"] { background: var(--text); color: var(--bg); }
+.tabs .n { font-weight: 450; opacity: .7; margin-left: 4px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 14px; }
+.chip { height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; transition: all .15s var(--ease); }
+.chip:hover { color: var(--text); }
+.chip[aria-pressed="true"] { border-color: var(--text); color: var(--text); background: var(--surface-2); }
+.chip .sw { width: 8px; height: 8px; border-radius: 2px; }
+.sort { margin-left: auto; height: 28px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); padding: 0 8px; font-size: 12.5px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.item { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; display: flex; flex-direction: column; transition: transform .15s var(--ease), box-shadow .15s var(--ease); }
+.item:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.media { position: relative; aspect-ratio: 4 / 5; background: var(--surface-2); overflow: hidden; }
+.media.wide { aspect-ratio: 16 / 9; }
+.media img, .media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media video { object-fit: contain; background: #000; }
+.play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; background: linear-gradient(transparent 55%, rgba(0,0,0,.35)); cursor: pointer; }
+.play span { width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; color: #111; font-size: 16px; padding-left: 3px; box-shadow: 0 4px 16px rgba(0,0,0,.25); transition: transform .15s var(--ease); }
+.play:hover span { transform: scale(1.08); }
+.media .ph { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--faint); }
+.item .body { padding: 11px 12px 12px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.item .top { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+.plat { font-weight: 650; display: inline-flex; align-items: center; gap: 5px; }
+.plat i { width: 7px; height: 7px; border-radius: 2px; display: inline-block; }
+.state { margin-left: auto; font-size: 10.5px; font-weight: 600; padding: 1px 6px; border-radius: 5px; }
+.state.active { color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, transparent); }
+.state.inactive { color: var(--faint); background: var(--surface-2); }
+.item h4 { margin: 0; font-size: 13.5px; line-height: 1.35; font-weight: 600; }
+.item p { margin: 0; font-size: 13px; line-height: 1.45; color: color-mix(in srgb, var(--text) 85%, var(--muted)); display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; }
+.item.textonly p { -webkit-line-clamp: 9; }
+.stats { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; color: var(--muted); }
+.stats b { color: var(--text); font-weight: 600; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tags span { font-size: 10.5px; padding: 1px 6px; border-radius: 5px; background: var(--surface-2); color: var(--muted); }
+.tags span.hot { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.item .foot { margin-top: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--faint); }
+.item .foot a { margin-left: auto; color: var(--text); text-decoration: none; font-weight: 550; }
+.item .foot a:hover { color: var(--accent); }
+.empty { padding: 40px; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: var(--radius); }
 
 /* Drawer */
 .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.25); opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); z-index: 40; }
@@ -291,7 +346,11 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
 <main id="runView" class="run" hidden>
   <aside class="rail">
     <div class="card">
-      <div class="brand"><img id="favicon" alt=""><div><h2 id="brand">…</h2><p id="domain"></p></div></div>
+      <div class="brand"><span id="logoSlot"></span><div><h2 id="brand">…</h2><p id="domain"></p></div></div>
+    </div>
+    <div class="card" id="foundersCard" hidden>
+      <p class="label">Founders</p>
+      <div class="founders" id="founders"></div>
     </div>
     <div class="card">
       <p class="label">Progress</p>
@@ -310,6 +369,10 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
   </aside>
   <section class="main">
     <div class="toolbar">
+      <div class="tabs" role="tablist" id="tabs" hidden>
+        <button role="tab" data-tab="report" aria-selected="true">Report</button>
+        <button role="tab" data-tab="content" aria-selected="false">Posts &amp; ads<span class="n" id="contentCount"></span></button>
+      </div>
       <span class="status" id="status"></span>
       <span class="spacer" style="flex:1"></span>
       <span id="valBadge"></span>
@@ -321,6 +384,10 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
     <div class="error" id="error" hidden></div>
     <div class="log" id="log" hidden></div>
     <article class="report" id="report" hidden></article>
+    <section id="contentView" hidden>
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </section>
     <div class="skeleton" id="skeleton"><i style="width:60%"></i><i></i><i style="width:85%"></i><i style="width:70%"></i><i></i><i style="width:40%"></i></div>
   </section>
 </main>
@@ -334,7 +401,7 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
 <dialog id="keyDialog">
   <form method="dialog" id="keyForm">
     <h3>Scrape Creators key</h3>
-    <p>Unlocks Meta, Google and LinkedIn ad libraries, TikTok/Instagram/YouTube/X/LinkedIn stats, founders and Reddit. About 20–40 credits per run. Saved to <span class="mono">~/.config/reverse-engineer-marketing</span> on this machine only.</p>
+    <p>Unlocks Meta, Google and LinkedIn ad libraries, TikTok/Instagram/YouTube/X/LinkedIn stats, founders and Reddit. About 25–50 credits per run. Saved to <span class="mono">~/.config/reverse-engineer-marketing</span> on this machine only.</p>
     <input class="field mono" id="keyInput" type="password" placeholder="sk_…" autocomplete="off">
     <div class="row">
       <a class="btn small ghost" href="https://scrapecreators.com" target="_blank" rel="noreferrer">Get a key</a>
@@ -350,11 +417,17 @@ const $ = s => document.querySelector(s);
 const LABELS = {
   paid_meta: "Paid · Meta", paid_google: "Paid · Google", paid_linkedin: "Paid · LinkedIn", paid_reddit: "Paid · Reddit", paid_tiktok: "Paid · TikTok",
   organic_tiktok: "TikTok", organic_instagram: "Instagram", organic_youtube: "YouTube", organic_x: "X", organic_linkedin: "LinkedIn page",
-  seo: "SEO", geo: "AI search", founder_led: "Founder-led", community: "Community", launches: "Launches", app_store: "App stores",
+  seo: "SEO", geo: "AI search", founder_led: "Founder-led", reddit_marketing: "Reddit marketing", community: "Community", launches: "Launches", app_store: "App stores",
   lifecycle: "Lifecycle", affiliate: "Affiliate", sales_led: "Sales-led",
 };
 const STAGES = [["website", "Website & pixels"], ["seo", "SEO & AI search"], ["history", "Positioning history"], ["apps", "Apps & launches"], ["paid", "Ad libraries"], ["social", "Organic social"], ["founders", "Founders"], ["community", "Community"], ["write", "Writing the playbook"]];
 let status = null, engine = null, state = null, es = null;
+const PLATFORMS = {
+  meta_ads: ["Meta ads", "#1877f2"], tiktok: ["TikTok", "#ff0050"], instagram: ["Instagram", "#d62976"], youtube: ["YouTube", "#ff0000"],
+  x: ["X", "#6b7280"], linkedin: ["LinkedIn", "#0a66c2"], reddit: ["Reddit", "#ff4500"], google_ads: ["Google ads", "#34a853"], linkedin_ads: ["LinkedIn ads", "#004182"],
+};
+let tab = "report", filter = "all", sortBy = "top";
+function fmtN(n) { n = Number(n); if (!Number.isFinite(n)) return ""; return n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e4 ? Math.round(n / 1e3) + "K" : n.toLocaleString(); }
 
 function store(k, v) { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} }
 function load(k) { try { return localStorage.getItem(k); } catch { return null; } }
@@ -362,6 +435,19 @@ function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.ad
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
 function ago(iso) { const s = (Date.now() - Date.parse(iso)) / 1000; return s < 3600 ? `${Math.max(1, Math.round(s / 60))}m ago` : s < 86400 ? `${Math.round(s / 3600)}h ago` : `${Math.round(s / 86400)}d ago`; }
 function favicon(domain) { return domain ? `https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(domain)}` : ""; }
+function initials(name) { return String(name || "?").split(/\s+/).map(w => w[0]).slice(0, 2).join("").toUpperCase(); }
+/** <img> that walks a list of candidate URLs, then falls back to initials. */
+function logoEl(urls, name, cls = "logo-img") {
+  const list = urls.filter(Boolean);
+  const fallback = () => { const s = document.createElement("span"); s.className = cls === "logo-img" ? "logo-fallback" : "initials"; s.textContent = initials(name); return s; };
+  if (!list.length) return fallback();
+  const img = document.createElement("img");
+  img.className = cls; img.alt = ""; img.referrerPolicy = "no-referrer"; img.loading = "lazy";
+  let i = 0;
+  img.onerror = () => { i++; if (i < list.length) img.src = list[i]; else img.replaceWith(fallback()); };
+  img.src = list[0];
+  return img;
+}
 
 async function api(path, opts = {}) {
   const res = await fetch(path, { ...opts, headers: { "content-type": "application/json", ...(opts.headers || {}) } });
@@ -403,7 +489,7 @@ async function renderRecent() {
   $("#recentWrap").hidden = !runs.length;
   $("#recent").innerHTML = runs.slice(0, 12).map(r => `
     <a href="#/run/${encodeURIComponent(r.id)}">
-      <img class="favicon" src="${favicon(r.domain)}" alt="">
+      <img class="favicon" src="${esc(r.logo || favicon(r.domain))}" data-fallback="${esc(favicon(r.domain))}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback}" referrerpolicy="no-referrer" alt="">
       <span><strong>${esc(r.brand)}</strong> <span style="color:var(--faint)">${esc(r.domain || "")}</span></span>
       ${r.hasReport ? '<span class="tag">report</span>' : '<span class="tag">evidence</span>'}
       <span class="when">${ago(r.at)}</span>
@@ -429,7 +515,8 @@ function resetRun(title) {
   state = { stages: {}, bundle: null, markdown: "", runId: null, jobId: null, engine: null, done: false, logs: [] };
   $("#brand").textContent = title || "…";
   $("#domain").textContent = "";
-  $("#favicon").removeAttribute("src");
+  $("#logoSlot").replaceChildren();
+  $("#foundersCard").hidden = true;
   $("#report").hidden = true; $("#report").innerHTML = "";
   $("#log").hidden = true; $("#log").innerHTML = "";
   $("#error").hidden = true;
@@ -438,6 +525,8 @@ function resetRun(title) {
   $("#copyBtn").hidden = $("#dlBtn").hidden = $("#cancelBtn").hidden = true;
   $("#valBadge").innerHTML = "";
   $("#status").textContent = "";
+  $("#tabs").hidden = true; $("#contentView").hidden = true; $("#grid").replaceChildren(); filter = "all";
+  setTab("report");
   renderStages();
 }
 
@@ -454,7 +543,12 @@ function renderBundle(b) {
   state.bundle = b;
   $("#brand").textContent = b.brand;
   $("#domain").textContent = b.target.domain || b.target.input;
-  $("#favicon").src = favicon(b.target.domain);
+  $("#logoSlot").replaceChildren(logoEl([...(b.identity?.logos || []).map(l => l.url), favicon(b.target.domain)], b.brand));
+  renderFounders(b.identity?.founders || []);
+  state.content = b.content || [];
+  $("#tabs").hidden = false;
+  $("#contentCount").textContent = state.content.length ? String(state.content.length) : "";
+  if (tab === "content") renderContent();
   document.title = `${b.brand} · REM`;
   const rows = b.scorecard.filter(c => c.status !== "unknown" || c.strength > 0).sort((a, z) => z.strength - a.strength);
   $("#score").innerHTML = rows.map(c => `
@@ -470,6 +564,103 @@ function renderBundle(b) {
   $("#mHarness").textContent = `v${b.harness.version} · ${b.harness.sha.slice(0, 7)}`;
 }
 
+function setTab(t) {
+  tab = t;
+  document.querySelectorAll("#tabs [data-tab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === t)));
+  const showReport = t === "report";
+  $("#report").hidden = !showReport || !state?.markdown;
+  $("#contentView").hidden = showReport;
+  if (!showReport) { $("#skeleton").hidden = true; renderContent(); }
+  else if (state && !state.markdown && !state.done) $("#skeleton").hidden = false;
+}
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) setTab(b.dataset.tab); });
+
+function renderContent() {
+  const items = state?.content || [];
+  const counts = {};
+  items.forEach(c => (counts[c.platform] = (counts[c.platform] || 0) + 1));
+  $("#filters").innerHTML = `<button class="chip" data-f="all" aria-pressed="${filter === "all"}">All ${items.length}</button>` +
+    Object.entries(PLATFORMS).filter(([k]) => counts[k]).map(([k, [label, color]]) => `<button class="chip" data-f="${k}" aria-pressed="${filter === k}"><span class="sw" style="background:${color}"></span>${label} ${counts[k]}</button>`).join("") +
+    `<select class="sort" id="sortSel" aria-label="Sort"><option value="top">Top performing</option><option value="newest">Newest</option><option value="running">Longest running ads</option></select>`;
+  $("#sortSel").value = sortBy;
+  const score = c => c.metrics?.views ?? c.metrics?.likes ?? c.metrics?.score ?? c.metrics?.runningDays ?? 0;
+  let list = items.filter(c => filter === "all" || c.platform === filter);
+  list = [...list].sort(sortBy === "newest" ? (a, b) => String(b.date || "").localeCompare(String(a.date || "")) : sortBy === "running" ? (a, b) => (b.metrics?.runningDays || 0) - (a.metrics?.runningDays || 0) : (a, b) => (b.tags?.length ? 1 : 0) - (a.tags?.length ? 1 : 0) || score(b) - score(a));
+  if (!list.length) { $("#grid").innerHTML = `<div class="empty">${items.length ? "Nothing for this filter." : "No posts, videos or ads collected. Add a Scrape Creators key (top right) to pull ads and social posts."}</div>`; return; }
+  $("#grid").replaceChildren(...list.slice(0, 200).map(card));
+}
+$("#filters").addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (b) { filter = b.dataset.f; renderContent(); } });
+$("#filters").addEventListener("change", e => { if (e.target.id === "sortSel") { sortBy = e.target.value; renderContent(); } });
+
+function card(c) {
+  const [label, color] = PLATFORMS[c.platform] || [c.platform, "#999"];
+  const el = document.createElement("article");
+  el.className = "item";
+  const hasMedia = c.thumb || c.video;
+  if (hasMedia) {
+    const media = document.createElement("div");
+    media.className = "media" + (c.platform === "youtube" || c.platform === "x" || c.platform === "google_ads" || c.platform === "linkedin_ads" ? " wide" : "");
+    if (c.thumb) {
+      const img = document.createElement("img");
+      img.src = c.thumb; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
+      img.onerror = () => { img.remove(); if (!c.video) media.innerHTML = '<span class="ph">preview expired · open the original</span>'; };
+      media.appendChild(img);
+    }
+    if (c.video) {
+      const btn = document.createElement("button");
+      btn.className = "play"; btn.setAttribute("aria-label", "Play video"); btn.innerHTML = "<span>▶</span>";
+      btn.onclick = () => {
+        const v = document.createElement("video");
+        v.src = c.video; v.controls = true; v.autoplay = true; v.playsInline = true; v.referrerPolicy = "no-referrer";
+        v.onerror = () => { media.innerHTML = '<span class="ph">video link expired · open the original</span>'; };
+        media.replaceChildren(v);
+      };
+      media.appendChild(btn);
+    }
+    el.appendChild(media);
+  } else el.classList.add("textonly");
+  const m = c.metrics || {};
+  const stats = [
+    m.runningDays != null ? `<span><b>${m.runningDays}d</b> running</span>` : "",
+    m.views != null ? `<span><b>${fmtN(m.views)}</b> views</span>` : "",
+    m.likes != null ? `<span><b>${fmtN(m.likes)}</b> likes</span>` : "",
+    m.comments != null ? `<span><b>${fmtN(m.comments)}</b> comments</span>` : "",
+    m.shares != null ? `<span><b>${fmtN(m.shares)}</b> shares</span>` : "",
+    m.score != null ? `<span><b>${fmtN(m.score)}</b> upvotes</span>` : "",
+    m.variants > 1 ? `<span><b>${m.variants}</b> variants</span>` : "",
+  ].join("");
+  const hot = t => /proven|top|founder|ranks on Google/.test(t);
+  const body = document.createElement("div");
+  body.className = "body";
+  body.innerHTML = `
+    <div class="top"><span class="plat"><i style="background:${color}"></i>${esc(label)}</span>${c.kind === "comment" ? "· comment" : ""}${c.status ? `<span class="state ${c.status}">${c.status === "active" ? "Active" : "Inactive"}</span>` : ""}</div>
+    ${c.title ? `<h4>${esc(c.title)}</h4>` : ""}
+    ${c.text ? `<p>${esc(c.text)}</p>` : ""}
+    ${stats ? `<div class="stats">${stats}</div>` : ""}
+    ${c.tags?.length ? `<div class="tags">${c.tags.map(t => `<span class="${hot(t) ? "hot" : ""}">${esc(t)}</span>`).join("")}</div>` : ""}
+    <div class="foot"><span>${esc(c.author || "")}${c.date ? ` · ${esc(c.date)}` : ""}</span><a href="${esc(c.url)}" target="_blank" rel="noreferrer">Open ↗</a></div>`;
+  el.appendChild(body);
+  return el;
+}
+
+function renderFounders(list) {
+  const shown = list.filter(f => f.confidence !== "low" || list.length <= 2).slice(0, 4);
+  $("#foundersCard").hidden = !shown.length;
+  $("#founders").replaceChildren(...shown.map(f => {
+    const row = document.createElement("div");
+    row.className = "founder";
+    const pic = f.photo ? logoEl([f.photo], f.name, "") : Object.assign(document.createElement("span"), { className: "initials", textContent: initials(f.name) });
+    if (pic.tagName === "IMG") pic.className = "";
+    const reach = [f.linkedinFollowers ? `${Number(f.linkedinFollowers).toLocaleString()} LinkedIn` : "", f.x?.followers ? `${Number(f.x.followers).toLocaleString()} X` : ""].filter(Boolean).join(" · ");
+    const info = document.createElement("div");
+    info.innerHTML = `<b>${esc(f.name)}</b><span class="conf ${f.confidence}" title="Sources: ${esc((f.sources || []).join(", "))}">${esc(f.confidence)}</span>
+      <div class="role">${esc(f.role || "")}${reach ? ` · ${reach}` : ""}${f.postsRecently ? " · posting" : ""}</div>
+      <div class="links">${f.linkedin ? `<a href="${esc(f.linkedin)}" target="_blank" rel="noreferrer">LinkedIn ↗</a>` : ""}${f.x ? `<a href="${esc(f.x.url)}" target="_blank" rel="noreferrer">@${esc(f.x.handle)} ↗</a>` : ""}</div>`;
+    row.append(pic, info);
+    return row;
+  }));
+}
+
 $("#score").addEventListener("click", e => {
   const b = e.target.closest("[data-ids]");
   if (b && b.dataset.ids) openEvidence(b.dataset.ids.split(","));
@@ -482,7 +673,7 @@ function renderReport(streaming) {
   requestAnimationFrame(() => {
     renderQueued = false;
     const el = $("#report");
-    el.hidden = false;
+    el.hidden = tab !== "report";
     $("#skeleton").hidden = true;
     const html = DOMPurify.sanitize(marked.parse(state.markdown, { gfm: true }), { ADD_ATTR: ["target"] });
     el.innerHTML = html;
@@ -617,6 +808,7 @@ async function openRun(runId) {
       $("#status").textContent = `Written by ${engineLabel(data.report.engine)}${data.report.model ? ` · ${data.report.model}` : ""}`;
     } else {
       $("#skeleton").hidden = true;
+      if ((data.bundle.content || []).length) setTab("content");
       $("#status").innerHTML = `Evidence only. <button class="btn small" id="writeNow">Write the playbook with ${esc(engineLabel(engine))}</button>`;
       $("#writeNow").onclick = () => rerun(data.bundle.target.input);
     }

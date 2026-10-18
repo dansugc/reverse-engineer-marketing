@@ -31,7 +31,7 @@ export function createServer(): McpServer {
         url: z.string().describe("Website domain/URL, App Store URL or Google Play URL"),
         only: z.array(z.enum(AREAS as [string, ...string[]])).optional().describe(`Limit to areas: ${AREAS.join(", ")}. Website always runs.`),
         handles: z.record(z.string(), z.string()).optional().describe('Override discovered handles, e.g. {"tiktok":"notionhq","x":"NotionHQ"}'),
-        max_credits: z.number().int().min(0).max(500).optional().describe("Scrape Creators credit budget (default 40)"),
+        max_credits: z.number().int().min(0).max(500).optional().describe("Scrape Creators credit budget (default 50)"),
       },
     },
     async ({ url, only, handles, max_credits }) => {
@@ -40,7 +40,7 @@ export function createServer(): McpServer {
       return text(
         [
           `# ${bundle.brand} — evidence collected (run_id: ${id})`,
-          `${bundle.evidence.length} evidence items · ${bundle.unknowns.length} unknowns · ${bundle.credits.scrapecreators ?? 0} Scrape Creators credits · harness v${bundle.harness.version} (${bundle.harness.sha}) · full bundle: ${path}`,
+          `${bundle.evidence.length} evidence items · ${(bundle.content ?? []).length} posts/videos/ads (get_content) · ${bundle.unknowns.length} unknowns · ${bundle.credits.scrapecreators ?? 0} Scrape Creators credits · harness v${bundle.harness.version} (${bundle.harness.sha}) · full bundle: ${path}`,
           "",
           "## Channel scorecard (deterministic)",
           scorecardTable(bundle.scorecard),
@@ -72,6 +72,29 @@ export function createServer(): McpServer {
       const bundle = await loadRun(run_id);
       const items = bundle.evidence.filter(e => (!ids?.length || ids.includes(e.id)) && (!source || e.source === source));
       return text(JSON.stringify(items, null, 1));
+    },
+  );
+
+  server.registerTool(
+    "get_content",
+    {
+      title: "Get posts, videos and ads",
+      description: "Concrete items to quote or show the user: Meta/Google/LinkedIn ads (with media URLs, running days, active/paused), TikTok and Instagram videos/posts, YouTube videos, X and LinkedIn posts (company + founders), Reddit threads and brand/founder replies. Each item links to the original.",
+      inputSchema: {
+        run_id: z.string(),
+        platform: z.enum(["meta_ads", "google_ads", "linkedin_ads", "tiktok", "instagram", "youtube", "x", "linkedin", "reddit"]).optional(),
+        sort: z.enum(["top", "newest", "longest_running"]).optional(),
+        limit: z.number().int().min(1).max(100).optional(),
+      },
+    },
+    async ({ run_id, platform, sort, limit }) => {
+      const bundle = await loadRun(run_id);
+      const score = (c: any) => c.metrics?.views ?? c.metrics?.likes ?? c.metrics?.score ?? c.metrics?.runningDays ?? 0;
+      let items = (bundle.content ?? []).filter(c => !platform || c.platform === platform);
+      if (sort === "newest") items = [...items].sort((a, b) => String(b.date ?? "").localeCompare(String(a.date ?? "")));
+      else if (sort === "longest_running") items = [...items].sort((a, b) => (b.metrics?.runningDays ?? 0) - (a.metrics?.runningDays ?? 0));
+      else if (sort === "top") items = [...items].sort((a, b) => score(b) - score(a));
+      return text(JSON.stringify(items.slice(0, limit ?? 30), null, 1));
     },
   );
 
