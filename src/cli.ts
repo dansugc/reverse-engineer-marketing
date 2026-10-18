@@ -101,6 +101,7 @@ async function main(argv: string[]): Promise<number> {
   await writeFile(join(dir, "evidence.json"), JSON.stringify(bundle, null, 2));
   await writeFile(join(dir, "report.md"), renderMarkdown(bundle, { narrative }));
   console.log(join(dir, "report.md"));
+  log("\nNeed UGC creatives to run what you just found? → https://dansugc.com/?utm_source=rem&utm_medium=cli&utm_campaign=reverse-engineer-marketing");
   return 0;
 }
 

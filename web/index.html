@@ -78,6 +78,13 @@ a { color: inherit; }
   transition: border-color .15s var(--ease), color .15s var(--ease);
 }
 .pill:hover { color: var(--text); border-color: var(--faint); }
+.cta-pill { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 550; }
+.cta-pill:hover { color: var(--bg); opacity: .88; }
+.cta-card { display: flex; gap: 14px; align-items: center; margin-top: 16px; padding: 16px 18px; border-radius: var(--radius); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border)); }
+.cta-card b { display: block; font-size: 14.5px; }
+.cta-card span { font-size: 13px; color: var(--muted); }
+.cta-card .btn { margin-left: auto; flex: none; }
+@media (max-width: 520px) { .cta-card { flex-direction: column; align-items: flex-start; } .cta-card .btn { margin-left: 0; } }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); }
 .dot.on { background: var(--ok); }
 
@@ -317,6 +324,7 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
   <span class="spacer"></span>
   <button class="pill" id="keyPill" title="Scrape Creators key"><span class="dot" id="keyDot"></span><span id="keyLabel">Data key</span></button>
   <a class="pill" href="https://github.com/dansugc/reverse-engineer-marketing" target="_blank" rel="noreferrer">GitHub</a>
+  <a class="pill cta-pill" href="https://dansugc.com/?utm_source=rem&utm_medium=app&utm_campaign=topbar" target="_blank" rel="noreferrer">Get UGC ads ↗</a>
 </header>
 
 <main id="home" class="home" hidden>
@@ -384,6 +392,10 @@ dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
     <div class="error" id="error" hidden></div>
     <div class="log" id="log" hidden></div>
     <article class="report" id="report" hidden></article>
+    <aside class="cta-card" id="cta" hidden>
+      <div><b>Seen what's working? Make it yourself.</b><span>Real-creator UGC reaction clips and custom videos for your ads and organic, from $5 a clip. Built by the team behind REM.</span></div>
+      <a class="btn small" href="https://dansugc.com/?utm_source=rem&utm_medium=app&utm_campaign=report" target="_blank" rel="noreferrer">Get UGC on DansUGC ↗</a>
+    </aside>
     <section id="contentView" hidden>
       <div class="filters" id="filters"></div>
       <div class="grid" id="grid"></div>
@@ -519,7 +531,7 @@ function resetRun(title) {
   $("#domain").textContent = "";
   $("#logoSlot").replaceChildren();
   $("#foundersCard").hidden = true;
-  $("#report").hidden = true; $("#report").innerHTML = "";
+  $("#report").hidden = true; $("#report").innerHTML = ""; $("#cta").hidden = true;
   $("#log").hidden = true; $("#log").innerHTML = "";
   $("#error").hidden = true;
   $("#skeleton").hidden = false;
@@ -728,6 +740,7 @@ function showValidation(v) {
 function finishReport(markdown) {
   state.markdown = markdown;
   renderReport(false);
+  $("#cta").hidden = false;
   $("#copyBtn").hidden = $("#dlBtn").hidden = false;
 }
 

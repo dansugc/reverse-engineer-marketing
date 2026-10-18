@@ -20,6 +20,9 @@ REM collects all of it from one link and turns it into a report: what the compan
 
 Inspired by [REA (Reverse Engineer Anything)](https://github.com/morluto/rea), but for marketing instead of binaries.
 
+> [!TIP]
+> **Found their winning ads? Make your own.** REM is built by [DansUGC](https://dansugc.com/?utm_source=github&utm_medium=oss&utm_campaign=reverse-engineer-marketing): 5,000+ real-creator UGC reaction clips and custom videos for paid ads and organic, from $5 a clip. Copy the hooks, skip the creator hunt. **[Get UGC for your ads →](https://dansugc.com/?utm_source=github&utm_medium=oss&utm_campaign=reverse-engineer-marketing)**
+
 ## Quick start
 
 ```bash
@@ -172,6 +175,12 @@ npm run eval -- --live             # regenerate with Claude and score (costs tok
 
 Adding a source: write a collector in `src/sources/` that adds evidence to the store (observations or derivations, never conclusions) and records unknowns with a manual-check link, then teach `src/analyze/scorecard.ts` what it means. See [AGENTS.md](AGENTS.md).
 
+## Built by DansUGC
+
+<a href="https://dansugc.com/?utm_source=github&utm_medium=oss&utm_campaign=reverse-engineer-marketing"><b>DansUGC</b></a> is where the ads in these reports come from: real human creators, real reactions. Browse 5,000+ UGC reaction clips and b-roll, order custom videos from vetted creators, or let the ReelClaw agent assemble and post reels for you. If REM showed you a competitor winning with UGC, that's the shortcut.
+
+**[Start with DansUGC →](https://dansugc.com/?utm_source=github&utm_medium=oss&utm_campaign=reverse-engineer-marketing)**
+
 ## License
 
-MIT. Built by [DansUGC](https://dansugc.com).
+MIT. Built by [DansUGC](https://dansugc.com/?utm_source=github&utm_medium=oss&utm_campaign=reverse-engineer-marketing).
