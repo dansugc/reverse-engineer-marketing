@@ -49,6 +49,8 @@ export interface WriteOptions {
 }
 
 export async function writeReport(engine: EngineId, bundle: EvidenceBundle, opts: WriteOptions = {}): Promise<{ markdown: string; model?: string }> {
+  // The model name becomes a CLI argument: never let it look like a flag.
+  if (opts.model && !/^[A-Za-z0-9][A-Za-z0-9._:/\[\]-]{0,80}$/.test(opts.model)) throw new Error("Invalid model name");
   if (engine === "claude-code") return claudeCode(bundle, opts);
   if (engine === "codex") return codex(bundle, opts);
   if (engine === "anthropic-api") {

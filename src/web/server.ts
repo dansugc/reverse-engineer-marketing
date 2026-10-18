@@ -120,7 +120,15 @@ export function startWeb(port: number): Promise<string> {
       const path = url.pathname;
 
       if (req.method === "GET" && path === "/") {
-        res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
+        res.writeHead(200, {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "no-store",
+          "x-content-type-options": "nosniff",
+          "referrer-policy": "no-referrer",
+          "x-frame-options": "DENY",
+          // Scripts only from us + the two pinned CDNs; no framing; API calls only to ourselves.
+          "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src * data: blob:; media-src *; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+        });
         return res.end(PAGE);
       }
       if (req.method === "GET" && path === "/api/status") {

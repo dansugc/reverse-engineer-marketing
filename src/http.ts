@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { isIP } from "node:net";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -15,12 +16,49 @@ export interface FetchedPage {
   body: string;
 }
 
+/**
+ * REM only reads public websites. Block loopback / private / link-local targets so a
+ * hostile robots.txt, sitemap or redirect can't point it at the user's machine or LAN
+ * (including REM's own local web server). Hostnames that *resolve* to private IPs are
+ * not checked here (no DNS pinning); this blocks literal addresses and localhost names.
+ */
+export function assertPublicUrl(raw: string): URL {
+  const u = new URL(raw);
+  if (u.protocol !== "https:" && u.protocol !== "http:") throw new Error(`Blocked non-http URL: ${u.protocol}`);
+  const host = u.hostname.replace(/^\[|\]$/g, "").toLowerCase();
+  if (host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local") || host.endsWith(".internal") || !host.includes(".") && !isIP(host)) throw new Error(`Blocked private host: ${host}`);
+  const v = isIP(host);
+  if (v === 4) {
+    const [a, b] = host.split(".").map(Number) as [number, number];
+    if (a === 0 || a === 10 || a === 127 || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 100 && b >= 64 && b <= 127) || a >= 224)
+      throw new Error(`Blocked private address: ${host}`);
+  } else if (v === 6) {
+    if (host === "::" || host === "::1" || /^f[cd]/.test(host) || /^fe[89ab]/.test(host) || host.startsWith("::ffff:")) throw new Error(`Blocked private address: ${host}`);
+  }
+  return u;
+}
+
+/** fetch() with redirects followed by hand so every hop is checked with assertPublicUrl. */
+async function safeFetch(url: string, init: RequestInit & { signal: AbortSignal }): Promise<Response> {
+  let current = url;
+  for (let hop = 0; hop < 6; hop++) {
+    assertPublicUrl(current);
+    const res = await fetch(current, { ...init, redirect: "manual" });
+    const loc = res.status >= 300 && res.status < 400 ? res.headers.get("location") : null;
+    if (!loc) {
+      Object.defineProperty(res, "url", { value: current });
+      return res;
+    }
+    current = new URL(loc, current).toString();
+  }
+  throw new Error(`Too many redirects: ${url}`);
+}
+
 export async function fetchText(
   url: string,
   opts: { timeoutMs?: number; headers?: Record<string, string>; maxBytes?: number } = {},
 ): Promise<FetchedPage> {
-  const res = await fetch(url, {
-    redirect: "follow",
+  const res = await safeFetch(url, {
     headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml,application/xml,*/*;q=0.8", ...opts.headers },
     signal: AbortSignal.timeout(opts.timeoutMs ?? 15_000),
   });
@@ -34,7 +72,7 @@ export async function fetchJson<T = unknown>(
   url: string,
   opts: { timeoutMs?: number; headers?: Record<string, string> } = {},
 ): Promise<{ status: number; json: T | null }> {
-  const res = await fetch(url, {
+  const res = await safeFetch(url, {
     headers: { "user-agent": UA, accept: "application/json", ...opts.headers },
     signal: AbortSignal.timeout(opts.timeoutMs ?? 20_000),
   });

@@ -4,8 +4,8 @@
     "version": "0.1.0"
   },
   "harness": {
-    "version": "1",
-    "sha": "fbd47e39dca9"
+    "version": "2",
+    "sha": "be4e28a2e9a0"
   },
   "target": {
     "input": "calai.app",
@@ -14,7 +14,7 @@
     "domain": "calai.app",
     "brand": "Cal AI"
   },
-  "generatedAt": "2026-10-18T13:21:41.740Z",
+  "generatedAt": "2026-10-18T14:28:50.309Z",
   "brand": "Cal AI",
   "discovered": {
     "socials": {
@@ -29,6 +29,107 @@
     "playIds": [
       "com.viraldevelopment.calai"
     ],
+    "logos": [
+      {
+        "url": "https://calai.app/logo.png",
+        "source": "icon",
+        "size": 32
+      },
+      {
+        "url": "https://www.calai.app/opengraph.jpg",
+        "source": "og-image"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/1f/e3/4e/1fe34eb7-a155-17c2-596a-c1d28658df42/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg",
+        "source": "appstore",
+        "size": 512
+      },
+      {
+        "url": "https://media.licdn.com/dms/image/v2/D560BAQHEQeB7troyag/company-logo_200_200/company-logo_200_200/0/1720641863077/cal_ai_app_logo?e=2147483647&v=beta&t=QCEJ0gcadrdMzR0YAwl1GyaF93bdJN-jBRSn6bCt0wg",
+        "source": "linkedin",
+        "size": 200
+      },
+      {
+        "url": "https://scontent-ord5-1.cdninstagram.com/v/t51.82787-19/584615366_17922275679195562_4674348776676832940_n.jpg?_nc_cat=1&ig_cache_key=GMaF2CKq0Wz7Nqw-AKy2GlZyn95AbmNDAQAB0j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=-HpbyQ92gbUQ7kNvwHCyyKx&_nc_oc=AdoCrVrMOObIoxbA9iVvCrswGvG-MPk16Uq7EgjFR3-ftJaybXlpsxpLdPHs4p6ltBA&_nc_zt=24&_nc_ht=scontent-ord5-1.cdninstagram.com&_nc_gid=51EdXySyhCUDcUqe39Muug&_nc_ss=78a8c&oh=00_AQNsvONoVoIjaHs7lUaBLXqO4LL36c8rzzhn0JsJSNPzLg&oe=6ADA9FC9",
+        "source": "instagram",
+        "size": 320
+      }
+    ],
+    "founderHints": [
+      {
+        "name": "Zach Yadegari",
+        "role": "Forbes 30 under 30 // CEO of Cal AI // 18 years old",
+        "source": "linkedin_search",
+        "linkedin": "https://www.linkedin.com/in/zachyadegari",
+        "url": "https://www.linkedin.com/in/zachyadegari"
+      },
+      {
+        "name": "Zach Yadegari",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://superwall.com/case-studies/cal-ai"
+      },
+      {
+        "name": "Henry Langmack",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://superwall.com/case-studies/cal-ai"
+      },
+      {
+        "name": "I's Teen",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://valueaddvc.com/pulse/cal-ai-30m-revenue-myfitnesspal-acquisition-2026"
+      },
+      {
+        "name": "Zach Yadegari",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://www.productmarketfit.tech/p/18-years-old-and-12m-arr-how-two"
+      },
+      {
+        "name": "Henry Langmack",
+        "role": "CTO",
+        "source": "google_snippet",
+        "url": "https://www.productmarketfit.tech/p/18-years-old-and-12m-arr-how-two"
+      },
+      {
+        "name": "Zach Yadegari",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://www.instagram.com/p/DeR9mPZkcTP/"
+      },
+      {
+        "name": "Zach Yadegari",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://creatordb.app/creatorstats/zachyadegari/"
+      },
+      {
+        "name": "Zach Yadegari",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://mealthinker.com/blog/myfitnesspal-acquires-cal-ai"
+      },
+      {
+        "name": "Henry Langmack",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://mealthinker.com/blog/myfitnesspal-acquires-cal-ai"
+      },
+      {
+        "name": "Zach Yadegari",
+        "role": "founder",
+        "source": "google_snippet",
+        "url": "https://www.instagram.com/reel/DVggpeZCZo5/?hl=en"
+      },
+      {
+        "name": "Babak Hassibi",
+        "role": "Founder",
+        "source": "google_snippet",
+        "url": "https://www.instagram.com/popular/cal-ai-founders-and-team/"
+      }
+    ],
     "brandName": "Cal AI"
   },
   "scorecard": [
@@ -36,9 +137,9 @@
       "channel": "paid_meta",
       "status": "active",
       "strength": 3,
-      "signal": "949 ads in library, 40 active in sample, 4 new in 30d; top run 137d",
+      "signal": "692 active now, 894 in library, 1 new in 30d; longest ran 185d",
       "evidence": [
-        "E17"
+        "E22"
       ]
     },
     {
@@ -47,7 +148,7 @@
       "strength": 1,
       "signal": "~1 ads, 0 shown in last 30d",
       "evidence": [
-        "E12"
+        "E7"
       ]
     },
     {
@@ -56,7 +157,7 @@
       "strength": 0,
       "signal": "No ads found and no pixel",
       "evidence": [
-        "E13",
+        "E8",
         "E3"
       ]
     },
@@ -84,7 +185,7 @@
       "strength": 1,
       "signal": "6 followers, 37 videos, 1.8 posts/wk, median 433 views (recent)",
       "evidence": [
-        "E20"
+        "E21"
       ]
     },
     {
@@ -93,7 +194,7 @@
       "strength": 3,
       "signal": "384K followers, 0.8 posts/wk, median 279 likes",
       "evidence": [
-        "E21"
+        "E20"
       ]
     },
     {
@@ -116,7 +217,7 @@
       "strength": 0,
       "signal": "? followers, 0 posts in last 30d (sample)",
       "evidence": [
-        "E14"
+        "E19"
       ]
     },
     {
@@ -125,8 +226,8 @@
       "strength": 2,
       "signal": "127 indexed URLs, 0 programmatic families, 103 content updates/90d",
       "evidence": [
-        "E8",
-        "E16"
+        "E10",
+        "E12"
       ]
     },
     {
@@ -135,35 +236,46 @@
       "strength": 0,
       "signal": "no llms.txt",
       "evidence": [
-        "E9"
+        "E11"
       ]
     },
     {
       "channel": "founder_led",
       "status": "dormant",
       "strength": 0,
-      "signal": "Zach Yadegari, X 86,570; Blake W Anderson; Henry Langmack",
+      "signal": "Zach Yadegari (Founder) · 24,154 LI followers · X 86,570; Henry Langmack (Founder) · 1,184 LI followers · X 5,709; I's Teen (Founder); Babak Hassibi (Founder)",
       "evidence": [
-        "E22"
+        "E23"
+      ]
+    },
+    {
+      "channel": "reddit_marketing",
+      "status": "none",
+      "strength": 0,
+      "signal": "0 brand/founder posts+replies",
+      "evidence": [
+        "E15",
+        "E17",
+        "E3"
       ]
     },
     {
       "channel": "community",
       "status": "active",
-      "strength": 1,
-      "signal": "7 recent threads mention calai.app (top r/ProductivityApps)",
+      "strength": 2,
+      "signal": "11 threads naming Cal AI across 11 subreddits, 1 comparison threads, 2 organic mentions in comments; 8 Reddit threads rank on Google",
       "evidence": [
-        "E18"
+        "E16",
+        "E17"
       ]
     },
     {
       "channel": "launches",
-      "status": "active",
-      "strength": 2,
-      "signal": "No Hacker News submissions of the domain; Product Hunt presence: Cal.com: Scheduling infrastructure for absolutely everyone; Cal.com Reviews (2026) - Product Hunt; Cal ID: Schedule and monetize meetings for free - Product H…",
+      "status": "none",
+      "strength": 0,
+      "signal": "No Hacker News submissions of the domain",
       "evidence": [
-        "E11",
-        "E19"
+        "E14"
       ]
     },
     {
@@ -172,8 +284,8 @@
       "strength": 3,
       "signal": "App Store: Cal AI - Calorie Tracker — 371,236 ratings, 4.80★; Google Play: Cal AI - Food Calorie Tracker — 1M+ downloads",
       "evidence": [
-        "E7",
-        "E10"
+        "E9",
+        "E13"
       ]
     },
     {
@@ -208,11 +320,11 @@
   "evidence": [
     {
       "id": "E1",
-      "observedAt": "2026-10-18T13:21:10.836Z",
+      "observedAt": "2026-10-18T14:28:37.013Z",
       "source": "website",
       "kind": "observation",
       "title": "Homepage positioning: \"Meet Cal AI Track your calories with just a picture\"",
-      "url": "https://calai.app/",
+      "url": "https://calai.app",
       "data": {
         "title": "Cal AI | Download Today",
         "metaDescription": "Download Today",
@@ -244,11 +356,11 @@
     },
     {
       "id": "E2",
-      "observedAt": "2026-10-18T13:21:10.837Z",
+      "observedAt": "2026-10-18T14:28:37.014Z",
       "source": "website",
       "kind": "observation",
       "title": "Linked channels: linkedin, instagram, tiktok",
-      "url": "https://calai.app/",
+      "url": "https://calai.app",
       "data": {
         "socials": {
           "linkedin": "cal-ai-app",
@@ -266,11 +378,11 @@
     },
     {
       "id": "E3",
-      "observedAt": "2026-10-18T13:21:10.843Z",
+      "observedAt": "2026-10-18T14:28:37.021Z",
       "source": "tracking",
       "kind": "observation",
       "title": "No ad pixels detected on homepage (or loaded server-side)",
-      "url": "https://calai.app/",
+      "url": "https://calai.app",
       "data": {
         "pixels": [],
         "gtmContainersScanned": []
@@ -278,11 +390,11 @@
     },
     {
       "id": "E4",
-      "observedAt": "2026-10-18T13:21:10.843Z",
+      "observedAt": "2026-10-18T14:28:37.021Z",
       "source": "tracking",
       "kind": "observation",
       "title": "Marketing stack: Google Analytics 4",
-      "url": "https://calai.app/",
+      "url": "https://calai.app",
       "data": {
         "byCategory": {
           "analytics": [
@@ -306,22 +418,22 @@
     },
     {
       "id": "E5",
-      "observedAt": "2026-10-18T13:21:10.843Z",
+      "observedAt": "2026-10-18T14:28:37.021Z",
       "source": "website",
       "kind": "observation",
       "title": "Key pages found: blog",
-      "url": "https://calai.app/",
+      "url": "https://calai.app",
       "data": {
         "blog": "https://calai.app/blog"
       }
     },
     {
       "id": "E6",
-      "observedAt": "2026-10-18T13:21:10.844Z",
+      "observedAt": "2026-10-18T14:28:37.022Z",
       "source": "website",
       "kind": "derivation",
       "title": "Monetization: 3-day trial",
-      "url": "https://calai.app/",
+      "url": "https://calai.app",
       "data": {
         "prices": [],
         "freePlan": false,
@@ -338,7 +450,47 @@
     },
     {
       "id": "E7",
-      "observedAt": "2026-10-18T13:21:11.134Z",
+      "observedAt": "2026-10-18T14:28:37.030Z",
+      "source": "google_ads",
+      "kind": "observation",
+      "title": "Google ads: ~1 ads pointing at calai.app (0 shown in last 30d), formats video",
+      "url": "https://adstransparency.google.com/?region=anywhere&domain=calai.app",
+      "data": {
+        "domain": "calai.app",
+        "estimate": 1,
+        "formats": {
+          "video": 1
+        },
+        "advertisers": {
+          "Addressable Media LLC": 1
+        },
+        "shownLast30d": 0,
+        "sample": [
+          {
+            "advertiser": "Addressable Media LLC",
+            "format": "video",
+            "firstShown": "2025-10-17",
+            "lastShown": "2025-10-20",
+            "url": "https://adstransparency.google.com/advertiser/AR08770828289406140417/creative/CR03716696592938434561",
+            "image": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "E8",
+      "observedAt": "2026-10-18T14:28:37.030Z",
+      "source": "linkedin_ads",
+      "kind": "observation",
+      "title": "LinkedIn ads: none found for advertiser \"Cal AI\"",
+      "url": "https://www.linkedin.com/ad-library/search?accountOwner=Cal%20AI",
+      "data": {
+        "otherAdvertisersMatched": []
+      }
+    },
+    {
+      "id": "E9",
+      "observedAt": "2026-10-18T14:28:37.413Z",
       "source": "appstore",
       "kind": "observation",
       "title": "App Store: Cal AI - Calorie Tracker — 371,236 ratings, 4.80★",
@@ -364,8 +516,8 @@
       }
     },
     {
-      "id": "E8",
-      "observedAt": "2026-10-18T13:21:11.322Z",
+      "id": "E10",
+      "observedAt": "2026-10-18T14:28:37.573Z",
       "source": "seo",
       "kind": "derivation",
       "title": "Sitemap: 127 URLs, 0 programmatic page families, 103 content updates in 90d",
@@ -457,8 +609,8 @@
       }
     },
     {
-      "id": "E9",
-      "observedAt": "2026-10-18T13:21:11.322Z",
+      "id": "E11",
+      "observedAt": "2026-10-18T14:28:37.573Z",
       "source": "seo",
       "kind": "observation",
       "title": "AI-search stance: no llms.txt; no AI bots blocked",
@@ -486,8 +638,68 @@
       }
     },
     {
-      "id": "E10",
-      "observedAt": "2026-10-18T13:21:11.431Z",
+      "id": "E12",
+      "observedAt": "2026-10-18T14:28:37.574Z",
+      "source": "seo",
+      "kind": "observation",
+      "title": "Top Google results for site:calai.app",
+      "url": "https://www.google.com/search?q=site:calai.app",
+      "data": [
+        {
+          "title": "Cal AI | Download Today",
+          "url": "https://www.calai.app/",
+          "description": "Meet Cal AI, the AI-powered app for easy calorie tracking. Snap a photo, scan a barcode, or describe your meal and get instant calorie and nutrient info."
+        },
+        {
+          "title": "Cal AI Payment Forms",
+          "url": "https://forms.calai.app/",
+          "description": "Input your payment details for Cal AI."
+        },
+        {
+          "title": "Privacy Notice - Cal AI",
+          "url": "https://www.calai.app/privacy",
+          "description": "May 21, 2026 ... Residents of the State of California have the right to request information from Cal AI regarding other companies to whom the company has ..."
+        },
+        {
+          "title": "Accessibility Statement for Cal AI – Calorie Tracker (iOS App)",
+          "url": "https://www.calai.app/access",
+          "description": "App Platform and Accessibility Integration. Cal AI is built natively for Apple iOS and is optimized for use on iPhones. Our development team has taken ..."
+        },
+        {
+          "title": "FAQ - Cal AI",
+          "url": "https://www.calai.app/faq",
+          "description": "My steps aren't showing up in CalAI · iPhone / Apple Health: In CalAI, swipe right on the calories screen → tap \"Connect with Apple Health.\" · Android / Google ..."
+        },
+        {
+          "title": "Terms of Service - Cal AI",
+          "url": "https://www.calai.app/tos",
+          "description": "Nov 28, 2025 ... Company, We, Us, or Ourmeans Cal AI, Inc., a Delaware corporation, with a mailing address at 160 W. Camino Real #594, Boca Raton, FL 33432, ..."
+        },
+        {
+          "title": "Sweepstakes Official Rules - Cal AI",
+          "url": "https://www.calai.app/sweepstakes",
+          "description": "Participants shall receive one automatic entry after they successfully complete and submit a survey. Or, to enter without submitting a survey, you may email ..."
+        },
+        {
+          "title": "Blog | Cal AI",
+          "url": "https://www.calai.app/blog",
+          "description": "Our Blog · Is the Zone Diet Healthy? · Can You Drink Protein Shakes While Intermittent Fasting · Why Am I Gaining Weight in a Calorie Deficit? · How Long Does ..."
+        },
+        {
+          "title": "Groups | Cal AI",
+          "url": "https://www.calai.app/groups",
+          "description": "Healthy habits feel easier when you do them with friends. Join groups and stay connected with friends to support one another in maintaining consistent ..."
+        },
+        {
+          "title": "Login - Cal AI",
+          "url": "https://www.calai.app/login",
+          "description": "Welcome back. Sign in to your Cal AI account. Continue with Google Continue with Apple. Download Cal AI. Google Play. Legal. Privacy Policy · Terms of use ..."
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "observedAt": "2026-10-18T14:28:37.763Z",
       "source": "appstore",
       "kind": "observation",
       "title": "Google Play: Cal AI - Food Calorie Tracker — 1M+ downloads",
@@ -498,8 +710,8 @@
       }
     },
     {
-      "id": "E11",
-      "observedAt": "2026-10-18T13:21:11.721Z",
+      "id": "E14",
+      "observedAt": "2026-10-18T14:28:38.069Z",
       "source": "hackernews",
       "kind": "observation",
       "title": "No Hacker News submissions of the domain",
@@ -507,48 +719,348 @@
       "data": []
     },
     {
-      "id": "E12",
-      "observedAt": "2026-10-18T13:21:12.399Z",
-      "source": "google_ads",
-      "kind": "observation",
-      "title": "Google ads: ~1 ads pointing at calai.app (0 shown in last 30d), formats video",
-      "url": "https://adstransparency.google.com/?region=anywhere&domain=calai.app",
+      "id": "E15",
+      "observedAt": "2026-10-18T14:28:38.579Z",
+      "source": "reddit",
+      "kind": "derivation",
+      "title": "Reddit marketing: 0 brand/founder posts, 0 brand/founder replies in big threads",
+      "url": "https://www.reddit.com/search/?q=Cal%20AI",
       "data": {
-        "domain": "calai.app",
-        "estimate": 1,
-        "formats": {
-          "video": 1
-        },
-        "advertisers": {
-          "Addressable Media LLC": 1
-        },
-        "shownLast30d": 0,
-        "sample": [
+        "affiliatedPosts": [],
+        "affiliatedComments": [],
+        "launchPosts": [
           {
-            "advertiser": "Addressable Media LLC",
-            "format": "video",
-            "firstShown": "2025-10-17",
-            "lastShown": "2025-10-20",
-            "url": "https://adstransparency.google.com/advertiser/AR08770828289406140417/creative/CR03716696592938434561",
-            "image": null
+            "id": "1vfb8li",
+            "subreddit": "SaaS",
+            "title": "Read this before starting to advertise your SaaS on TikTok",
+            "author": "No-Grand3283",
+            "score": 562,
+            "comments": 128,
+            "date": "2026-08-04",
+            "url": "https://www.reddit.com/r/SaaS/comments/1vfb8li/read_this_before_starting_to_advertise_your_saas/",
+            "selfPromo": true,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1tlwheo",
+            "subreddit": "Zepbound",
+            "title": "I made it to One-derland today (with pics and a long note)",
+            "author": "CleverFeather",
+            "score": 250,
+            "comments": 24,
+            "date": "2026-05-24",
+            "url": "https://www.reddit.com/r/Zepbound/comments/1tlwheo/i_made_it_to_onederland_today_with_pics_and_a/",
+            "selfPromo": true,
+            "affiliated": false,
+            "comparison": false
+          }
+        ],
+        "ownSubreddit": null,
+        "note": "Affiliation is inferred from usernames and phrases like \"I'm the founder\" / \"we built\" — verify before citing as fact."
+      }
+    },
+    {
+      "id": "E16",
+      "observedAt": "2026-10-18T14:28:38.580Z",
+      "source": "reddit",
+      "kind": "observation",
+      "title": "Reddit mentions: 11 threads naming Cal AI across 11 subreddits, 1 comparison threads, 2 organic mentions in comments",
+      "url": "https://www.reddit.com/search/?q=Cal%20AI",
+      "data": {
+        "subreddits": {
+          "ProductivityApps": 1,
+          "caloriecount": 1,
+          "CoachingSoftware": 1,
+          "cheatonlineschool": 1,
+          "apps": 1,
+          "startups": 1,
+          "DigitalMarketing": 1,
+          "Myfitnesspal": 1,
+          "SaaS": 1,
+          "Zepbound": 1,
+          "loseit": 1
+        },
+        "topThreads": [
+          {
+            "id": "1vfb8li",
+            "subreddit": "SaaS",
+            "title": "Read this before starting to advertise your SaaS on TikTok",
+            "author": "No-Grand3283",
+            "score": 562,
+            "comments": 128,
+            "date": "2026-08-04",
+            "url": "https://www.reddit.com/r/SaaS/comments/1vfb8li/read_this_before_starting_to_advertise_your_saas/",
+            "selfPromo": true,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1tlwheo",
+            "subreddit": "Zepbound",
+            "title": "I made it to One-derland today (with pics and a long note)",
+            "author": "CleverFeather",
+            "score": 250,
+            "comments": 24,
+            "date": "2026-05-24",
+            "url": "https://www.reddit.com/r/Zepbound/comments/1tlwheo/i_made_it_to_onederland_today_with_pics_and_a/",
+            "selfPromo": true,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1op7i4k",
+            "subreddit": "loseit",
+            "title": "Thanks, r/loseit! I Just hit my goal weight! Lost 33 pounds in 4 months. 45M, 5'6\", 187 to 154 pounds. I went from obese to overweight to \"normal\" BMI. The thing that worked for m…",
+            "author": "seeing_red415",
+            "score": 213,
+            "comments": 19,
+            "date": "2025-11-05",
+            "url": "https://www.reddit.com/r/loseit/comments/1op7i4k/thanks_rloseit_i_just_hit_my_goal_weight_lost_33/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1r5ngfj",
+            "subreddit": "caloriecount",
+            "title": "Do NOT use Cal AI to track calories",
+            "author": "StatureDelaware",
+            "score": 20,
+            "comments": 17,
+            "date": "2026-02-15",
+            "url": "https://www.reddit.com/r/caloriecount/comments/1r5ngfj/do_not_use_cal_ai_to_track_calories/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1pwi5xo",
+            "subreddit": "Myfitnesspal",
+            "title": "Tested MyFitnessPal, Cal AI, and meetaugust for a month - honest comparison",
+            "author": null,
+            "score": 16,
+            "comments": 20,
+            "date": "2025-12-26",
+            "url": "https://www.reddit.com/r/Myfitnesspal/comments/1pwi5xo/tested_myfitnesspal_cal_ai_and_meetaugust_for_a/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1sn4up8",
+            "subreddit": "CoachingSoftware",
+            "title": "CalAI just got pulled from the App Store — and it exposes a bigger problem with AI calorie tracking",
+            "author": "r1setraining",
+            "score": 11,
+            "comments": 13,
+            "date": "2026-04-16",
+            "url": "https://www.reddit.com/r/CoachingSoftware/comments/1sn4up8/calai_just_got_pulled_from_the_app_store_and_it/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1tkd9kp",
+            "subreddit": "DigitalMarketing",
+            "title": "How Cal AI hit $50M ARR and got acquired by MyFitnessPal",
+            "author": "Delicious-Pumpkin667",
+            "score": 10,
+            "comments": 15,
+            "date": "2026-05-22",
+            "url": "https://www.reddit.com/r/DigitalMarketing/comments/1tkd9kp/how_cal_ai_hit_50m_arr_and_got_acquired_by/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": false
+          },
+          {
+            "id": "1rnjzqs",
+            "subreddit": "startups",
+            "title": "I will not promote - How did Cal AI do it? What is behind the success?",
+            "author": "lulu0925",
+            "score": 7,
+            "comments": 12,
+            "date": "2026-03-07",
+            "url": "https://www.reddit.com/r/startups/comments/1rnjzqs/i_will_not_promote_how_did_cal_ai_do_it_what_is/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": false
+          }
+        ],
+        "comparisonThreads": [
+          {
+            "id": "1w5j521",
+            "subreddit": "ProductivityApps",
+            "title": "Does anyone use Cal AI or any other calorie tracker? Any better alternative?",
+            "author": "darthvadery",
+            "score": 1,
+            "comments": 13,
+            "date": "2026-09-02",
+            "url": "https://www.reddit.com/r/ProductivityApps/comments/1w5j521/does_anyone_use_cal_ai_or_any_other_calorie/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": true
+          }
+        ],
+        "askThreads": [
+          {
+            "id": "1w5j521",
+            "subreddit": "ProductivityApps",
+            "title": "Does anyone use Cal AI or any other calorie tracker? Any better alternative?",
+            "author": "darthvadery",
+            "score": 1,
+            "comments": 13,
+            "date": "2026-09-02",
+            "url": "https://www.reddit.com/r/ProductivityApps/comments/1w5j521/does_anyone_use_cal_ai_or_any_other_calorie/",
+            "selfPromo": false,
+            "affiliated": false,
+            "comparison": true
+          }
+        ],
+        "organicMentions": [
+          {
+            "author": "stonkbroker2024",
+            "score": 1,
+            "body": "Have you tried Myfitfix, it’s the best. It’s like CALAI but it adds other habits easily sync to the clean UI ( steps, exercise, sleep and water) and you get a fitscore every Sunday to encourage you to balance your healthy lifestyle. It’s revolutionary. We have credit score for o…",
+            "affiliated": false,
+            "thread": "Tested MyFitnessPal, Cal AI, and meetaugust for a month - honest comparison",
+            "url": "https://www.reddit.com/r/Myfitnesspal/comments/1pwi5xo/comment/nw6vfio/",
+            "date": "2025-12-27"
+          },
+          {
+            "author": "Gokuhouse",
+            "score": 1,
+            "body": "My personal experience here. I tried LoseIt and Cal AI. After a few days (before the trials ended) I decided on Cal AI because it was the quickest calorie tracker I've ever used. It isn’t 100% accurate but getting close enough for me was good. You can take a picture of the food …",
+            "affiliated": false,
+            "thread": "Tested MyFitnessPal, Cal AI, and meetaugust for a month - honest comparison",
+            "url": "https://www.reddit.com/r/Myfitnesspal/comments/1pwi5xo/comment/oookucq/",
+            "date": "2026-05-30"
           }
         ]
       }
     },
     {
-      "id": "E13",
-      "observedAt": "2026-10-18T13:21:12.703Z",
-      "source": "linkedin_ads",
+      "id": "E17",
+      "observedAt": "2026-10-18T14:28:38.580Z",
+      "source": "reddit",
       "kind": "observation",
-      "title": "LinkedIn ads: none found for advertiser \"Cal AI\"",
-      "url": "https://www.linkedin.com/ad-library/search?accountOwner=Cal%20AI",
+      "title": "Reddit threads ranking on Google for \"Cal AI\": 8 (top: Are image-based calorie apps like Cal AI accurate? How does it get ...)",
+      "url": "https://www.google.com/search?q=site%3Areddit.com%20%22Cal%20AI%22",
+      "data": [
+        {
+          "title": "Are image-based calorie apps like Cal AI accurate? How does it get ...",
+          "subreddit": "Healthy_Recipes",
+          "url": "https://www.reddit.com/r/Healthy_Recipes/comments/1c21nch/are_imagebased_calorie_apps_like_cal_ai_accurate/",
+          "snippet": "Apr 12, 2024 ... ... CAL AI app uses an immense amount of battery even when I'm not actively using it. Way more than mere step tracking such as Apple health and ..."
+        },
+        {
+          "title": "and it exposes a bigger problem with AI calorie tracking - Reddit",
+          "subreddit": "fitmeals",
+          "url": "https://www.reddit.com/r/fitmeals/comments/1sni6eq/calai_just_got_pulled_from_the_app_store_and_it/",
+          "snippet": "Apr 16, 2026 ... ... keeping track of calories? 4. 56. Anyone have success using Cal Ai? r/nutrition. • 2y ago. Anyone have success using Cal Ai? 2. 44. Post workout ..."
+        },
+        {
+          "title": "Tested MyFitnessPal, Cal AI, and meetaugust for a month - Reddit",
+          "subreddit": "Myfitnesspal",
+          "url": "https://www.reddit.com/r/Myfitnesspal/comments/1pwi5xo/tested_myfitnesspal_cal_ai_and_meetaugust_for_a/",
+          "snippet": "Dec 26, 2025 ... Cal AI is much easier - snap a photo, it guesses the calories and macros using recognition tech. Usually gets it right, sometimes way off ..."
+        },
+        {
+          "title": "CAL AI : r/Myfitnesspal - Reddit",
+          "subreddit": "Myfitnesspal",
+          "url": "https://www.reddit.com/r/Myfitnesspal/comments/1i87qvx/cal_ai/",
+          "snippet": "Jan 23, 2025 ... As the title says, I recently started using the CAL AI app. Does anyone else use it? I'm 27 years old (M), 190cm tall, and weigh 106kg."
+        },
+        {
+          "title": "MyFitnessPal has acquired Cal AI, the viral calorie app built by teens",
+          "subreddit": "technology",
+          "url": "https://www.reddit.com/r/technology/comments/1riw8m7/myfitnesspal_has_acquired_cal_ai_the_viral/",
+          "snippet": "Mar 2, 2026 ... After wooing Cal AI for months, MyFitnessPal has successfully acquired its up-and-coming rival, Cal AI, the app built by teens soaring on the ..."
+        },
+        {
+          "title": "Cal AI… thoughts? : r/workout - Reddit",
+          "subreddit": "workout",
+          "url": "https://www.reddit.com/r/workout/comments/1jnk6kf/cal_ai_thoughts/",
+          "snippet": "Mar 30, 2025 ... Award this post. Report. Cal AI… thoughts? I'm seeing a bunch of ads from this app. Have any of you tried it, and what are your thoughts? Upvote"
+        },
+        {
+          "title": "How Cal AI hit $50M ARR and got acquired by MyFitnessPal - Reddit",
+          "subreddit": "DigitalMarketing",
+          "url": "https://www.reddit.com/r/DigitalMarketing/comments/1tkd9kp/how_cal_ai_hit_50m_arr_and_got_acquired_by/",
+          "snippet": "May 22, 2026 ... 10 votes, 15 comments. I've deep-dived into the Cal AI acquisition and most people are completely missing why this worked."
+        },
+        {
+          "title": "better. AI Calorie Tracker is now 100% free! Every feature ... - Reddit",
+          "subreddit": "iosapps",
+          "url": "https://www.reddit.com/r/iosapps/comments/1tkdv1e/better_ai_calorie_tracker_is_now_100_free_every/",
+          "snippet": "May 22, 2026 ... ... Cal AI it was crowded. That is most probably the reason why you havent gotten any traction. I see a trend where a lot of «new developers ..."
+        }
+      ]
+    },
+    {
+      "id": "E18",
+      "observedAt": "2026-10-18T14:28:39.440Z",
+      "source": "wayback",
+      "kind": "observation",
+      "title": "Homepage history: first archived 2022-04-09, 24 monthly snapshots",
+      "url": "https://web.archive.org/web/*/calai.app",
       "data": {
-        "otherAdvertisersMatched": []
+        "firstSeen": "20220409051056",
+        "monthlySnapshots": 24,
+        "history": [
+          {
+            "date": "2022-04-09",
+            "title": "Calai app - Home",
+            "h1": "",
+            "description": "Distraction free calendar. Keep organised without the clutter.",
+            "ctas": [
+              "Join the Waitlist"
+            ]
+          },
+          {
+            "date": "2024-10-03",
+            "title": "Cal AI | Download Today",
+            "h1": "Track your calories with just a picture.",
+            "description": "Introducing Cal AI, the AI-powered app that simplifies calorie tracking. Snap a photo or scan a barcode, and Cal AI instantly calculates calories and nutrients. Stay on track with personalized insights and smart reminde…",
+            "ctas": [
+              "Download"
+            ]
+          },
+          {
+            "date": "2025-10-10",
+            "title": "Cal AI | Download Today",
+            "h1": "Meet Cal AI Track your calories with just a picture",
+            "description": "Download Today",
+            "ctas": [
+              "Claim My Free Trial"
+            ]
+          },
+          {
+            "date": "2026-04-08",
+            "title": "Cal AI | Download Today",
+            "h1": "Meet Cal AI Track your calories with just a picture",
+            "description": "Download Today",
+            "ctas": [
+              "Claim My Free Trial"
+            ]
+          },
+          {
+            "date": "2026-10-03",
+            "title": "Cal AI | Download Today",
+            "h1": "Meet Cal AI Track your calories with just a picture",
+            "description": "Download Today",
+            "ctas": [
+              "Request a refund from Apple",
+              "Request your Google Play refund",
+              "Claim My Free Trial"
+            ]
+          }
+        ]
       }
     },
     {
-      "id": "E14",
-      "observedAt": "2026-10-18T13:21:13.214Z",
+      "id": "E19",
+      "observedAt": "2026-10-18T14:28:39.522Z",
       "source": "linkedin",
       "kind": "observation",
       "title": "LinkedIn Cal AI: ? followers, 54 employees on LinkedIn, founded ?",
@@ -611,555 +1123,8 @@
       }
     },
     {
-      "id": "E15",
-      "observedAt": "2026-10-18T13:21:13.588Z",
-      "source": "wayback",
-      "kind": "observation",
-      "title": "Homepage history: first archived 2022-04-09, 24 monthly snapshots",
-      "url": "https://web.archive.org/web/*/calai.app",
-      "data": {
-        "firstSeen": "20220409051056",
-        "monthlySnapshots": 24,
-        "history": [
-          {
-            "date": "2022-04-09",
-            "title": "Calai app - Home",
-            "h1": "",
-            "description": "Distraction free calendar. Keep organised without the clutter.",
-            "ctas": [
-              "Join the Waitlist"
-            ]
-          },
-          {
-            "date": "2024-10-03",
-            "title": "Cal AI | Download Today",
-            "h1": "Track your calories with just a picture.",
-            "description": "Introducing Cal AI, the AI-powered app that simplifies calorie tracking. Snap a photo or scan a barcode, and Cal AI instantly calculates calories and nutrients. Stay on track with personalized insights and smart reminde…",
-            "ctas": [
-              "Download"
-            ]
-          },
-          {
-            "date": "2025-10-10",
-            "title": "Cal AI | Download Today",
-            "h1": "Meet Cal AI Track your calories with just a picture",
-            "description": "Download Today",
-            "ctas": [
-              "Claim My Free Trial"
-            ]
-          },
-          {
-            "date": "2026-04-08",
-            "title": "Cal AI | Download Today",
-            "h1": "Meet Cal AI Track your calories with just a picture",
-            "description": "Download Today",
-            "ctas": [
-              "Claim My Free Trial"
-            ]
-          },
-          {
-            "date": "2026-10-03",
-            "title": "Cal AI | Download Today",
-            "h1": "Meet Cal AI Track your calories with just a picture",
-            "description": "Download Today",
-            "ctas": [
-              "Request a refund from Apple",
-              "Request your Google Play refund",
-              "Claim My Free Trial"
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "id": "E16",
-      "observedAt": "2026-10-18T13:21:16.286Z",
-      "source": "seo",
-      "kind": "observation",
-      "title": "Top Google results for site:calai.app",
-      "url": "https://www.google.com/search?q=site:calai.app",
-      "data": [
-        {
-          "title": "Cal AI | Download Today",
-          "url": "https://www.calai.app/",
-          "description": "Meet Cal AI, the AI-powered app for easy calorie tracking. Snap a photo, scan a barcode, or describe your meal and get instant calorie and nutrient info."
-        },
-        {
-          "title": "Cal AI Payment Forms",
-          "url": "https://forms.calai.app/",
-          "description": "Input your payment details for Cal AI."
-        },
-        {
-          "title": "Privacy Notice - Cal AI",
-          "url": "https://www.calai.app/privacy",
-          "description": "May 21, 2026 ... Residents of the State of California have the right to request information from Cal AI regarding other companies to whom the company has ..."
-        },
-        {
-          "title": "Accessibility Statement for Cal AI – Calorie Tracker (iOS App)",
-          "url": "https://www.calai.app/access",
-          "description": "App Platform and Accessibility Integration. Cal AI is built natively for Apple iOS and is optimized for use on iPhones. Our development team has taken ..."
-        },
-        {
-          "title": "FAQ - Cal AI",
-          "url": "https://www.calai.app/faq",
-          "description": "My steps aren't showing up in CalAI · iPhone / Apple Health: In CalAI, swipe right on the calories screen → tap \"Connect with Apple Health.\" · Android / Google ..."
-        },
-        {
-          "title": "Terms of Service - Cal AI",
-          "url": "https://www.calai.app/tos",
-          "description": "Nov 28, 2025 ... Company, We, Us, or Ourmeans Cal AI, Inc., a Delaware corporation, with a mailing address at 160 W. Camino Real #594, Boca Raton, FL 33432, ..."
-        },
-        {
-          "title": "Sweepstakes Official Rules - Cal AI",
-          "url": "https://www.calai.app/sweepstakes",
-          "description": "Participants shall receive one automatic entry after they successfully complete and submit a survey. Or, to enter without submitting a survey, you may email ..."
-        },
-        {
-          "title": "Blog | Cal AI",
-          "url": "https://www.calai.app/blog",
-          "description": "Our Blog · Is the Zone Diet Healthy? · Can You Drink Protein Shakes While Intermittent Fasting · Why Am I Gaining Weight in a Calorie Deficit? · How Long Does ..."
-        },
-        {
-          "title": "Groups | Cal AI",
-          "url": "https://www.calai.app/groups",
-          "description": "Healthy habits feel easier when you do them with friends. Join groups and stay connected with friends to support one another in maintaining consistent ..."
-        },
-        {
-          "title": "Login - Cal AI",
-          "url": "https://www.calai.app/login",
-          "description": "Welcome back. Sign in to your Cal AI account. Continue with Google Continue with Apple. Download Cal AI. Google Play. Legal. Privacy Policy · Terms of use ..."
-        }
-      ]
-    },
-    {
-      "id": "E17",
-      "observedAt": "2026-10-18T13:21:16.327Z",
-      "source": "meta_ads",
-      "kind": "observation",
-      "title": "Meta ads: 949 ads in library (40 active in sample of 40), 4 launched in last 30d",
-      "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=311353912066626",
-      "data": {
-        "page": {
-          "id": "311353912066626",
-          "name": "Cal AI",
-          "likes": 2895,
-          "igUsername": "calai.app",
-          "igFollowers": 384077
-        },
-        "totalInLibrary": 949,
-        "sampled": 40,
-        "activeInSample": 40,
-        "launchedLast30d": 4,
-        "formats": {
-          "VIDEO": 40
-        },
-        "ctas": {
-          "Learn more": 28,
-          "Download": 11,
-          "Install now": 1
-        },
-        "platforms": {
-          "FACEBOOK": 40,
-          "INSTAGRAM": 40,
-          "THREADS": 40,
-          "MESSENGER": 20
-        },
-        "landingPages": {
-          "itunes.apple.com/app/id6480417616": 40
-        },
-        "utmCampaigns": {},
-        "longestRunningActive": [
-          {
-            "runningDays": 137,
-            "started": "2026-06-03",
-            "format": "VIDEO",
-            "variants": 7,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=2922821464729858"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 1,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=1021005514260002"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 1,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=1057659773863214"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 1,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=d6d6bc5c",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=1076813341674150"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 1,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=d6d6bc5c",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=1755157979160678"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 7,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=20dea1a6",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=1566040661829164"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 1,
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Learn more",
-            "landing": "http://itunes.apple.com/app/id6480417616?trybe=20dea1a6",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=1378150284270880"
-          },
-          {
-            "runningDays": 81,
-            "started": "2026-07-29",
-            "format": "VIDEO",
-            "variants": 1,
-            "title": "AI Counts Your Food for You",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
-            "cta": "Download",
-            "landing": "http://itunes.apple.com/app/id6480417616",
-            "hasVideo": true,
-            "url": "https://www.facebook.com/ads/library?id=4450098348566849"
-          }
-        ],
-        "newest": [
-          {
-            "started": "2026-10-11",
-            "format": "VIDEO",
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual log…",
-            "url": "https://www.facebook.com/ads/library?id=1105684182211688"
-          },
-          {
-            "started": "2026-09-30",
-            "format": "VIDEO",
-            "title": "You Have To Try This",
-            "body": "#ad If you're still typing every meal into MyFitnessPal, you're wasting your time.",
-            "url": "https://www.facebook.com/ads/library?id=1403617637942210"
-          },
-          {
-            "started": "2026-09-25",
-            "format": "VIDEO",
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual log…",
-            "url": "https://www.facebook.com/ads/library?id=1809915300436905"
-          },
-          {
-            "started": "2026-09-21",
-            "format": "VIDEO",
-            "title": "AI Counts Your Calories for You",
-            "body": "#ad AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual…",
-            "url": "https://www.facebook.com/ads/library?id=1538764284952078"
-          },
-          {
-            "started": "2026-09-08",
-            "format": "VIDEO",
-            "title": "Limited Time Free Trial 👉",
-            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual log…",
-            "url": "https://www.facebook.com/ads/library?id=1653157039705987"
-          }
-        ]
-      }
-    },
-    {
-      "id": "E18",
-      "observedAt": "2026-10-18T13:21:16.600Z",
-      "source": "reddit",
-      "kind": "observation",
-      "title": "Reddit: 7 recent threads mention calai.app (top r/ProductivityApps)",
-      "url": "https://www.reddit.com/search/?q=calai.app",
-      "data": {
-        "subreddits": {
-          "ProductivityApps": 1,
-          "CoachingSoftware": 1,
-          "apps": 1,
-          "CAIRevolution": 1,
-          "Myfitnesspal": 1,
-          "DigitalMarketing": 1,
-          "startups": 1
-        },
-        "threads": [
-          {
-            "subreddit": "CAIRevolution",
-            "title": "THEY SHUTTING THE APP/SITE FOREVER?",
-            "score": 297,
-            "comments": 187,
-            "date": "2026-10-13",
-            "author": "JustTinyBitHungry",
-            "url": "https://www.reddit.com/r/CAIRevolution/comments/1x4zab2/they_shutting_the_appsite_forever/"
-          },
-          {
-            "subreddit": "Myfitnesspal",
-            "title": "Tested MyFitnessPal, Cal AI, and meetaugust for a month - honest comparison",
-            "score": 16,
-            "comments": 20,
-            "date": "2025-12-26",
-            "author": null,
-            "url": "https://www.reddit.com/r/Myfitnesspal/comments/1pwi5xo/tested_myfitnesspal_cal_ai_and_meetaugust_for_a/"
-          },
-          {
-            "subreddit": "CoachingSoftware",
-            "title": "CalAI just got pulled from the App Store — and it exposes a bigger problem with AI calorie tracking",
-            "score": 11,
-            "comments": 13,
-            "date": "2026-04-16",
-            "author": "r1setraining",
-            "url": "https://www.reddit.com/r/CoachingSoftware/comments/1sn4up8/calai_just_got_pulled_from_the_app_store_and_it/"
-          },
-          {
-            "subreddit": "DigitalMarketing",
-            "title": "How Cal AI hit $50M ARR and got acquired by MyFitnessPal",
-            "score": 10,
-            "comments": 15,
-            "date": "2026-05-22",
-            "author": "Delicious-Pumpkin667",
-            "url": "https://www.reddit.com/r/DigitalMarketing/comments/1tkd9kp/how_cal_ai_hit_50m_arr_and_got_acquired_by/"
-          },
-          {
-            "subreddit": "startups",
-            "title": "I will not promote - How did Cal AI do it? What is behind the success?",
-            "score": 7,
-            "comments": 12,
-            "date": "2026-03-07",
-            "author": "lulu0925",
-            "url": "https://www.reddit.com/r/startups/comments/1rnjzqs/i_will_not_promote_how_did_cal_ai_do_it_what_is/"
-          },
-          {
-            "subreddit": "apps",
-            "title": "Why would people use Cal AI over gpt?",
-            "score": 3,
-            "comments": 16,
-            "date": "2025-08-24",
-            "author": "Cesur_mem",
-            "url": "https://www.reddit.com/r/apps/comments/1mz43ez/why_would_people_use_cal_ai_over_gpt/"
-          },
-          {
-            "subreddit": "ProductivityApps",
-            "title": "Does anyone use Cal AI or any other calorie tracker? Any better alternative?",
-            "score": 1,
-            "comments": 13,
-            "date": "2026-09-02",
-            "author": "darthvadery",
-            "url": "https://www.reddit.com/r/ProductivityApps/comments/1w5j521/does_anyone_use_cal_ai_or_any_other_calorie/"
-          }
-        ]
-      }
-    },
-    {
-      "id": "E19",
-      "observedAt": "2026-10-18T13:21:16.600Z",
-      "source": "producthunt",
-      "kind": "observation",
-      "title": "Product Hunt presence: Cal.com: Scheduling infrastructure for absolutely everyone; Cal.com Reviews (2026) - Product Hunt; Cal ID: Schedule and monetize meetings for free - Product H…",
-      "url": "https://www.producthunt.com/products/cal",
-      "data": [
-        {
-          "title": "Cal.com: Scheduling infrastructure for absolutely everyone",
-          "url": "https://www.producthunt.com/products/cal",
-          "snippet": "Cal.com Launches ; Cal.com Agents AI Agents coming to the best scheduling tool ; Cal.com Companion Apps Native iOS & Android App + Browser Extensions for ..."
-        },
-        {
-          "title": "Cal.com Reviews (2026) - Product Hunt",
-          "url": "https://www.producthunt.com/products/cal/reviews",
-          "snippet": "Very few or none out there on the product market are at par with Cal.com. Can't wait for Cal.ai to be in hands for general availability. What's great. easy ..."
-        },
-        {
-          "title": "Cal ID: Schedule and monetize meetings for free - Product Hunt",
-          "url": "https://www.producthunt.com/products/cal-id",
-          "snippet": "Cal ID is a fully open-source scheduling tool for solos and teams, with unlimited meetings, comprehensive integrations, real human support – and amazing ..."
-        }
-      ]
-    },
-    {
       "id": "E20",
-      "observedAt": "2026-10-18T13:21:18.526Z",
-      "source": "tiktok",
-      "kind": "derivation",
-      "title": "TikTok @getcalai: 6 followers, 37 videos, 1.8 posts/wk, median 433 views (recent)",
-      "url": "https://www.tiktok.com/@getcalai",
-      "data": {
-        "handleSource": "linked from website",
-        "followers": 6,
-        "totalLikes": 146,
-        "videos": 37,
-        "bio": "AI calorie scanner 🍱\nTrack calories & macros 👇\nhttps://tinyurl.com/5s7tj7yu",
-        "postsPerWeek": 1.8,
-        "medianViewsRecent": 433,
-        "lastPostDaysAgo": 24,
-        "sparkAdsInRecent": 0,
-        "topVideos": [
-          {
-            "views": 4654,
-            "likes": 82,
-            "shares": 0,
-            "saves": 2,
-            "created": 1779807140,
-            "hook": "Can AI detect this crispy meal? #calories #ai #fitness",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7644213418035006742"
-          },
-          {
-            "views": 904,
-            "likes": 3,
-            "shares": 0,
-            "saves": 0,
-            "created": 1780661809,
-            "hook": "🍔Scanned My KFC Meal...😱 1200 Caloties?! #calories #weightloss #fitness #nutrition #kfc",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7647884188024098070"
-          },
-          {
-            "views": 862,
-            "likes": 3,
-            "shares": 0,
-            "saves": 0,
-            "created": 1786786075,
-            "hook": "🍝 PASTA vs BURGER 🍔 Which Has More Calories?! 😳 #PastaVsBurger #CalorieCheck #FoodTok #FitnessTok #CalAI",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7674187731307613462"
-          },
-          {
-            "views": 843,
-            "likes": 3,
-            "shares": 0,
-            "saves": 2,
-            "created": 1786873856,
-            "hook": "🍗 KFC vs McDonald’s 🍔 Which Has More Calories?! 😳 #CalAI #CalorieComparison #FoodTok #nutritiontok",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7674564734724607254"
-          },
-          {
-            "views": 841,
-            "likes": 3,
-            "shares": 0,
-            "saves": 1,
-            "created": 1780230709,
-            "hook": "Want to lose weight? Start with this McDonald's meal #weightlosstransformation #mcdonaldsccsing #ai",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7646032640717393174"
-          },
-          {
-            "views": 833,
-            "likes": 4,
-            "shares": 0,
-            "saves": 1,
-            "created": 1779434618,
-            "hook": "Can AI really detect shawarma calories? #ai #fitness #calories #gym #weightloss #food",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7642613436160953622"
-          }
-        ],
-        "recentVideos": [
-          {
-            "views": 578,
-            "likes": 6,
-            "shares": 0,
-            "saves": 0,
-            "created": 1790245991,
-            "hook": "AI Missed an Ingredient… So I Added This 👀🍗 #CalAI #CalorieTracker #FoodTracking #AITools #fitnesstok",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7689047958762867990"
-          },
-          {
-            "views": 115,
-            "likes": 1,
-            "shares": 0,
-            "saves": 0,
-            "created": 1789313099,
-            "hook": "I Made My AI Calorie Tracker Smarter 🤖🍗 #CalAI #CalorieTracker #AITools #FoodTracking #fitnesstok",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7685041217838517526"
-          },
-          {
-            "views": 681,
-            "likes": 2,
-            "shares": 0,
-            "saves": 1,
-            "created": 1788181836,
-            "hook": "I Added New AI Features to My Calorie Tracker 🤖🍗 #CalAI #CalorieTracker #AI #FitnessApp #MacroTracking",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7680182465251560726"
-          },
-          {
-            "views": 255,
-            "likes": 1,
-            "shares": 0,
-            "saves": 0,
-            "created": 1787827234,
-            "hook": "🥩 Steak: GOOD or BAD for the Gym? 💪👀 #GymTok #Steak #HighProtein #Fitness #CalAI",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7678659478056619286"
-          },
-          {
-            "views": 803,
-            "likes": 1,
-            "shares": 0,
-            "saves": 0,
-            "created": 1787737568,
-            "hook": "420 Calories in ONE Coffee?! ☕😳 Scan It With AI #CalAI #CalorieTracker #AIFoodScanner #coffee #Fitness",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7678274363619167510"
-          },
-          {
-            "views": 846,
-            "likes": 2,
-            "shares": 0,
-            "saves": 0,
-            "created": 1787484952,
-            "hook": "🍗 KFC vs Pasta 🍝 Which Has More Calories?! 😳 #KFC #Pasta #CalorieComparison #CalorieTracker #CalAI",
-            "isAd": false,
-            "url": "https://www.tiktok.com/@getcalai/video/7677189371405126934"
-          }
-        ]
-      }
-    },
-    {
-      "id": "E21",
-      "observedAt": "2026-10-18T13:21:22.627Z",
+      "observedAt": "2026-10-18T14:28:39.528Z",
       "source": "instagram",
       "kind": "derivation",
       "title": "Instagram @calai.app: 384K followers, 0.8 posts/wk, median 279 likes",
@@ -1176,6 +1141,7 @@
         "engagementRate": 0.08,
         "topPosts": [
           {
+            "id": "3575419389736531353",
             "type": "image",
             "likes": 3565,
             "comments": 134,
@@ -1185,6 +1151,7 @@
             "url": "https://www.instagram.com/p/DGecP3YSjWZ/"
           },
           {
+            "id": "3575419123901651887",
             "type": "image",
             "likes": 3551,
             "comments": 190,
@@ -1194,6 +1161,7 @@
             "url": "https://www.instagram.com/p/DGecL_zS9uv/"
           },
           {
+            "id": "3653504243115403042",
             "type": "reel",
             "likes": 1654,
             "comments": 141,
@@ -1203,6 +1171,7 @@
             "url": "https://www.instagram.com/p/DKz2sCERqci/"
           },
           {
+            "id": "3575419593906945011",
             "type": "image",
             "likes": 1638,
             "comments": 46,
@@ -1212,6 +1181,7 @@
             "url": "https://www.instagram.com/p/DGecS1hy3vz/"
           },
           {
+            "id": "3602023408019455697",
             "type": "reel",
             "likes": 349,
             "comments": 13,
@@ -1224,20 +1194,618 @@
       }
     },
     {
+      "id": "E21",
+      "observedAt": "2026-10-18T14:28:39.531Z",
+      "source": "tiktok",
+      "kind": "derivation",
+      "title": "TikTok @getcalai: 6 followers, 37 videos, 1.8 posts/wk, median 433 views (recent)",
+      "url": "https://www.tiktok.com/@getcalai",
+      "data": {
+        "handleSource": "linked from website",
+        "followers": 6,
+        "totalLikes": 146,
+        "videos": 37,
+        "bio": "AI calorie scanner 🍱\nTrack calories & macros 👇\nhttps://tinyurl.com/5s7tj7yu",
+        "postsPerWeek": 1.8,
+        "medianViewsRecent": 433,
+        "lastPostDaysAgo": 24,
+        "sparkAdsInRecent": 0,
+        "topVideos": [
+          {
+            "id": "7644213418035006742",
+            "views": 4654,
+            "likes": 82,
+            "comments": 0,
+            "shares": 0,
+            "saves": 2,
+            "created": 1779807140,
+            "hook": "Can AI detect this crispy meal? #calories #ai #fitness",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7644213418035006742"
+          },
+          {
+            "id": "7647884188024098070",
+            "views": 904,
+            "likes": 3,
+            "comments": 0,
+            "shares": 0,
+            "saves": 0,
+            "created": 1780661809,
+            "hook": "🍔Scanned My KFC Meal...😱 1200 Caloties?! #calories #weightloss #fitness #nutrition #kfc",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7647884188024098070"
+          },
+          {
+            "id": "7674187731307613462",
+            "views": 862,
+            "likes": 3,
+            "comments": 1,
+            "shares": 0,
+            "saves": 0,
+            "created": 1786786075,
+            "hook": "🍝 PASTA vs BURGER 🍔 Which Has More Calories?! 😳 #PastaVsBurger #CalorieCheck #FoodTok #FitnessTok #CalAI",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7674187731307613462"
+          },
+          {
+            "id": "7674564734724607254",
+            "views": 843,
+            "likes": 3,
+            "comments": 1,
+            "shares": 0,
+            "saves": 2,
+            "created": 1786873856,
+            "hook": "🍗 KFC vs McDonald’s 🍔 Which Has More Calories?! 😳 #CalAI #CalorieComparison #FoodTok #nutritiontok",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7674564734724607254"
+          },
+          {
+            "id": "7646032640717393174",
+            "views": 841,
+            "likes": 3,
+            "comments": 0,
+            "shares": 0,
+            "saves": 1,
+            "created": 1780230709,
+            "hook": "Want to lose weight? Start with this McDonald's meal #weightlosstransformation #mcdonaldsccsing #ai",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7646032640717393174"
+          },
+          {
+            "id": "7642613436160953622",
+            "views": 833,
+            "likes": 4,
+            "comments": 1,
+            "shares": 0,
+            "saves": 1,
+            "created": 1779434618,
+            "hook": "Can AI really detect shawarma calories? #ai #fitness #calories #gym #weightloss #food",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7642613436160953622"
+          }
+        ],
+        "recentVideos": [
+          {
+            "id": "7689047958762867990",
+            "views": 578,
+            "likes": 6,
+            "comments": 1,
+            "shares": 0,
+            "saves": 0,
+            "created": 1790245991,
+            "hook": "AI Missed an Ingredient… So I Added This 👀🍗 #CalAI #CalorieTracker #FoodTracking #AITools #fitnesstok",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7689047958762867990"
+          },
+          {
+            "id": "7685041217838517526",
+            "views": 115,
+            "likes": 1,
+            "comments": 1,
+            "shares": 0,
+            "saves": 0,
+            "created": 1789313099,
+            "hook": "I Made My AI Calorie Tracker Smarter 🤖🍗 #CalAI #CalorieTracker #AITools #FoodTracking #fitnesstok",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7685041217838517526"
+          },
+          {
+            "id": "7680182465251560726",
+            "views": 681,
+            "likes": 2,
+            "comments": 1,
+            "shares": 0,
+            "saves": 1,
+            "created": 1788181836,
+            "hook": "I Added New AI Features to My Calorie Tracker 🤖🍗 #CalAI #CalorieTracker #AI #FitnessApp #MacroTracking",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7680182465251560726"
+          },
+          {
+            "id": "7678659478056619286",
+            "views": 255,
+            "likes": 1,
+            "comments": 1,
+            "shares": 0,
+            "saves": 0,
+            "created": 1787827234,
+            "hook": "🥩 Steak: GOOD or BAD for the Gym? 💪👀 #GymTok #Steak #HighProtein #Fitness #CalAI",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7678659478056619286"
+          },
+          {
+            "id": "7678274363619167510",
+            "views": 803,
+            "likes": 1,
+            "comments": 1,
+            "shares": 0,
+            "saves": 0,
+            "created": 1787737568,
+            "hook": "420 Calories in ONE Coffee?! ☕😳 Scan It With AI #CalAI #CalorieTracker #AIFoodScanner #coffee #Fitness",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7678274363619167510"
+          },
+          {
+            "id": "7677189371405126934",
+            "views": 846,
+            "likes": 2,
+            "comments": 1,
+            "shares": 0,
+            "saves": 0,
+            "created": 1787484952,
+            "hook": "🍗 KFC vs Pasta 🍝 Which Has More Calories?! 😳 #KFC #Pasta #CalorieComparison #CalorieTracker #CalAI",
+            "isAd": false,
+            "url": "https://www.tiktok.com/@getcalai/video/7677189371405126934"
+          }
+        ]
+      }
+    },
+    {
       "id": "E22",
-      "observedAt": "2026-10-18T13:21:41.738Z",
+      "observedAt": "2026-10-18T14:28:42.670Z",
+      "source": "meta_ads",
+      "kind": "observation",
+      "title": "Meta ads: 894 ads in library, 692 active now, 1 launched in last 30d (sample of 61)",
+      "url": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=311353912066626",
+      "data": {
+        "page": {
+          "id": "311353912066626",
+          "name": "Cal AI",
+          "likes": 2895,
+          "igUsername": "calai.app",
+          "igFollowers": 384077
+        },
+        "totalInLibrary": 894,
+        "activeNow": 692,
+        "sampled": 61,
+        "activeInSample": 30,
+        "lastRan": "2026-10-18",
+        "launchedLast30d": 1,
+        "formats": {
+          "VIDEO": 61
+        },
+        "ctas": {
+          "Learn more": 36,
+          "Download": 25
+        },
+        "platforms": {
+          "FACEBOOK": 61,
+          "INSTAGRAM": 61,
+          "THREADS": 61,
+          "MESSENGER": 47,
+          "AUDIENCE_NETWORK": 13
+        },
+        "landingPages": {
+          "itunes.apple.com/app/id6480417616": 60,
+          "app.appsflyer.com/id6480417616": 1
+        },
+        "utmCampaigns": {},
+        "longestRunning": [
+          {
+            "runningDays": 185,
+            "active": false,
+            "started": "2026-04-14",
+            "ended": "2026-10-16",
+            "format": "VIDEO",
+            "variants": 12,
+            "title": "Calorie Tracking Made Easy",
+            "body": "Track your calories as easy as taking a picture of your food",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1303607675011510"
+          },
+          {
+            "runningDays": 185,
+            "active": false,
+            "started": "2026-04-14",
+            "ended": "2026-10-16",
+            "format": "VIDEO",
+            "variants": 10,
+            "title": "Calorie Tracking Made Easy",
+            "body": "Track your calories as easy as taking a picture of your food",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1205578701472396"
+          },
+          {
+            "runningDays": 184,
+            "active": false,
+            "started": "2026-04-14",
+            "ended": "2026-10-15",
+            "format": "VIDEO",
+            "variants": 12,
+            "title": "AI Counts Your Food For You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=940685895393764"
+          },
+          {
+            "runningDays": 184,
+            "active": false,
+            "started": "2026-04-14",
+            "ended": "2026-10-15",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "Calorie Tracking Made Easy",
+            "body": "Track your calories as easy as taking a picture of your food",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1427384048700638"
+          },
+          {
+            "runningDays": 184,
+            "active": false,
+            "started": "2026-04-14",
+            "ended": "2026-10-15",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "AI Counts Your Food for You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=2021491678798871"
+          },
+          {
+            "runningDays": 137,
+            "active": true,
+            "started": "2026-06-03",
+            "format": "VIDEO",
+            "variants": 8,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=2922821464729858"
+          },
+          {
+            "runningDays": 81,
+            "active": true,
+            "started": "2026-07-29",
+            "format": "VIDEO",
+            "variants": 9,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=20dea1a6",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1566040661829164"
+          },
+          {
+            "runningDays": 81,
+            "active": true,
+            "started": "2026-07-29",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "AI Counts Your Food for You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=4450098348566849"
+          }
+        ],
+        "longestRunningActive": [
+          {
+            "runningDays": 137,
+            "active": true,
+            "started": "2026-06-03",
+            "format": "VIDEO",
+            "variants": 8,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=2922821464729858"
+          },
+          {
+            "runningDays": 81,
+            "active": true,
+            "started": "2026-07-29",
+            "format": "VIDEO",
+            "variants": 9,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=20dea1a6",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1566040661829164"
+          },
+          {
+            "runningDays": 81,
+            "active": true,
+            "started": "2026-07-29",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "AI Counts Your Food for You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=4450098348566849"
+          },
+          {
+            "runningDays": 81,
+            "active": true,
+            "started": "2026-07-29",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1021005514260002"
+          },
+          {
+            "runningDays": 81,
+            "active": true,
+            "started": "2026-07-29",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1057659773863214"
+          }
+        ],
+        "mostShown": [
+          {
+            "runningDays": 137,
+            "active": true,
+            "started": "2026-06-03",
+            "format": "VIDEO",
+            "variants": 8,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=bc4fafc1",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=2922821464729858"
+          },
+          {
+            "runningDays": 50,
+            "active": false,
+            "started": "2025-12-26",
+            "ended": "2026-02-14",
+            "format": "VIDEO",
+            "variants": 4,
+            "title": "AI Counts Your Food for You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1368170628323463"
+          },
+          {
+            "runningDays": 31,
+            "active": false,
+            "started": "2026-02-13",
+            "ended": "2026-03-16",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "AI Counts Your Food for You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1588058392409399"
+          },
+          {
+            "runningDays": 184,
+            "active": false,
+            "started": "2026-04-14",
+            "ended": "2026-10-15",
+            "format": "VIDEO",
+            "variants": 12,
+            "title": "AI Counts Your Food For You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=940685895393764"
+          },
+          {
+            "runningDays": 49,
+            "active": false,
+            "started": "2025-12-26",
+            "ended": "2026-02-13",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "AI Counts Your Food For You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1151124703837128"
+          },
+          {
+            "runningDays": 50,
+            "active": false,
+            "started": "2025-12-26",
+            "ended": "2026-02-14",
+            "format": "VIDEO",
+            "variants": 6,
+            "title": "AI Counts Your Food For You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1792521544795747"
+          },
+          {
+            "runningDays": 40,
+            "active": true,
+            "started": "2026-09-08",
+            "format": "VIDEO",
+            "variants": 9,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=d6d6bc5c",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=28316219904686268"
+          },
+          {
+            "runningDays": 55,
+            "active": false,
+            "started": "2026-08-18",
+            "ended": "2026-10-12",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=d6d6bc5c",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=2227569554699786"
+          }
+        ],
+        "newest": [
+          {
+            "runningDays": 23,
+            "active": true,
+            "started": "2026-09-25",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=04e6282d",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1809915300436905"
+          },
+          {
+            "runningDays": 40,
+            "active": true,
+            "started": "2026-09-08",
+            "format": "VIDEO",
+            "variants": 9,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=d6d6bc5c",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=28316219904686268"
+          },
+          {
+            "runningDays": 40,
+            "active": true,
+            "started": "2026-09-08",
+            "format": "VIDEO",
+            "variants": 1,
+            "title": "Limited Time Free Trial 👉",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Learn more",
+            "landing": "http://itunes.apple.com/app/id6480417616?trybe=20dea1a6",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1664812581669646"
+          },
+          {
+            "runningDays": 40,
+            "active": true,
+            "started": "2026-09-08",
+            "format": "VIDEO",
+            "variants": 12,
+            "title": "AI Counts Your Food for You",
+            "body": "AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging.",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1049625001042447"
+          },
+          {
+            "runningDays": 40,
+            "active": true,
+            "started": "2026-09-08",
+            "format": "VIDEO",
+            "variants": 12,
+            "title": "Calorie Tracking Made Easy",
+            "body": "Track your calories as easy as taking a picture of your food",
+            "cta": "Download",
+            "landing": "http://itunes.apple.com/app/id6480417616",
+            "hasVideo": true,
+            "url": "https://www.facebook.com/ads/library?id=1976384713070310"
+          }
+        ]
+      }
+    },
+    {
+      "id": "E23",
+      "observedAt": "2026-10-18T14:28:50.305Z",
       "source": "founders",
       "kind": "observation",
-      "title": "Founders/leaders: Zach Yadegari, X 86,570; Blake W Anderson; Henry Langmack",
-      "url": "https://www.google.com/search?q=%22Cal%20AI%22%20founder%20site%3Alinkedin.com%2Fin",
+      "title": "Founders/leaders: Zach Yadegari (Founder) · 24,154 LI followers · X 86,570; Henry Langmack (Founder) · 1,184 LI followers · X 5,709; I's Teen (Founder); Babak Hassibi (Founder)",
+      "url": "https://www.google.com/search?q=%22Cal%20AI%22%20founder",
       "data": [
         {
           "name": "Zach Yadegari",
-          "headline": "Zach Yadegari - Forbes 30 under 30 // CEO of Cal AI // 18 years old",
-          "url": "https://www.linkedin.com/in/zachyadegari",
-          "snippet": "Forbes 30 under 30 // CEO of Cal AI // 18 years old · Experience: Cal AI ... Co-Founder & CEO. Cal AI. Apr 2024 - Present 2 years 7 months. 10 million ...",
-          "linkedinFollowers": null,
-          "recentPosts": [],
+          "confidence": "high",
+          "score": 4,
+          "sources": [
+            "linkedin_search",
+            "google_snippet"
+          ],
+          "evidenceUrls": [
+            "https://www.linkedin.com/in/zachyadegari",
+            "https://superwall.com/case-studies/cal-ai",
+            "https://www.productmarketfit.tech/p/18-years-old-and-12m-arr-how-two",
+            "https://www.instagram.com/p/DeR9mPZkcTP/",
+            "https://creatordb.app/creatorstats/zachyadegari/",
+            "https://mealthinker.com/blog/myfitnesspal-acquires-cal-ai",
+            "https://www.instagram.com/reel/DVggpeZCZo5/?hl=en"
+          ],
+          "role": "Founder",
+          "linkedin": "https://www.linkedin.com/in/zachyadegari",
+          "photo": "https://media.licdn.com/dms/image/v2/D4E03AQFbsGHpn7dpfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1724109021488?e=2147483647&v=beta&t=fk4Jce53obwQbix0f7YjWKw4EZfSpJpufqeD6g54ogU",
+          "linkedinFollowers": 24154,
+          "location": "Roslyn, New York, United States",
+          "recentPosts": [
+            {
+              "date": "2026-09-15",
+              "title": "Everyone’s been asking what’s next after selling Cal AI. Introducing Persona. Others couldn’t figure out the interface, we did. https://lnkd.in/g8tWckHX",
+              "url": "https://www.linkedin.com/posts/zachyadegari_everyones-been-asking-whats-next-after-activity-7505660761181085696-dD4y"
+            },
+            {
+              "date": "2025-05-26",
+              "title": "Had a blast at MAU Vegas",
+              "url": "https://www.linkedin.com/posts/zachyadegari_had-a-blast-at-mau-vegas-activity-7332860587728642050-ZayX"
+            },
+            {
+              "date": "2023-08-02",
+              "title": "Late post but came up in my camera roll and decided it’s worth uploading. Also first post. Had a lot of fun and met a lot of cool people at Techstars, June 202…",
+              "url": "https://www.linkedin.com/posts/zachyadegari_late-post-but-came-up-in-my-camera-roll-and-activity-7092603878667358208-iCNg"
+            }
+          ],
           "articles": [],
           "postsRecently": false,
           "x": {
@@ -1245,27 +1813,59 @@
             "followers": 86570,
             "bio": "19. Forbes 30u30. https://t.co/kzOxNGZoSP (acquired) @yourpersona ✡️",
             "url": "https://x.com/zach_yadegari"
-          }
-        },
-        {
-          "name": "Blake W Anderson",
-          "headline": "Blake W Anderson - Founder EcoGPT, Cal AI - Forbes 30u30",
-          "url": "https://www.linkedin.com/in/blakeandersonw",
-          "snippet": "Founder EcoGPT, Cal AI - Forbes 30u30 · My objective is to help people have ... Co-Founder. EcoGPT. Apr 2026 - Present 7 months. 6m users, 425k trees ...",
-          "linkedinFollowers": null,
-          "recentPosts": [],
-          "articles": [],
-          "postsRecently": false
+          },
+          "recentXPostCount": 20
         },
         {
           "name": "Henry Langmack",
-          "headline": "Henry Langmack - Cofounder @ Soar / 19 Years Old | LinkedIn",
-          "url": "https://www.linkedin.com/in/henrylangmack",
-          "snippet": "Cofounder @ Soar / 19 Years Old · Experience: Soar · Location: United States ... Co-Founder & CTO. Cal AI. Mar 2024 - May 2026 2 years 3 months. New York ...",
-          "linkedinFollowers": null,
+          "confidence": "medium",
+          "score": 2,
+          "sources": [
+            "google_snippet"
+          ],
+          "evidenceUrls": [
+            "https://superwall.com/case-studies/cal-ai",
+            "https://www.productmarketfit.tech/p/18-years-old-and-12m-arr-how-two",
+            "https://mealthinker.com/blog/myfitnesspal-acquires-cal-ai"
+          ],
+          "role": "Founder",
+          "linkedin": "https://www.linkedin.com/in/henrylangmack",
+          "photo": "https://media.licdn.com/dms/image/v2/D4E03AQEeuRfJQx-gNQ/profile-displayphoto-scale_200_200/B4EZsGLp3uGcAY-/0/1765335280707?e=2147483647&v=beta&t=kTcYdvg1X2VP9a22HPPUS4VVGJUHYWg1VYEtChTa8r4",
+          "linkedinFollowers": 1184,
+          "location": "United States",
           "recentPosts": [],
           "articles": [],
-          "postsRecently": false
+          "postsRecently": false,
+          "x": {
+            "handle": "henrylangmack",
+            "followers": 5709,
+            "bio": "19. Making fun products Exited @calai_app, Cofounder @rifttravel",
+            "url": "https://x.com/henrylangmack"
+          }
+        },
+        {
+          "name": "I's Teen",
+          "confidence": "medium",
+          "score": 2,
+          "sources": [
+            "google_snippet"
+          ],
+          "evidenceUrls": [
+            "https://valueaddvc.com/pulse/cal-ai-30m-revenue-myfitnesspal-acquisition-2026"
+          ],
+          "role": "Founder"
+        },
+        {
+          "name": "Babak Hassibi",
+          "confidence": "medium",
+          "score": 2,
+          "sources": [
+            "google_snippet"
+          ],
+          "evidenceUrls": [
+            "https://www.instagram.com/popular/cal-ai-founders-and-team/"
+          ],
+          "role": "Founder"
         }
       ]
     }
@@ -1294,50 +1894,182 @@
     {
       "source": "website",
       "status": "ok",
-      "ms": 410
-    },
-    {
-      "source": "appstore",
-      "status": "ok",
-      "ms": 585
-    },
-    {
-      "source": "hackernews",
-      "status": "ok",
-      "ms": 290
-    },
-    {
-      "source": "wayback",
-      "status": "ok",
-      "ms": 2743
+      "ms": 354
     },
     {
       "source": "seo",
       "status": "ok",
-      "ms": 5442
+      "ms": 552
     },
     {
-      "source": "paid",
+      "source": "appstore",
       "status": "ok",
-      "ms": 5480
+      "ms": 739
+    },
+    {
+      "source": "hackernews",
+      "status": "ok",
+      "ms": 306
     },
     {
       "source": "community",
       "status": "ok",
-      "ms": 5752
+      "ms": 1553
+    },
+    {
+      "source": "wayback",
+      "status": "ok",
+      "ms": 2416
     },
     {
       "source": "social",
       "status": "ok",
-      "ms": 11780
+      "ms": 2505
+    },
+    {
+      "source": "paid",
+      "status": "ok",
+      "ms": 5646
     },
     {
       "source": "founders",
       "status": "ok",
-      "ms": 30891
+      "ms": 13279
     }
   ],
   "credits": {
-    "scrapecreators": 19
+    "scrapecreators": 12
+  },
+  "content": [],
+  "identity": {
+    "logo": "https://media.licdn.com/dms/image/v2/D560BAQHEQeB7troyag/company-logo_200_200/company-logo_200_200/0/1720641863077/cal_ai_app_logo?e=2147483647&v=beta&t=QCEJ0gcadrdMzR0YAwl1GyaF93bdJN-jBRSn6bCt0wg",
+    "logos": [
+      {
+        "url": "https://media.licdn.com/dms/image/v2/D560BAQHEQeB7troyag/company-logo_200_200/company-logo_200_200/0/1720641863077/cal_ai_app_logo?e=2147483647&v=beta&t=QCEJ0gcadrdMzR0YAwl1GyaF93bdJN-jBRSn6bCt0wg",
+        "source": "linkedin",
+        "size": 200
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/1f/e3/4e/1fe34eb7-a155-17c2-596a-c1d28658df42/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg",
+        "source": "appstore",
+        "size": 512
+      },
+      {
+        "url": "https://scontent-ord5-1.cdninstagram.com/v/t51.82787-19/584615366_17922275679195562_4674348776676832940_n.jpg?_nc_cat=1&ig_cache_key=GMaF2CKq0Wz7Nqw-AKy2GlZyn95AbmNDAQAB0j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=-HpbyQ92gbUQ7kNvwHCyyKx&_nc_oc=AdoCrVrMOObIoxbA9iVvCrswGvG-MPk16Uq7EgjFR3-ftJaybXlpsxpLdPHs4p6ltBA&_nc_zt=24&_nc_ht=scontent-ord5-1.cdninstagram.com&_nc_gid=51EdXySyhCUDcUqe39Muug&_nc_ss=78a8c&oh=00_AQNsvONoVoIjaHs7lUaBLXqO4LL36c8rzzhn0JsJSNPzLg&oe=6ADA9FC9",
+        "source": "instagram",
+        "size": 320
+      },
+      {
+        "url": "https://www.calai.app/opengraph.jpg",
+        "source": "og-image"
+      },
+      {
+        "url": "https://www.google.com/s2/favicons?sz=128&domain=calai.app",
+        "source": "favicon",
+        "size": 128
+      }
+    ],
+    "founders": [
+      {
+        "name": "Zach Yadegari",
+        "confidence": "high",
+        "score": 4,
+        "sources": [
+          "linkedin_search",
+          "google_snippet"
+        ],
+        "evidenceUrls": [
+          "https://www.linkedin.com/in/zachyadegari",
+          "https://superwall.com/case-studies/cal-ai",
+          "https://www.productmarketfit.tech/p/18-years-old-and-12m-arr-how-two",
+          "https://www.instagram.com/p/DeR9mPZkcTP/",
+          "https://creatordb.app/creatorstats/zachyadegari/",
+          "https://mealthinker.com/blog/myfitnesspal-acquires-cal-ai",
+          "https://www.instagram.com/reel/DVggpeZCZo5/?hl=en"
+        ],
+        "role": "Founder",
+        "linkedin": "https://www.linkedin.com/in/zachyadegari",
+        "photo": "https://media.licdn.com/dms/image/v2/D4E03AQFbsGHpn7dpfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1724109021488?e=2147483647&v=beta&t=fk4Jce53obwQbix0f7YjWKw4EZfSpJpufqeD6g54ogU",
+        "linkedinFollowers": 24154,
+        "location": "Roslyn, New York, United States",
+        "recentPosts": [
+          {
+            "date": "2026-09-15",
+            "title": "Everyone’s been asking what’s next after selling Cal AI. Introducing Persona. Others couldn’t figure out the interface, we did. https://lnkd.in/g8tWckHX",
+            "url": "https://www.linkedin.com/posts/zachyadegari_everyones-been-asking-whats-next-after-activity-7505660761181085696-dD4y"
+          },
+          {
+            "date": "2025-05-26",
+            "title": "Had a blast at MAU Vegas",
+            "url": "https://www.linkedin.com/posts/zachyadegari_had-a-blast-at-mau-vegas-activity-7332860587728642050-ZayX"
+          },
+          {
+            "date": "2023-08-02",
+            "title": "Late post but came up in my camera roll and decided it’s worth uploading. Also first post. Had a lot of fun and met a lot of cool people at Techstars, June 202…",
+            "url": "https://www.linkedin.com/posts/zachyadegari_late-post-but-came-up-in-my-camera-roll-and-activity-7092603878667358208-iCNg"
+          }
+        ],
+        "articles": [],
+        "postsRecently": false,
+        "x": {
+          "handle": "zach_yadegari",
+          "followers": 86570,
+          "bio": "19. Forbes 30u30. https://t.co/kzOxNGZoSP (acquired) @yourpersona ✡️",
+          "url": "https://x.com/zach_yadegari"
+        },
+        "recentXPostCount": 20
+      },
+      {
+        "name": "Henry Langmack",
+        "confidence": "medium",
+        "score": 2,
+        "sources": [
+          "google_snippet"
+        ],
+        "evidenceUrls": [
+          "https://superwall.com/case-studies/cal-ai",
+          "https://www.productmarketfit.tech/p/18-years-old-and-12m-arr-how-two",
+          "https://mealthinker.com/blog/myfitnesspal-acquires-cal-ai"
+        ],
+        "role": "Founder",
+        "linkedin": "https://www.linkedin.com/in/henrylangmack",
+        "photo": "https://media.licdn.com/dms/image/v2/D4E03AQEeuRfJQx-gNQ/profile-displayphoto-scale_200_200/B4EZsGLp3uGcAY-/0/1765335280707?e=2147483647&v=beta&t=kTcYdvg1X2VP9a22HPPUS4VVGJUHYWg1VYEtChTa8r4",
+        "linkedinFollowers": 1184,
+        "location": "United States",
+        "recentPosts": [],
+        "articles": [],
+        "postsRecently": false,
+        "x": {
+          "handle": "henrylangmack",
+          "followers": 5709,
+          "bio": "19. Making fun products Exited @calai_app, Cofounder @rifttravel",
+          "url": "https://x.com/henrylangmack"
+        }
+      },
+      {
+        "name": "I's Teen",
+        "confidence": "medium",
+        "score": 2,
+        "sources": [
+          "google_snippet"
+        ],
+        "evidenceUrls": [
+          "https://valueaddvc.com/pulse/cal-ai-30m-revenue-myfitnesspal-acquisition-2026"
+        ],
+        "role": "Founder"
+      },
+      {
+        "name": "Babak Hassibi",
+        "confidence": "medium",
+        "score": 2,
+        "sources": [
+          "google_snippet"
+        ],
+        "evidenceUrls": [
+          "https://www.instagram.com/popular/cal-ai-founders-and-team/"
+        ],
+        "role": "Founder"
+      }
+    ]
   }
 }

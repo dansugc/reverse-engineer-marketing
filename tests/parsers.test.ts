@@ -189,3 +189,17 @@ describe("reddit", () => {
     expect(classifyPost({ id: "3", subreddit: "x", title: "unrelated", selftext: "", author: "u", url: "u" }, "Cal AI")).toBeNull();
   });
 });
+
+describe("security", () => {
+  it("blocks private, loopback and non-http targets", async () => {
+    const { assertPublicUrl } = await import("../src/http.js");
+    for (const bad of ["http://localhost:4321/api/status", "http://127.0.0.1/", "http://10.0.0.5/", "http://192.168.1.1/", "http://169.254.169.254/latest/meta-data", "http://[::1]/", "http://172.20.0.1/", "file:///etc/passwd", "http://router.local/", "http://intranet/"])
+      expect(() => assertPublicUrl(bad), bad).toThrow();
+    expect(assertPublicUrl("https://notion.so/").hostname).toBe("notion.so");
+    expect(() => parseTarget("localhost:4321")).toThrow();
+  });
+  it("rejects model names that look like CLI flags", async () => {
+    const { writeReport } = await import("../src/engines.js");
+    await expect(writeReport("claude-code", {} as any, { model: "--dangerously-skip-permissions" })).rejects.toThrow("Invalid model name");
+  });
+});

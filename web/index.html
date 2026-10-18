@@ -432,13 +432,15 @@ function fmtN(n) { n = Number(n); if (!Number.isFinite(n)) return ""; return n >
 function store(k, v) { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} }
 function load(k) { try { return localStorage.getItem(k); } catch { return null; } }
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 1800); }
+/** Only http(s) links leave the app; scraped data can't smuggle javascript: URLs. */
+function safeUrl(u) { try { const x = new URL(String(u || ""), location.href); return x.protocol === "https:" || x.protocol === "http:" ? x.href : "#"; } catch { return "#"; } }
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
 function ago(iso) { const s = (Date.now() - Date.parse(iso)) / 1000; return s < 3600 ? `${Math.max(1, Math.round(s / 60))}m ago` : s < 86400 ? `${Math.round(s / 3600)}h ago` : `${Math.round(s / 86400)}d ago`; }
 function favicon(domain) { return domain ? `https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(domain)}` : ""; }
 function initials(name) { return String(name || "?").split(/\s+/).map(w => w[0]).slice(0, 2).join("").toUpperCase(); }
 /** <img> that walks a list of candidate URLs, then falls back to initials. */
 function logoEl(urls, name, cls = "logo-img") {
-  const list = urls.filter(Boolean);
+  const list = urls.filter(Boolean).map(safeUrl).filter(u => u !== "#");
   const fallback = () => { const s = document.createElement("span"); s.className = cls === "logo-img" ? "logo-fallback" : "initials"; s.textContent = initials(name); return s; };
   if (!list.length) return fallback();
   const img = document.createElement("img");
@@ -489,7 +491,7 @@ async function renderRecent() {
   $("#recentWrap").hidden = !runs.length;
   $("#recent").innerHTML = runs.slice(0, 12).map(r => `
     <a href="#/run/${encodeURIComponent(r.id)}">
-      <img class="favicon" src="${esc(r.logo || favicon(r.domain))}" data-fallback="${esc(favicon(r.domain))}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback}" referrerpolicy="no-referrer" alt="">
+      <img class="favicon" src="${esc(safeUrl(r.logo || favicon(r.domain)))}" data-fallback="${esc(favicon(r.domain))}" onerror="if(this.src!==this.dataset.fallback){this.src=this.dataset.fallback}" referrerpolicy="no-referrer" alt="">
       <span><strong>${esc(r.brand)}</strong> <span style="color:var(--faint)">${esc(r.domain || "")}</span></span>
       ${r.hasReport ? '<span class="tag">report</span>' : '<span class="tag">evidence</span>'}
       <span class="when">${ago(r.at)}</span>
@@ -602,7 +604,7 @@ function card(c) {
     media.className = "media" + (c.platform === "youtube" || c.platform === "x" || c.platform === "google_ads" || c.platform === "linkedin_ads" ? " wide" : "");
     if (c.thumb) {
       const img = document.createElement("img");
-      img.src = c.thumb; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
+      img.src = safeUrl(c.thumb); img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
       img.onerror = () => { img.remove(); if (!c.video) media.innerHTML = '<span class="ph">preview expired · open the original</span>'; };
       media.appendChild(img);
     }
@@ -611,7 +613,7 @@ function card(c) {
       btn.className = "play"; btn.setAttribute("aria-label", "Play video"); btn.innerHTML = "<span>▶</span>";
       btn.onclick = () => {
         const v = document.createElement("video");
-        v.src = c.video; v.controls = true; v.autoplay = true; v.playsInline = true; v.referrerPolicy = "no-referrer";
+        v.src = safeUrl(c.video); v.controls = true; v.autoplay = true; v.playsInline = true; v.referrerPolicy = "no-referrer";
         v.onerror = () => { media.innerHTML = '<span class="ph">video link expired · open the original</span>'; };
         media.replaceChildren(v);
       };
@@ -638,7 +640,7 @@ function card(c) {
     ${c.text ? `<p>${esc(c.text)}</p>` : ""}
     ${stats ? `<div class="stats">${stats}</div>` : ""}
     ${c.tags?.length ? `<div class="tags">${c.tags.map(t => `<span class="${hot(t) ? "hot" : ""}">${esc(t)}</span>`).join("")}</div>` : ""}
-    <div class="foot"><span>${esc(c.author || "")}${c.date ? ` · ${esc(c.date)}` : ""}</span><a href="${esc(c.url)}" target="_blank" rel="noreferrer">Open ↗</a></div>`;
+    <div class="foot"><span>${esc(c.author || "")}${c.date ? ` · ${esc(c.date)}` : ""}</span><a href="${esc(safeUrl(c.url))}" target="_blank" rel="noreferrer">Open ↗</a></div>`;
   el.appendChild(body);
   return el;
 }
@@ -655,7 +657,7 @@ function renderFounders(list) {
     const info = document.createElement("div");
     info.innerHTML = `<b>${esc(f.name)}</b><span class="conf ${f.confidence}" title="Sources: ${esc((f.sources || []).join(", "))}">${esc(f.confidence)}</span>
       <div class="role">${esc(f.role || "")}${reach ? ` · ${reach}` : ""}${f.postsRecently ? " · posting" : ""}</div>
-      <div class="links">${f.linkedin ? `<a href="${esc(f.linkedin)}" target="_blank" rel="noreferrer">LinkedIn ↗</a>` : ""}${f.x ? `<a href="${esc(f.x.url)}" target="_blank" rel="noreferrer">@${esc(f.x.handle)} ↗</a>` : ""}</div>`;
+      <div class="links">${f.linkedin ? `<a href="${esc(safeUrl(f.linkedin))}" target="_blank" rel="noreferrer">LinkedIn ↗</a>` : ""}${f.x ? `<a href="${esc(safeUrl(f.x.url))}" target="_blank" rel="noreferrer">@${esc(f.x.handle)} ↗</a>` : ""}</div>`;
     row.append(pic, info);
     return row;
   }));
@@ -675,10 +677,11 @@ function renderReport(streaming) {
     const el = $("#report");
     el.hidden = tab !== "report";
     $("#skeleton").hidden = true;
-    const html = DOMPurify.sanitize(marked.parse(state.markdown, { gfm: true }), { ADD_ATTR: ["target"] });
+    // Model-written HTML: no images/media/forms (a prompt-injected report could beacon data via image URLs).
+    const html = DOMPurify.sanitize(marked.parse(state.markdown, { gfm: true }), { ADD_ATTR: ["target"], FORBID_TAGS: ["img", "picture", "source", "video", "audio", "iframe", "object", "embed", "svg", "math", "form", "input", "button", "style", "link", "meta"], FORBID_ATTR: ["style", "srcset"], ALLOWED_URI_REGEXP: /^(?:https?:|#)/i });
     el.innerHTML = html;
     linkCitations(el);
-    el.querySelectorAll("a[href^='http']").forEach(a => { a.target = "_blank"; a.rel = "noreferrer"; });
+    el.querySelectorAll("a[href]").forEach(a => { a.href = safeUrl(a.getAttribute("href")); a.target = "_blank"; a.rel = "noreferrer noopener"; });
     if (streaming) { const last = el.lastElementChild; if (last) last.classList.add("caret"); }
   });
 }
@@ -707,7 +710,7 @@ function openEvidence(ids) {
   const items = (state.bundle?.evidence || []).filter(e => ids.includes(e.id));
   if (!items.length) return;
   $("#dTitle").textContent = items.length === 1 ? `${items[0].id} · ${items[0].title}` : `${items.length} evidence items`;
-  $("#dMeta").innerHTML = items.map(e => `${esc(e.source)} · ${e.kind}${e.url ? ` · <a href="${esc(e.url)}" target="_blank" rel="noreferrer">open source ↗</a>` : ""}`).join("<br>");
+  $("#dMeta").innerHTML = items.map(e => `${esc(e.source)} · ${e.kind}${e.url ? ` · <a href="${esc(safeUrl(e.url))}" target="_blank" rel="noreferrer">open source ↗</a>` : ""}`).join("<br>");
   $("#dBody").textContent = items.map(e => (items.length > 1 ? `${e.id} · ${e.title}\n` : "") + JSON.stringify(e.data, null, 2)).join("\n\n");
   $("#drawer").classList.add("open"); $("#scrim").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false");
 }

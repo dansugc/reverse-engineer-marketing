@@ -1,3 +1,5 @@
+import { assertPublicUrl } from "./http.js";
+
 export interface Target {
   input: string;
   kind: "website" | "app_store" | "play_store";
@@ -34,6 +36,7 @@ export function parseTarget(input: string): Target {
     return { input: raw, kind: "play_store", playId: id };
   }
   if (!host.includes(".")) throw new Error(`Not a URL or domain: ${input}`);
+  assertPublicUrl(`https://${u.hostname}`);
   return { input: raw, kind: "website", url: `https://${u.hostname}`, domain: host, brand: brandFromDomain(host) };
 }
 

@@ -1,212 +1,214 @@
 # How Cal AI gets customers
 
-**One-line verdict:** A paid-social creative factory — ~949 Meta video ads (40/40 active in sample, winners running 137 days) built from influencer/UGC "#ad" footage, all pointed straight at the App Store listing with a 3-day free trial paywall, backed by a 371k-rating App Store asset and a bulk-published SEO blog [E17, E7, E8].
+**One-line verdict:** An always-on Meta video machine (692 active ads, all video, almost all linking straight to the App Store) sells a 3-day free trial behind a photo-to-calories hook, on top of a very large App Store base (371K ratings) and influencer-led social proof.
 
 ## TL;DR
-
-- **Meta is the engine.** 949 ads in the library, every sampled ad active, every sampled ad VIDEO, every one landing on `itunes.apple.com/app/id6480417616` — no website in the path at all [E17]. The longest-running active ad has been live 137 days with 7 variants [E17]: that's a proven winner, not a test.
-- **One hook does the heavy lifting.** The 137-day winner and seven of the eight longest-running ads share the identical body copy — *"AI can now count your calories—just from a photo…"* — under two headline wrappers: *"Limited Time Free Trial 👉"* and *"AI Counts Your Food for You"* [E17]. They scale one message across many creator-shot videos rather than many messages.
-- **The creative supply is creators, not a studio.** Newer ads carry "#ad" in the body (*"#ad If you're still typing every meal into MyFitnessPal, you're wasting your time."*) and the homepage leads with "Used by your favorite fitness influencers 👀" [E17, E1]. The brand's own TikTok has 6 followers and 433 median views [E20] — the TikTok distribution is on creator accounts, not the brand handle.
-- **The store listing is the landing page.** 371,236 ratings at 4.80★ on iOS and 1M+ installs on Play do the conversion work; the site exists mostly for trial claims, FAQ, legal and blog [E7, E10, E1, E8].
-- **Website SEO is a secondary, recently-stuffed asset:** 127 URLs total, 103 of them blog posts, and all 103 updated/published within the last 30 days — a bulk content push, not a programmatic engine (0 programmatic families) [E8].
+- **Meta video at scale is the engine.** The library holds 894 ads, 692 of them active, and every ad in the sample of 61 is video [E22]. The longest-running ads ran 184–185 days (Apr 14 → Oct 15/16, 2026), with up to 12 variants each [E22]. Nobody pays that long for losers, so these are the proven winners.
+- **One promise, repeated everywhere.** "Track your calories as easy as taking a picture of your food" is the ad copy [E22], the homepage H1 is "Track your calories with just a picture" [E1], and the Play Store listing says "snap a photo & track calories easily" [E13]. Each touchpoint repeats the same single product mechanic, so the promise reads as one clear idea.
+- **Offer: a 3-day free trial in front of a hard paywall.** The homepage CTA is "Claim My Free Trial" [E1, E6]. The current top ad headline is "Limited Time Free Trial 👉" [E22]. Per the App Store listing, scan results "REQUIRE A SUBSCRIPTION" [E9]. Onboarding asks lifestyle questions before the first scan [E9], which is a quiz-style plan builder.
+- **Scale proof feeds conversion.** The app has 371,236 App Store ratings at 4.80★ [E9] and 1M+ Play downloads [E13]. The homepage claims "5M users" and "Over 100k 5-star ratings" and leads with "Used by your favorite fitness influencers 👀" [E1].
+- **The machine is likely in harvest mode.** Only 1 ad launched in the last 30 days [E22]. The 185-day winners ended Oct 15–16, 2026 [E22]. The founder posted on 2026-09-15 about "what's next after selling Cal AI" [E23]. A r/technology thread reports a MyFitnessPal acquisition [E17].
 
 ## Channel scorecard
 
 | Channel | Status | Strength | What we saw | Evidence |
 |---|---|---|---|---|
-| Paid Meta | active | 3 | 949 ads in library; 40/40 sampled ads active; 4 launched in last 30d; 100% VIDEO; top ad 137 days; all traffic to the iOS App Store listing | E17 |
-| App Store / Play | active | 3 | iOS "Cal AI - Calorie Tracker" 371,236 ratings @4.80★, live since 2024-04-08, updated 2026-10-13; Play 1M+ installs | E7, E10 |
-| Organic Instagram | active | 3 (audience), weak output | 384,077 followers but 0.8 posts/wk and median 279 likes (0.08% ER) | E21 |
-| SEO | active | 2 | 127 indexed URLs, 103-post blog, 103 content updates in 90d, 24 comparison-pattern URLs, 0 programmatic families | E8, E16 |
-| Launches | active | 2 | No Hacker News submissions of the domain; the Product Hunt hits returned are Cal.com, a different company — treat as no verified PH presence | E11, E19 |
-| Paid Google | dormant | 1 | ~1 video ad pointing at calai.app, 0 shown in last 30d, and it ran under a third-party advertiser "Addressable Media LLC" (2025-10-17→20) | E12 |
-| Organic TikTok | active | 1 | @getcalai: 6 followers, 37 videos, 1.8 posts/wk, median 433 views, last post 24 days ago, 0 spark ads in sample | E20 |
-| Community | active | 1 | 7 recent threads mention calai.app across r/ProductivityApps, r/Myfitnesspal, r/startups, r/DigitalMarketing and others | E18 |
-| Founder-led | dormant | 0 | Zach Yadegari (CEO) has 86,570 X followers; no recent LinkedIn posting captured for any of the three founders | E22 |
-| Organic LinkedIn | dormant | 0 | Company page, 54 employees listed, 0 posts in the last 30d sample | E14 |
-| Paid LinkedIn | none | 0 | Ad library searched for "Cal AI": no ads; no LinkedIn pixel on site | E13, E3 |
-| GEO / AI search | none | 0 | No llms.txt; robots.txt specifies nothing for any AI bot and has 0 disallows | E9 |
-| Affiliate | none (visible) | 0 | No affiliate program page found — but ad URLs carry `?trybe=` partner-style tokens (see Funnel) | E4, E17 |
-| Sales-led | none | 0 | Self-serve only; no contact-sales, no pricing page on site | E6, E4 |
+| Paid Meta | active | 3 | 894 ads in library, 692 active. 100% video in the sample of 61. Winners ran 184–185d with 10–12 variants. 60/61 sampled ads link directly to the App Store. Launch rate has dropped to 1 in 30d | E22 |
+| App Store / Play | active | 3 | 371,236 ratings, 4.80★, released 2024-04-08, updated 2026-10-13. Play shows 1M+ installs | E9, E13 |
+| Organic Instagram | active | 3 | 384K followers but 0.8 posts/wk and a median of 279 likes (~0.08% engagement). Best reel: 128,940 views | E20 |
+| SEO | active | 2 | 127 URLs, of which 103 are blog posts, all marked fresh in 30d. No programmatic families | E10, E12 |
+| Community (Reddit) | active | 2 | 11 threads across 11 subreddits. 8 Reddit threads rank on Google for "Cal AI". Sentiment is mixed | E16, E17 |
+| Organic TikTok (@getcalai) | active | 1 | 6 followers, 37 videos, 1.8/wk, median 433 views, last post 24 days ago | E21 |
+| Paid Google | dormant | 1 | 1 video ad from "Addressable Media LLC" (not Cal AI), shown Oct 17–20, 2025 | E7 |
+| Founder-led | dormant | 0 | Zach Yadegari has 86,570 X and 24,154 LinkedIn followers, but his recent LinkedIn post is about his new company | E23 |
+| Paid LinkedIn | none | 0 | Library checked: no ads, no pixel | E8, E3 |
+| Reddit marketing | none | 0 | 0 brand or founder posts/replies found | E15 |
+| GEO | none | 0 | No llms.txt, and no AI bots blocked | E11 |
+| Launches (HN) | none | 0 | No HN submissions of the domain | E14 |
 
 ## The engine
 
-The loop is short and brutally simple:
+**Loop:** Meta video ad → App Store page → lifestyle-questions onboarding → paywall with 3-day trial → subscription.
 
-**Creator video → Meta/Instagram/Threads ad → App Store listing → 3-day free trial → subscription paywall.**
-
-There is no website step. All 40 sampled active ads land on `http://itunes.apple.com/app/id6480417616` with a `trybe=` tracking parameter [E17]. The homepage exists as a brand/trial page ("CLAIM YOUR 3-DAY FREE TRIAL", CTA "Claim My Free Trial") and as a support surface, not as the paid-funnel destination [E1]. Consistent with that, no ad pixels were detected on the homepage at all [E3] — conversion measurement almost certainly happens in-app/SKAN rather than on the web (Inference, based on E3 + the app-store-only landing pattern in E17).
-
-The conversion asset is the listing itself: 371,236 ratings at 4.80★ and a Play listing headlined "#1 calorie counter & nutrition tracker - snap a photo & track calories easily" [E7, E10]. The in-app onboarding is spelled out in the description: "1) Answer lifestyle questions to build your plan 2) Snap a photo of your meal* 3) Get your nutritional breakdown*" with the asterisk disclosing "FOOD SCANNING ANALYSIS RESULTS REQUIRE A SUBSCRIPTION" [E7] — a quiz-style onboarding that ends at a paywall.
-
-Everything else is support: the Instagram audience (384k) acts as social proof and a retargeting pool [E21]; the blog catches search demand around calorie questions [E8, E16]; Reddit threads are organic word of mouth they appear not to be seeding [E18].
+- **Traffic goes straight to the store.** 60 of the 61 sampled ads land on `itunes.apple.com/app/id6480417616`, and 1 lands on an AppsFlyer link [E22]. The website is not the funnel. It carries no ad pixels and only GA4 [E3, E4], its meta description is just "Download Today" [E1], and its job is to convert people who were already convinced by ads or influencers.
+- **Probably the app does the attribution.** The AppsFlyer landing link [E22] suggests an install-attribution SDK lives in the app rather than on the site.
+- **Two offer framings run side by side:**
+  - Feature/"Download" ads ("AI Counts Your Food For You", "Calorie Tracking Made Easy").
+  - Offer/"Learn more" ads ("Limited Time Free Trial 👉") that carry a `?trybe=` token on the store link [E22].
+  - Likely the free-trial framing is the newer winner. All of the longest-running *active* ads use it, starting 2026-06-03 [E22].
+- **Conversion stack:**
+  - Plan-building questions come first [E9].
+  - The paywall gates results [E9].
+  - A 3-day trial is the entry offer [E6].
+  - Web payment surfaces also exist: forms.calai.app "Input your payment details for Cal AI" [E12] and /shop/checkout [E10]. Probably these are web-checkout paths that sit beside in-app purchase.
+- **Retention signals:**
+  - A Groups feature ("stay connected with friends") [E12].
+  - A survey-entry sweepstakes [E12].
+  - Frequent releases (version 26.41.0, updated 5 days ago) [E9].
+- **Trust and complaint handling.** As of 2026-10-03 the homepage added "Request a refund from Apple" and "Request your Google Play refund" CTAs [E18, E1]. Likely this deflects refund complaints and chargebacks from aggressive trial-to-paid conversion.
 
 ## Paid
 
-### Meta (Facebook + Instagram + Threads + Messenger)
+**Meta (the engine) [E22]**
+- **Volume:** 894 ads in library and 692 active. In the sample, 30 of 61 are active.
+- **Velocity:** only 1 new ad in the last 30 days, started 2026-09-25.
+- **Launches come in batches.** In the sample there are clusters starting 2026-04-14, 2026-07-29 and 2026-09-08, rather than a steady weekly flow. Likely they ship creative in waves and let the algorithm pick.
+- **Proven winners (longest running):**
+  - "Calorie Tracking Made Easy": *"Track your calories as easy as taking a picture of your food"*. Ran 185d, 12 variants, CTA Download.
+  - "AI Counts Your Food For You": *"AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker… without wasting time on manual logging."* Ran 184d, 12 variants, CTA Download.
+  - "Limited Time Free Trial 👉" (same body). Active for 137d (since 2026-06-03), 8 variants, CTA Learn more. It is also the most-shown ad.
+- **Angles:**
+  - Effortlessness/speed: "as easy as taking a picture".
+  - Novelty of the tech: "AI can now…".
+  - Time saving versus manual logging.
+  - Offer urgency: "Limited Time Free Trial".
+  - There are no testimonial or discount angles in the sample's copy. The video content itself was not visible, and copy is near-identical across ads, so likely the testing happens in the video creative, not the text.
+- **Formats:** VIDEO is 61/61.
+- **Placements:** FB 61, IG 61, Threads 61, Messenger 47, Audience Network 13.
+- **CTAs:** Learn more 36, Download 25.
+- **UTMs:** none. Instead there are `trybe=` tokens (bc4fafc1, 20dea1a6, d6d6bc5c, 04e6282d) shared across ad groups. Probably these are a creative or campaign identifier; the tool behind them is not identified.
+- **Target:** consumer weight-loss and fitness users, served broadly.
 
-**Volume & velocity.** 949 ads in the library for page "Cal AI" (page id 311353912066626, 2,895 likes, linked IG 384,077 followers) [E17]. Of the 40 sampled, 40 were active; 4 launched in the last 30 days [E17]. Derivation: a 949-ad lifetime library with a currently-small launch rate (4/30d) suggests they built a huge creative bank and are now running the proven subset rather than testing hard this month (Inference, E17).
+**Google [E7]:** 1 video ad shown Oct 17–20, 2025 by **"Addressable Media LLC"**, not Cal AI. That is an agency, affiliate or reseller entity bidding with Cal AI's domain. Nothing has run in the last 30 days.
 
-**Proven winners — lead with these.** Longest-running active ads [E17]:
+**LinkedIn [E8]:** checked and empty, which fits a consumer app.
 
-| Days live | Started | Headline | Variants | CTA |
-|---|---|---|---|---|
-| 137 | 2026-06-03 | "Limited Time Free Trial 👉" | 7 | Learn more |
-| 81 | 2026-07-29 | "Limited Time Free Trial 👉" | 7 | Learn more |
-| 81 ×5 | 2026-07-29 | "Limited Time Free Trial 👉" | 1 each | Learn more |
-| 81 | 2026-07-29 | "AI Counts Your Food for You" | 1 | Download |
-
-Seven of eight longest-running ads launched on the same day (2026-07-29) — a batch launch of the same message across different video assets [E17]. The 137-day and 81-day ads with `variants: 7` indicate dynamic-creative / multi-version testing inside a single winning concept [E17].
-
-**The hooks (quoted exactly).**
-1. *"AI can now count your calories—just from a photo. Cal AI turns your camera into a smart tracker, giving you instant nutritional breakdowns so you can hit your goals without wasting time on manual logging."* — the universal body, used by all 8 longest-running ads [E17].
-2. *"Limited Time Free Trial 👉"* — the dominant headline/offer wrapper [E17].
-3. *"AI Counts Your Food for You"* / *"AI Counts Your Calories for You"* — benefit-restated headline [E17].
-4. *"#ad If you're still typing every meal into MyFitnessPal, you're wasting your time."* — launched 2026-09-30; direct competitor-displacement angle inside creator content [E17].
-5. *"You Have To Try This"* — curiosity headline on that same competitor ad [E17].
-
-**Angle classification:** the core is *feature demo + time-saving problem/solution* with an *offer* wrapper ("Limited Time Free Trial"); the newest creatives add *competitor comparison* (MyFitnessPal) and *creator testimonial* (#ad) [E17].
-
-**Format & placements.** 100% VIDEO in the sample (40/40) — no image, no carousel [E17]. Placements: Facebook 40, Instagram 40, Threads 40, Messenger 20 [E17]. CTA mix: "Learn more" 28, "Download" 11, "Install now" 1 [E17] — note "Learn more" outnumbers "Download" on app-install traffic, a deliberate softer-click choice (Inference, E17).
-
-**Landing & tracking.** Every sampled ad → `itunes.apple.com/app/id6480417616`, most with `?trybe=` tokens (`bc4fafc1`, `d6d6bc5c`, `20dea1a6`) [E17]. No UTMs were captured because the destination is the App Store, not the site [E17]. The three distinct `trybe` values map to distinct creative clusters — likely a partner/creative attribution scheme rather than UTM-based web tracking (Inference, E17).
-
-**Target:** broad consumer fitness/weight-loss, English, iOS-first (the destination is the iOS listing even though a Play app exists with 1M+ installs) [E17, E10].
-
-### Google
-
-Essentially off: ~1 video creative pointing at calai.app, 0 shown in the last 30 days, first/last shown 2025-10-17 → 2025-10-20, and run by **"Addressable Media LLC"**, not Cal AI [E12]. That's a third-party/agency or affiliate entity, not a brand-owned search programme — flagging it as a brand-attribution gap, not evidence of a Google channel [E12].
-
-### LinkedIn
-
-Checked and empty: no ads for advertiser "Cal AI", and no LinkedIn tag on site [E13, E3]. Correct call for a consumer calorie app.
-
-### TikTok / Reddit paid
-
-Unknown, not absent. No global TikTok ad library exists and no pixels were detected client-side [E3]; given the creator-UGC ad style and the app's demographic, TikTok ads are plausible but unproven (Inference, E17, E3). Manual checks below.
+**TikTok / Reddit ads:** unknown; see Unknowns. A r/workout thread from Mar 2025 says *"I'm seeing a bunch of ads from this app"* [E17], which confirms heavy ad exposure but not which platform it came from.
 
 ## Organic social
 
-**Instagram @calai.app — big audience, low output.** 384,077 followers; 0.8 posts/week; median 279 likes; engagement rate 0.08%; recent mix 9 reels / 3 images [E21]. The follower base is wildly out of proportion to current engagement — Derivation: 279 median likes on 384k followers means the account is not being fed by the algorithm today; the audience was probably accumulated earlier (and/or via spend) and now functions as social proof and a retargeting pool (Inference, E21, E17).
+**Instagram @calai.app [E20]**
+- **Size vs activity:** 384,077 followers, but only 0.8 posts/week and a median of 279 likes.
+- **Format mix:** 9 reels and 3 images in the sample.
+- **Top posts:**
+  - "Download Cal AI today! The future of calorie tracking 🎯": three image posts on 2025-02-25 (3,565, 3,551 and 1,638 likes).
+  - "Sorry if I let you down 😞": reel, 128,940 views, 1,654 likes.
+  - "Let's use Cal AI to track the macros in my post gym meal 💪": reel, 63,611 views.
+- **Inference:** a follower count this large with engagement this low is likely accumulated through ads (the IG account is the Meta ad identity [E22]) and influencer collaborations ("Used by your favorite fitness influencers" [E1]), not built by the feed. Organic IG is a trust asset, not a growth driver.
 
-Top posts [E21]:
-- *"Download Cal AI today! The future of calorie tracking 🎯"* — 3,565 likes (image, Feb 2025); the same caption appears on the #2 and #4 posts at 3,551 and 1,638 likes. Three near-identical posts in the same minute = likely a giveaway/launch burst (Inference, E21).
-- *"Sorry if I let you down 😞"* — reel, 128,940 views, 1,654 likes. The highest-reach piece in the sample is a personality/confessional hook, not a product demo [E21].
-- *"Let's use Cal AI to track the macros in my post gym meal 💪 #protein #macros #gymmotivation #workout"* — reel, 63,611 views [E21]: the straightforward demo-in-context format.
+**TikTok @getcalai [E21]**
+- **Reach:** 6 followers, 37 videos, 1.8 posts/week, median 433 views. The best video is "Can AI detect this crispy meal?" at 4,654 views.
+- **Hook templates:**
+  - Food-vs-food: "🍗 KFC vs McDonald's 🍔 Which Has More Calories?! 😳".
+  - Shock number: "420 Calories in ONE Coffee?! ☕😳 Scan It With AI".
+  - "Can AI really detect shawarma calories?".
+- **Inference:** with only 6 followers, this is probably not Cal AI's main TikTok presence. The site links it, but any reach on TikTok likely runs through creator and influencer accounts not captured here.
+- **Ad reuse:** no overlap found between organic hooks and Meta ad copy [E21, E22].
 
-**TikTok @getcalai — not a channel.** 6 followers, 37 videos, 1.8 posts/week, 433 median recent views, last post 24 days ago, 0 spark ads in the recent sample [E20]. The content is competent short-form bait — *"Can AI detect this crispy meal?"* (4,654 views), *"🍝 PASTA vs BURGER 🍔 Which Has More Calories?! 😳"*, *"🍗 KFC vs McDonald's 🍔 Which Has More Calories?! 😳"*, *"420 Calories in ONE Coffee?! ☕😳 Scan It With AI"* [E20] — but with 6 followers it has no owned distribution. Inference: the brand's real TikTok presence runs through creator accounts with "#ad" disclosures that then get licensed into Meta ads, which is exactly what the "#ad" ad bodies suggest (E17, E20, E1).
-
-**Organic → paid reuse:** the ad library's dominant body copy ("AI can now count your calories—just from a photo…") is not what wins on the brand's own organic accounts (comparison/scan-reveal hooks on TikTok, confessional reels on IG) [E17, E20, E21]. So this is not an organic-first testing loop on owned accounts — it's a creator-sourced loop (Inference).
-
-**LinkedIn page:** 54 employees listed, 0 posts in the last 30d sample [E14]. Not a channel.
+**X:** @calai_app is referenced in a co-founder's bio [E23], but it was not analyzed.
 
 ## SEO & AI search
-
-**Shape.** 127 sitemap URLs: /blog 103, root pages 19, /shop 2 (checkout + order-complete), /ios/login, /jobs/ios-dev [E8]. Zero programmatic page families [E8] — no /x-vs-y or /alternatives/ folder, though pattern-matching finds 24 comparison-style and 4 alternatives-style slugs plus 13 how-tos and 8 listicles inside the blog [E8].
-
-**Cadence.** 103 of 103 blog URLs updated within the last 30 days [E8]. Derivation: either a site migration/bulk re-date or a mass publish — either way the content layer was built or refreshed in one push, not drip-published (Inference, E8).
-
-**Template.** Informational, question-shaped titles aimed at calorie-search demand: `/blog/15,000-steps-calories/`, `/blog/500-calorie-meals-for-weight-loss/`, `/blog/active-calories-vs-total-calories/`, `/blog/active-vs-resting-calories/` [E8]; the blog index lists "Is the Zone Diet Healthy?", "Can You Drink Protein Shakes While Intermittent Fasting", "Why Am I Gaining Weight in a Calorie Deficit?" [E16]. Classic top-of-funnel nutrition Q&A.
-
-**Money pages.** site: results rank the homepage first, then utility/legal pages — forms.calai.app (payment forms), /privacy, /access, /faq, /tos, /sweepstakes, /blog, /groups, /login [E16]. Note two growth-relevant pages surfacing here: **/sweepstakes** ("one automatic entry after they successfully complete and submit a survey") [E16] and **/groups** ("Healthy habits feel easier when you do them with friends. Join groups and stay connected with friends…") [E16] — a survey-incentive mechanic and an in-product social/retention feature.
-
-**AI search.** No llms.txt; robots.txt specifies nothing for GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, Applebot-Extended or Bytespider, and has 0 disallows [E9]. So AI crawlers are unblocked by default but nothing is being done actively to court citations [E9].
+- **Size:** 127 URLs. /blog has 103 posts, there are 19 root pages, and there are no locales [E10].
+- **Programmatic families:** none [E10].
+- **Freshness:** all 103 blog posts are marked as updated in the last 30 days [E10]. Probably this is a bulk publish or a sitemap lastmod reset, not a steady cadence; confirm against post dates.
+- **Blog template:** answers to calorie and weight-loss questions such as `/blog/15,000-steps-calories/`, `/blog/500-calorie-meals-for-weight-loss/` and `/blog/active-vs-resting-calories/` [E10]. Live titles include "Why Am I Gaining Weight in a Calorie Deficit?" [E12].
+- **Pattern counts:** 24 comparison, 4 alternatives, 13 how-to, 8 listicles [E10]. Likely many "vs" posts are nutrition comparisons (active vs total calories), not competitor pages.
+- **Money pages (top site: results):** homepage, payment forms, privacy, accessibility, FAQ, ToS, sweepstakes, blog, groups, login [E12]. Google mostly ranks brand and utility pages. SEO is supporting, not an engine.
+- **AI search:** no llms.txt and no AI bots blocked [E11]. That is passive allowance, not active courting.
 
 ## Founders & people
+- **Zach Yadegari (high confidence)** [E23]:
+  - **Role:** Founder/CEO. Confirmed by LinkedIn headline "CEO of Cal AI" and multiple snippets, including a Superwall case study.
+  - **Audience:** 24,154 LinkedIn followers and 86,570 X followers. His X bio reads "(acquired) @yourpersona".
+  - **Activity:** 20 recent X posts were counted; topics were not captured.
+  - **LinkedIn:** rarely posts. The latest post (2026-09-15) reads *"Everyone's been asking what's next after selling Cal AI. Introducing Persona."*
+  - **Inference:** his audience now routes to his next company, not Cal AI.
+- **Henry Langmack (medium–high)** [E23]:
+  - **Role:** named as founder or CTO in three snippets. His X bio, "Exited @calai_app", independently corroborates this.
+  - **Audience:** 5,709 X and 1,184 LinkedIn followers. No recent posts.
+- **Discarded:**
+  - "I's Teen" is a text-parsing artifact.
+  - Babak Hassibi rests on a single Instagram "popular" page [E23]. That match is weak and is not presented as a founder.
+- **Team size:** LinkedIn lists 54 employees on profile, versus a "2-10" size band [E19].
 
-- **Zach Yadegari — Co-Founder & CEO, Cal AI (Apr 2024–present), "Forbes 30 under 30 // CEO of Cal AI // 18 years old"** [E22]. X: @zach_yadegari, **86,570 followers**, bio "19. Forbes 30u30. [link] (acquired) @yourpersona" [E22]. That's a real founder audience — big enough to be a channel — but no recent posts were captured and no LinkedIn posting activity was observed [E22]. Status: dormant in this bundle, not proven absent.
-- **Blake W Anderson — "Founder EcoGPT, Cal AI - Forbes 30u30"**, now Co-Founder of EcoGPT since Apr 2026 [E22].
-- **Henry Langmack — Co-Founder & CTO, Cal AI, Mar 2024 – May 2026**, now "Cofounder @ Soar" [E22].
-
-Derivation: two of three founders have moved to new ventures and the CEO's X bio contains "(acquired)" [E22] — consistent with the Reddit thread titled "How Cal AI hit $50M ARR and got acquired by MyFitnessPal" [E18]. Treat the ARR and acquisition specifics as **unverified community claims**, not facts; the only first-party-adjacent signal is the "(acquired)" bio string [E22, E18].
-
-Founder-as-brand does not appear in the ad creative — no founder-story angle in any sampled ad [E17].
+## Reddit
+- **Deliberate Reddit marketing:** none found. There are 0 brand or founder posts and replies, and no owned subreddit [E15].
+- **Positive organic signal:** in the "Tested MyFitnessPal, Cal AI, and meetaugust…" comparison thread (r/Myfitnesspal), a user wrote: *"I decided on Cal AI because it was the quickest calorie tracker I've ever used. It isn't 100% accurate…"* [E16].
+- **Recurring objection:** accuracy. Examples include "Do NOT use Cal AI to track calories" (r/caloriecount, 20 points) [E16] and "Are image-based calorie apps like Cal AI accurate?", which ranks on Google [E17].
+- **Reputation hit:** "CalAI just got pulled from the App Store…" (Apr 2026) appears in r/CoachingSoftware and r/fitmeals, and the r/fitmeals copy ranks on Google [E16, E17]. The app is live and was updated 2026-10-13 [E9], so the removal was resolved.
+- **Founder-story threads:**
+  - "How Cal AI hit $50M ARR and got acquired by MyFitnessPal" (r/DigitalMarketing). This is a third-party claim, unverified [E16].
+  - "How did Cal AI do it?" (r/startups) [E16].
+- **Competitors piggyback.** A "Myfitfix" reply pitches itself as "like CALAI but…" [E16].
+- **Reddit SEO is mixed.** Of the 8 threads ranking on Google, several focus on accuracy and the App Store removal [E17].
 
 ## Community & launches
-
-- **Reddit:** 7 recent threads mention the domain, spread across r/ProductivityApps, r/CoachingSoftware, r/apps, r/CAIRevolution, r/Myfitnesspal, r/DigitalMarketing and r/startups — one thread per subreddit [E18]. Sentiment is mixed and mostly third-party:
-  - *"Tested MyFitnessPal, Cal AI, and meetaugust for a month - honest comparison"* (r/Myfitnesspal, 16 pts, 20 comments) [E18]
-  - *"CalAI just got pulled from the App Store — and it exposes a bigger problem with AI calorie tracking"* (r/CoachingSoftware, 11 pts, Apr 2026) [E18] — note the app is currently live and was updated 2026-10-13 [E7], so whatever happened was not permanent.
-  - *"Why would people use Cal AI over gpt?"* (r/apps, 16 comments) [E18] — the core objection for this category.
-  - *"How Cal AI hit $50M ARR and got acquired by MyFitnessPal"* and *"I will not promote - How did Cal AI do it?"* [E18] — the company has become a growth case study, which is free brand distribution.
-  - The highest-scoring thread, *"THEY SHUTTING THE APP/SITE FOREVER?"* (297 pts, r/CAIRevolution) [E18], is from a Character.AI-adjacent subreddit and is probably a false-positive match on "CAI" (Inference, E18).
-  - No evidence of founder or brand accounts replying in any thread [E18].
-- **Hacker News:** no submissions of the domain [E11]. Expected for a consumer fitness app.
-- **Product Hunt:** the returned results — "Cal.com: Scheduling infrastructure…", "Cal.com Reviews (2026)", "Cal ID" — are **Cal.com, a different company** [E19]. No verified Cal AI Product Hunt launch in this bundle.
-- **Owned community:** the site has a **/groups** page — in-product friend groups for accountability [E16]. That's retention/virality inside the app rather than an external community.
+- **Hacker News:** no submissions [E14].
+- **Product Hunt / Discord / ambassadors:** none visible.
+- **In-app community:** the Groups feature [E12].
+- **Influencer channel:** the homepage section "Used by your favorite fitness influencers 👀" [E1] signals one. Likely this is the TikTok reach channel, since the brand account itself barely has reach [E21]. Probably paid creator deals, but terms are not visible.
 
 ## Funnel & monetization
+- **Entry offer:** 3-day free trial. There is no free plan and no public pricing page [E6].
+- **Paywall:** gates the core value, food scanning results [E9]. Likely this paywall runs on Superwall, given a Superwall case study on Cal AI [E23].
+- **Motion:** pure self-serve consumer. There is no sales path [E6].
+- **Checkout:** web payment forms plus /shop checkout exist alongside in-app purchase [E10, E12].
+- **Lifecycle/email:** unknown; only GA4 is client-side [E4]. The sweepstakes collects survey entries [E12].
+- **Affiliate program:** none found [E4].
+- **Social proof:**
+  - "5M users", "Over 100k 5-star ratings", "Thousands of users talk about us" [E1].
+  - IG bio: "Over 5 million happy users" [E20].
+- **Refund deflection:** refund links sit on the homepage [E1].
 
-- **Entry offer:** 3-day free trial, surfaced as a dedicated homepage section "CLAIM YOUR 3-DAY FREE TRIAL" with CTA "Claim My Free Trial" [E1, E6]. Same offer is the headline of the top ads: "Limited Time Free Trial 👉" [E17].
-- **Model:** free app, paid subscription gating the core feature — "FOOD SCANNING ANALYSIS RESULTS REQUIRE A SUBSCRIPTION" [E7]. No pricing page on the website, no free plan, no money-back guarantee, no annual-discount or lifetime messaging found on site [E6]. Payments collected partly off-site at forms.calai.app ("Input your payment details for Cal AI.") [E16].
-- **Motion:** 100% self-serve; no contact-sales, no demo, no visitor-identification tags [E6, E4, E3].
-- **Onboarding:** quiz-first — "Answer lifestyle questions to build your plan" before the first scan [E7]. That personalisation step is the standard consumer-subscription paywall ramp (Inference, E7).
-- **Social proof stack:** homepage says "Used by your favorite fitness influencers 👀", "Over 100k 5-star ratings", "Thousands of users talk about us", "5M users with ⭐ 4" [E1]; IG bio repeats "⭐️ Over 5 million happy users" [E21]; the store evidence supports it with 371,236 ratings @4.80★ [E7].
-- **Incentive mechanic:** a sweepstakes with "one automatic entry after they successfully complete and submit a survey" [E16] — survey completion bought with a prize draw, likely for research and/or list building (Inference, E16).
-- **Lifecycle:** no email/CRM tool visible client-side; only GA4 (G-3DR33124SR) [E4]. Unknown, not absent — for an app, lifecycle usually runs via push/server-side.
-- **Affiliate:** no program page found [E4], but every ad URL carries a `trybe=` token [E17] and a third-party advertiser ran a Google video ad for the domain [E12]. Likely some partner/creator attribution layer exists that isn't publicly documented (Inference, E17, E12).
-- **Refund friction (notable):** the live homepage now carries two CTAs that didn't exist in April 2026 — "Request a refund from Apple" and "Request your Google Play refund" [E1, E15]. Likely a response to subscription-refund pressure or a consumer-protection requirement (Inference, E15).
-
-## Positioning over time
-
-- **2022-04-09:** calai.app was a different product — "Calai app - Home", "Distraction free calendar. Keep organised without the clutter.", CTA "Join the Waitlist" [E15]. The domain was repurposed/acquired before the calorie app launched (app first released 2024-04-08) [E15, E7].
-- **2024-10-03:** "Track your calories with just a picture." with a long descriptive meta ("Snap a photo or scan a barcode, and Cal AI instantly calculates calories and nutrients…") and a single CTA: **Download** [E15]. Pure install pitch.
-- **2025-10-10:** H1 becomes "Meet Cal AI Track your calories with just a picture" and the CTA switches to **"Claim My Free Trial"** [E15]. Derivation: the offer moved from "download" to "trial" — that's the monetisation step being pulled forward, and it matches the ad headline "Limited Time Free Trial 👉" running today [E15, E17].
-- **2026-04-08:** unchanged [E15].
-- **2026-10-03:** same pitch, but refund-request CTAs added [E15]. Inference: growth messaging is frozen; the site changes now are operational/compliance, consistent with a company post-acquisition where the paid engine runs on autopilot (E15, E22, E18).
+## Positioning over time [E18]
+- **2022-04:** the domain hosted "Distraction free calendar" with a "Join the Waitlist" CTA. This was a different product on the same domain, and likely the founders reused it.
+- **2024-10:** the calorie pivot is live with "Track your calories with just a picture." and a "Download" CTA. The app was first released 2024-04-08 [E9].
+- **2025-10:** the CTA changed to "Claim My Free Trial". This was the shift from install-first to trial-first, mirrored later by the "Limited Time Free Trial 👉" ads [E22].
+- **2026-10:** refund CTAs were added [E1]. Likely this is reputation and complaint management after scale, the App Store removal and the acquisition [E16, E17].
+- **What stayed constant:** the H1 has held since 2024, so the core promise never changed.
 
 ## Steal this playbook
-
-1. **Put the App Store listing, not your website, behind the ad click.** All 40 sampled active ads go to `itunes.apple.com/app/id6480417616` with a tracking token [E17]. If your conversion is an install, remove the web step. Budget the saved effort into store screenshots and ratings instead [E7].
-2. **Write one body of copy and scale it across 40+ videos.** Cal AI runs the identical paragraph — *"AI can now count your calories—just from a photo…"* — under every long-running winner [E17]. Find your one sentence, then vary only the footage and the headline wrapper.
-3. **Use two headline wrappers: offer and benefit.** "Limited Time Free Trial 👉" (offer) vs "AI Counts Your Food for You" (benefit) [E17]. Run both against the same body; the offer wrapper owns 7 of the 8 longest-running slots in this sample [E17].
-4. **Buy creator footage with #ad disclosure and run it as brand ads.** The newest creatives carry "#ad" and name a competitor: *"#ad If you're still typing every meal into MyFitnessPal, you're wasting your time."* [E17]. Target 4–8 new creator videos per month to match their recent launch rate (4 in the last 30 days) [E17], and whitelist the strongest into the account.
-5. **Launch in batches, then let winners run.** Seven of the eight longest-running ads started on the same day (2026-07-29) and are still live 81 days later [E17]. Ship a cohort, kill fast, and leave the survivors untouched for 90+ days.
-6. **Use dynamic variants inside the winner.** The 137-day ad has 7 variants under one ad [E17] — copy/thumbnail permutations inside a proven concept, not new concepts.
-7. **Run VIDEO-only across FB + IG + Threads + Messenger.** 40/40 sampled ads are video and all four placements are enabled on every one (Messenger on 20) [E17]. Don't bother with static for this motion.
-8. **Move the homepage CTA from "Download" to "Claim My Free Trial".** Cal AI made that exact swap between Oct 2024 and Oct 2025 and still runs it [E15, E1]. Pair it with a hard proof block: "Over 100k 5-star ratings" + "5M users" [E1].
-9. **Ship ~100 question-shaped blog posts in one push, not 2/week.** Their entire SEO asset is 103 posts targeting queries like "active calories vs total calories" and "500 calorie meals for weight loss" [E8]. Mix how-tos (13) and listicles (8) and comparison-shaped titles (24) [E8].
-10. **Add a survey-for-sweepstakes entry and in-app friend groups.** "/sweepstakes": one entry per completed survey [E16]; "/groups": "Healthy habits feel easier when you do them with friends" [E16] — one feeds research/list, the other feeds retention and invites.
+1. **Pick one physical "magic moment" and make it the only promise.** For Cal AI it is "take a picture → get calories" [E1, E22]. Use that exact line in ad body, H1 and store subtitle.
+2. **Run all-video Meta ads straight to the App Store.** Do not build a landing page; Cal AI sends 60 of 61 sampled ads to the store [E22]. Use FB+IG+Threads placements.
+3. **Ship creative in batches.** Launch 3–5 concepts × 8–12 variants each, mirroring the 10–12-variant winners [E22]. Keep body copy fixed and test the video. Kill anything that hasn't earned 60+ days of run time; scale what has.
+4. **Test two framings in parallel.**
+   - Feature + "Download" CTA ("AI Counts Your Food For You").
+   - Offer + "Learn more" CTA ("Limited Time Free Trial 👉").
+   - Cal AI's offer framing became the longest-running active ad [E22].
+5. **Put a 3-day trial behind a hard paywall, after a plan-building questionnaire.** Gate the result, not the feature [E6, E9]. Add web checkout as a second payment path [E10, E12].
+6. **Buy influencer social proof and show it on the homepage.** Add a "Used by your favorite fitness influencers" strip, and repeat the user count and rating count in bio, site and ads [E1, E20].
+7. **Fill the blog with 100 answer posts on your category's FAQ queries.** Use the shape "X steps calories" or "why am I gaining weight in a deficit" [E10, E12]. Allow AI crawlers and add llms.txt, which Cal AI skipped [E11].
+8. **Own the accuracy objection on Reddit.** Cal AI has no presence there [E15] while accuracy threads rank on Google [E17]. Reply 2–3×/week in r/loseit, r/caloriecount and r/Myfitnesspal with disclosure, and publish an honest accuracy page.
+9. **Pre-empt refund rage.** Link refund instructions prominently once trial volume scales [E1].
 
 ## Unknowns & how to check
-
-- **TikTok paid.** No global ad library API, and no TikTok pixel was detected client-side [E3]. Given 100%-video creator ads [E17], TikTok ads are plausible. Check: https://library.tiktok.com/ads?region=all&adv_name=Cal%20AI and the TikTok Creative Center.
-- **Reddit paid.** Reddit's ad library is shut down; no Reddit pixel detected [E3]. Check community chatter manually: https://www.reddit.com/search/?q=Cal%20AI
-- **Why no pixels at all?** Zero ad pixels and only GA4 on the homepage [E3, E4] despite 949 Meta ads [E17]. Likely MMP/SKAN-based in-app measurement, but no attribution SDK was observed. Check the app binary / AppsFlyer-Adjust-Branch link domains, and inspect calai.app in a real browser with a tag scanner.
-- **The `trybe=` parameter.** Appears on every ad URL with at least three distinct values [E17]. Unknown whether it's an internal creative ID or a partner/affiliate platform. Check: resolve `itunes.apple.com/app/id6480417616?trybe=bc4fafc1` and look for a partner-program page or a `trybe` vendor.
-- **Google Ads under "Addressable Media LLC."** One video, 0 shown in 30d [E12]. Unknown whether this is an agency, affiliate or unrelated bidder. Check: https://adstransparency.google.com/advertiser/AR08770828289406140417
-- **Product Hunt.** The bundle's PH results are Cal.com, not Cal AI [E19]. Check directly: https://www.producthunt.com/search?q=Cal%20AI
-- **YouTube and X brand accounts.** Not linked from the website, so unknown — not absent. Check by hand.
-- **Founder X activity.** Zach Yadegari has 86,570 X followers but no posts were captured [E22]. Check https://x.com/zach_yadegari for cadence and whether launches route through it.
-- **The $50M ARR / MyFitnessPal acquisition claim.** Only evidence is a Reddit thread title and an "(acquired)" string in an X bio [E18, E22]. Unverified — check press releases and the App Store seller record ("Viral Development LLC") for a change of ownership [E7].
-- **Lifecycle/email.** Nothing visible client-side [E4]; most of it would be push + server-side. Check: install the app and log the first 14 days of push/email.
-- **Android paid.** Play shows 1M+ installs [E10] but every sampled ad points at the iOS listing [E17]. Check the Meta library filtered by country/placement for Android-destination creatives.
+- **Video creatives on Meta** (UGC vs studio, hooks inside the video). Only text fields were captured, so watch the long-runners directly: https://www.facebook.com/ads/library?id=1303607675011510 and https://www.facebook.com/ads/library?id=2922821464729858
+- **TikTok ads:** no global ad library exists. Check https://library.tiktok.com/ads?region=all&adv_name=Cal%20AI and TikTok Creative Center.
+- **Influencer and creator roster:** the homepage claims it [E1], but no accounts were captured. Search TikTok and IG for "#calai" and "Cal AI" creator posts, and review the homepage influencer section.
+- **Reddit ads:** the ad library is gone and no pixel was detected [E3]. Search https://www.reddit.com/search/?q=Cal%20AI for promoted posts.
+- **X (@calai_app) and YouTube:** not linked from the site, so not analyzed. Check https://x.com/calai_app and YouTube search.
+- **Apple Search Ads:** not observable. Search category terms ("calorie counter") in the App Store for sponsored slots.
+- **Pricing and paywall design:** no pricing page exists [E6]. Install the app and screenshot onboarding and the paywall.
+- **"Addressable Media LLC" Google ad:** the relationship to Cal AI is unknown. See https://adstransparency.google.com/?region=anywhere&domain=calai.app
+- **Post-acquisition strategy:** the drop in launch rate and the ending of the 185-day winners [E22] may mean scaling down. Re-check the Meta library in 30 days.
+- **Revenue figures** ($50M ARR in a Reddit title, other figures in third-party URLs [E16, E23]) are unverified claims and should not be relied on.
 
 ---
 
 ## Evidence
 
-- **[E1]** Homepage positioning: "Meet Cal AI Track your calories with just a picture" — <https://calai.app/>
-- **[E2]** Linked channels: linkedin, instagram, tiktok — <https://calai.app/>
-- **[E3]** No ad pixels detected on homepage (or loaded server-side) — <https://calai.app/>
-- **[E4]** Marketing stack: Google Analytics 4 — <https://calai.app/>
-- **[E5]** Key pages found: blog — <https://calai.app/>
-- **[E6]** _(derived)_ Monetization: 3-day trial — <https://calai.app/>
-- **[E7]** App Store: Cal AI - Calorie Tracker — 371,236 ratings, 4.80★ — <https://apps.apple.com/us/app/cal-ai-calorie-tracker/id6480417616?uo=4>
-- **[E8]** _(derived)_ Sitemap: 127 URLs, 0 programmatic page families, 103 content updates in 90d — <http://calai.app/sitemap-index.xml>
-- **[E9]** AI-search stance: no llms.txt; no AI bots blocked — <https://calai.app/robots.txt>
-- **[E10]** Google Play: Cal AI - Food Calorie Tracker — 1M+ downloads — <https://play.google.com/store/apps/details?id=com.viraldevelopment.calai&hl=en_US>
-- **[E11]** No Hacker News submissions of the domain — <https://hn.algolia.com/?query=calai.app>
-- **[E12]** Google ads: ~1 ads pointing at calai.app (0 shown in last 30d), formats video — <https://adstransparency.google.com/?region=anywhere&domain=calai.app>
-- **[E13]** LinkedIn ads: none found for advertiser "Cal AI" — <https://www.linkedin.com/ad-library/search?accountOwner=Cal%20AI>
-- **[E14]** LinkedIn Cal AI: ? followers, 54 employees on LinkedIn, founded ? — <https://www.linkedin.com/company/cal-ai-app>
-- **[E15]** Homepage history: first archived 2022-04-09, 24 monthly snapshots — <https://web.archive.org/web/*/calai.app>
-- **[E16]** Top Google results for site:calai.app — <https://www.google.com/search?q=site:calai.app>
-- **[E17]** Meta ads: 949 ads in library (40 active in sample of 40), 4 launched in last 30d — <https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=311353912066626>
-- **[E18]** Reddit: 7 recent threads mention calai.app (top r/ProductivityApps) — <https://www.reddit.com/search/?q=calai.app>
-- **[E19]** Product Hunt presence: Cal.com: Scheduling infrastructure for absolutely everyone; Cal.com Reviews (2026) - Product Hunt; Cal ID: Schedule and monetize meetings for free - Product H… — <https://www.producthunt.com/products/cal>
-- **[E20]** _(derived)_ TikTok @getcalai: 6 followers, 37 videos, 1.8 posts/wk, median 433 views (recent) — <https://www.tiktok.com/@getcalai>
-- **[E21]** _(derived)_ Instagram @calai.app: 384K followers, 0.8 posts/wk, median 279 likes — <https://www.instagram.com/calai.app/>
-- **[E22]** Founders/leaders: Zach Yadegari, X 86,570; Blake W Anderson; Henry Langmack — <https://www.google.com/search?q=%22Cal%20AI%22%20founder%20site%3Alinkedin.com%2Fin>
+- **[E1]** Homepage positioning: "Meet Cal AI Track your calories with just a picture" — <https://calai.app>
+- **[E2]** Linked channels: linkedin, instagram, tiktok — <https://calai.app>
+- **[E3]** No ad pixels detected on homepage (or loaded server-side) — <https://calai.app>
+- **[E4]** Marketing stack: Google Analytics 4 — <https://calai.app>
+- **[E5]** Key pages found: blog — <https://calai.app>
+- **[E6]** _(derived)_ Monetization: 3-day trial — <https://calai.app>
+- **[E7]** Google ads: ~1 ads pointing at calai.app (0 shown in last 30d), formats video — <https://adstransparency.google.com/?region=anywhere&domain=calai.app>
+- **[E8]** LinkedIn ads: none found for advertiser "Cal AI" — <https://www.linkedin.com/ad-library/search?accountOwner=Cal%20AI>
+- **[E9]** App Store: Cal AI - Calorie Tracker — 371,236 ratings, 4.80★ — <https://apps.apple.com/us/app/cal-ai-calorie-tracker/id6480417616?uo=4>
+- **[E10]** _(derived)_ Sitemap: 127 URLs, 0 programmatic page families, 103 content updates in 90d — <http://calai.app/sitemap-index.xml>
+- **[E11]** AI-search stance: no llms.txt; no AI bots blocked — <https://calai.app/robots.txt>
+- **[E12]** Top Google results for site:calai.app — <https://www.google.com/search?q=site:calai.app>
+- **[E13]** Google Play: Cal AI - Food Calorie Tracker — 1M+ downloads — <https://play.google.com/store/apps/details?id=com.viraldevelopment.calai&hl=en_US>
+- **[E14]** No Hacker News submissions of the domain — <https://hn.algolia.com/?query=calai.app>
+- **[E15]** _(derived)_ Reddit marketing: 0 brand/founder posts, 0 brand/founder replies in big threads — <https://www.reddit.com/search/?q=Cal%20AI>
+- **[E16]** Reddit mentions: 11 threads naming Cal AI across 11 subreddits, 1 comparison threads, 2 organic mentions in comments — <https://www.reddit.com/search/?q=Cal%20AI>
+- **[E17]** Reddit threads ranking on Google for "Cal AI": 8 (top: Are image-based calorie apps like Cal AI accurate? How does it get ...) — <https://www.google.com/search?q=site%3Areddit.com%20%22Cal%20AI%22>
+- **[E18]** Homepage history: first archived 2022-04-09, 24 monthly snapshots — <https://web.archive.org/web/*/calai.app>
+- **[E19]** LinkedIn Cal AI: ? followers, 54 employees on LinkedIn, founded ? — <https://www.linkedin.com/company/cal-ai-app>
+- **[E20]** _(derived)_ Instagram @calai.app: 384K followers, 0.8 posts/wk, median 279 likes — <https://www.instagram.com/calai.app/>
+- **[E21]** _(derived)_ TikTok @getcalai: 6 followers, 37 videos, 1.8 posts/wk, median 433 views (recent) — <https://www.tiktok.com/@getcalai>
+- **[E22]** Meta ads: 894 ads in library, 692 active now, 1 launched in last 30d (sample of 61) — <https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=ALL&view_all_page_id=311353912066626>
+- **[E23]** Founders/leaders: Zach Yadegari (Founder) · 24,154 LI followers · X 86,570; Henry Langmack (Founder) · 1,184 LI followers · X 5,709; I's Teen (Founder); Babak Hassibi (Founder) — <https://www.google.com/search?q=%22Cal%20AI%22%20founder>
 
-<sub>Generated by [reverse-engineer-marketing](https://github.com/dansugc/reverse-engineer-marketing) v0.1.0 · harness v1 (fbd47e39dca9) · 2026-10-18 · 19 Scrape Creators credits</sub>
+<sub>Generated by [reverse-engineer-marketing](https://github.com/dansugc/reverse-engineer-marketing) v0.1.0 · harness v2 (be4e28a2e9a0) · 2026-10-18 · 12 Scrape Creators credits</sub>
