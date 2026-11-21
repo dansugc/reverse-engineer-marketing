@@ -16,6 +16,7 @@ REM (Reverse Engineer Marketing) collects public evidence of how a company acqui
 - `src/analyze/synthesize.ts` Claude report from bundle + harness.
 - `src/report/` deterministic Markdown + the validator (`validate.ts`) used by evals and the `validate_report` tool.
 - `harness/` versioned analyst bundle (role, guardrails, template, lessons, playbooks). Listed in `manifest.json`; the loader fails if a file is missing and hashes the bundle into every report.
+- `src/untrusted.ts` collected text is third-party data. Anything that hands it to a model goes through `fence()`, and `scanInjection()` flags text aimed at the model. New MCP tools that return collected text must use the `collected()` helper in `mcp.ts`.
 - `evals/` recorded evidence fixtures + `run.ts`.
 - `src/engines.ts` report writers: Claude Code (`claude -p` stream-json), Codex (`codex exec --json`), Anthropic API. Subscription engines must never inherit API-key env vars.
 - `src/web/server.ts` + `web/index.html` local web app (`rem web`): no framework, SSE job events, 127.0.0.1 + Host/Origin guard. `src/runs.ts` stores runs for web + MCP.

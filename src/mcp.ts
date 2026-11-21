@@ -7,6 +7,7 @@ import { AREAS, reverseEngineer, VERSION, type EvidenceBundle } from "./index.js
 import { renderMarkdown, scorecardTable } from "./report/markdown.js";
 import { validateReport } from "./report/validate.js";
 import { loadRun as loadSavedRun, saveRun } from "./runs.js";
+import { fence, injectionWarning, scanInjection } from "./untrusted.js";
 
 async function loadRun(id: string): Promise<EvidenceBundle> {
   try {
@@ -17,6 +18,8 @@ async function loadRun(id: string): Promise<EvidenceBundle> {
 }
 
 const text = (t: string) => ({ content: [{ type: "text" as const, text: t }] });
+/** Tool results that carry collected text: fenced as data, with a warning if something in the run looks like an injection attempt. */
+const collected = (t: string, bundle?: EvidenceBundle) => text([bundle ? injectionWarning(scanInjection(bundle)) : "", fence(t)].filter(Boolean).join("\n\n"));
 
 export function createServer(): McpServer {
   const server = new McpServer({ name: "reverse-engineer-marketing", version: VERSION });
@@ -39,17 +42,24 @@ export function createServer(): McpServer {
       const { id, path } = await saveRun(bundle);
       return text(
         [
-          `# ${bundle.brand} — evidence collected (run_id: ${id})`,
+          `# Evidence collected (run_id: ${id})`,
           `${bundle.evidence.length} evidence items · ${(bundle.content ?? []).length} posts/videos/ads (get_content) · ${bundle.unknowns.length} unknowns · ${bundle.credits.scrapecreators ?? 0} Scrape Creators credits · harness v${bundle.harness.version} (${bundle.harness.sha}) · full bundle: ${path}`,
           "",
-          "## Channel scorecard (deterministic)",
-          scorecardTable(bundle.scorecard),
-          "",
-          "## Evidence index",
-          ...bundle.evidence.map(e => `- [${e.id}] (${e.source}) ${e.title}${e.url ? ` — ${e.url}` : ""}`),
-          "",
-          "## Unknowns",
-          ...(bundle.unknowns.length ? bundle.unknowns.map(u => `- ${u.channel}: ${u.reason}${u.manualCheck ? ` → ${u.manualCheck}` : ""}`) : ["- none"]),
+          injectionWarning(scanInjection(bundle)),
+          fence(
+            [
+              `Company: ${bundle.brand}`,
+              "",
+              "## Channel scorecard (deterministic)",
+              scorecardTable(bundle.scorecard),
+              "",
+              "## Evidence index",
+              ...bundle.evidence.map(e => `- [${e.id}] (${e.source}) ${e.title}${e.url ? ` — ${e.url}` : ""}`),
+              "",
+              "## Unknowns",
+              ...(bundle.unknowns.length ? bundle.unknowns.map(u => `- ${u.channel}: ${u.reason}${u.manualCheck ? ` → ${u.manualCheck}` : ""}`) : ["- none"]),
+            ].join("\n"),
+          ),
           "",
           "Next: call get_evidence (run_id, ids) for the items you need (ads copy, top posts, sitemap families, founders), get_playbook for the method and report format, write the report citing [E#], then validate_report.",
         ].join("\n"),
@@ -71,7 +81,7 @@ export function createServer(): McpServer {
     async ({ run_id, ids, source }) => {
       const bundle = await loadRun(run_id);
       const items = bundle.evidence.filter(e => (!ids?.length || ids.includes(e.id)) && (!source || e.source === source));
-      return text(JSON.stringify(items, null, 1));
+      return collected(JSON.stringify(items, null, 1), { ...bundle, evidence: items, content: [] });
     },
   );
 
@@ -94,7 +104,8 @@ export function createServer(): McpServer {
       if (sort === "newest") items = [...items].sort((a, b) => String(b.date ?? "").localeCompare(String(a.date ?? "")));
       else if (sort === "longest_running") items = [...items].sort((a, b) => (b.metrics?.runningDays ?? 0) - (a.metrics?.runningDays ?? 0));
       else if (sort === "top") items = [...items].sort((a, b) => score(b) - score(a));
-      return text(JSON.stringify(items.slice(0, limit ?? 30), null, 1));
+      const page = items.slice(0, limit ?? 30);
+      return collected(JSON.stringify(page, null, 1), { ...bundle, evidence: [], content: page });
     },
   );
 
@@ -136,9 +147,9 @@ export function createServer(): McpServer {
     },
     async ({ run_id, model }) => {
       const bundle = await loadRun(run_id);
-      if (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN) return text(renderMarkdown(bundle));
+      if (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN) return collected(renderMarkdown(bundle));
       const res = await synthesize(bundle, { model });
-      return text(renderMarkdown(bundle, { narrative: res.markdown }));
+      return collected(renderMarkdown(bundle, { narrative: res.markdown }));
     },
   );
 
@@ -160,7 +171,7 @@ export function createServer(): McpServer {
         if (runs.length < 2) throw new Error(`Need two saved runs of ${domain} (found ${runs.length}). Call reverse_engineer_marketing again later, then compare.`);
         [a, b] = [await resolveRun(runs[1]!.id), await resolveRun(runs[0]!.id)];
       } else throw new Error("Pass a domain, or run_a and run_b");
-      return text(renderDiff(diffRuns(a, b)));
+      return collected(renderDiff(diffRuns(a, b)));
     },
   );
 

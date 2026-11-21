@@ -9,6 +9,13 @@ REM runs on your machine and reads public data. Here is what it can and cannot t
 - Subscription engines (Claude Code, Codex) run your installed CLI with `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN` and `OPENAI_API_KEY` removed from their environment, so they use your logged-in plan and never see your API keys.
 - The response cache (`~/.cache/reverse-engineer-marketing`) stores API responses keyed by a hash of the request URL. It contains scraped public data, never keys.
 
+## Collected content is untrusted
+
+- Page copy, ad text, posts and comments are written by third parties, and a hostile page can plant text aimed at the model that reads the evidence. In MCP mode that reader is your own agent, with its tools.
+- Everything REM hands to a model (the report prompt and the `get_evidence`, `get_content`, `write_report` and `compare_runs` tool results) is wrapped in an `<untrusted-evidence>` fence with a random id, so text inside cannot close it early, plus a notice that the contents are data and not instructions. The harness guardrails and the skill carry the same rule.
+- Collected text is scanned for common injection phrasing ("ignore previous instructions", fake system messages, requests to run commands or reveal keys). Matches are flagged to the model and listed in the report under "Suspected prompt injection".
+- This lowers the risk. It does not remove it: the scan is a tripwire that misses clever attempts, and a fence is a strong hint to a model, not a sandbox. Keep the agent you connect REM to on a permission mode you are comfortable with.
+
 ## Local web app (`rem web`)
 
 - Listens on `127.0.0.1` only. Requests with a `Host` other than `localhost:<port>` / `127.0.0.1:<port>` are rejected (DNS rebinding), and so are cross-origin writes (CSRF).
