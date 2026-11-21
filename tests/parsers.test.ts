@@ -246,3 +246,34 @@ describe("diff", () => {
     expect(d.content[0]!.added.map(a => a.url)).toEqual(["https://x/c", "https://x/d"]);
   });
 });
+
+describe("private address checks", () => {
+  it("flags private literals, passes public ones", async () => {
+    const { isPrivateAddress } = await import("../src/http.js");
+    for (const bad of ["127.0.0.1", "10.1.2.3", "192.168.0.9", "172.20.0.1", "169.254.169.254", "100.64.0.1", "::1", "fd00::1", "fe80::1", "::ffff:127.0.0.1"])
+      expect(isPrivateAddress(bad), bad).toBe(true);
+    for (const ok of ["8.8.8.8", "1.1.1.1", "2606:4700:4700::1111", "notion.so"]) expect(isPrivateAddress(ok), ok).toBe(false);
+  });
+  it("blocks a hostname that resolves to a private address", async () => {
+    const { assertPublicHost } = await import("../src/http.js");
+    const to = (...ips: string[]) => async () => ips.map(address => ({ address }));
+    await expect(assertPublicHost(new URL("https://evil.example/"), to("127.0.0.1"))).rejects.toThrow(/private address/);
+    await expect(assertPublicHost(new URL("https://evil.example/"), to("93.184.216.34", "192.168.1.1"))).rejects.toThrow(/private address/);
+    await expect(assertPublicHost(new URL("https://ok.example/"), to("93.184.216.34"))).resolves.toBeUndefined();
+    await expect(assertPublicHost(new URL("https://gone.example/"), async () => { throw new Error("ENOTFOUND"); })).resolves.toBeUndefined();
+  });
+});
+
+describe("setup server command", () => {
+  it("pins the version for one-off npx runs and when there is no built cli", async () => {
+    const { serverCommand } = await import("../src/setup.js");
+    expect(serverCommand("/home/u/.npm/_npx/abc123/node_modules/reverse-engineer-marketing/dist/setup.js", "1.2.3")).toEqual(["npx", "-y", "reverse-engineer-marketing@1.2.3", "mcp"]);
+    expect(serverCommand("/nowhere/dist/setup.js", "1.2.3")).toEqual(["npx", "-y", "reverse-engineer-marketing@1.2.3", "mcp"]);
+  });
+  it("keeps the pinned version in step with package.json", async () => {
+    const { VERSION } = await import("../src/index.js");
+    const { readFileSync } = await import("node:fs");
+    expect(VERSION).toBe(JSON.parse(readFileSync("package.json", "utf8")).version);
+  });
+});
+

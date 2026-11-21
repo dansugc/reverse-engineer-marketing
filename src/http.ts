@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
@@ -19,30 +20,55 @@ export interface FetchedPage {
 /**
  * REM only reads public websites. Block loopback / private / link-local targets so a
  * hostile robots.txt, sitemap or redirect can't point it at the user's machine or LAN
- * (including REM's own local web server). Hostnames that *resolve* to private IPs are
- * not checked here (no DNS pinning); this blocks literal addresses and localhost names.
+ * (including REM's own local web server). This blocks literal addresses and localhost
+ * names; hostnames that *resolve* to private IPs are caught by assertPublicHost.
  */
 export function assertPublicUrl(raw: string): URL {
   const u = new URL(raw);
   if (u.protocol !== "https:" && u.protocol !== "http:") throw new Error(`Blocked non-http URL: ${u.protocol}`);
   const host = u.hostname.replace(/^\[|\]$/g, "").toLowerCase();
   if (host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local") || host.endsWith(".internal") || !host.includes(".") && !isIP(host)) throw new Error(`Blocked private host: ${host}`);
+  if (isPrivateAddress(host)) throw new Error(`Blocked private address: ${host}`);
+  return u;
+}
+
+/** True for loopback / private / link-local / CGNAT / multicast literals. Non-IP strings return false. */
+export function isPrivateAddress(host: string): boolean {
   const v = isIP(host);
   if (v === 4) {
     const [a, b] = host.split(".").map(Number) as [number, number];
-    if (a === 0 || a === 10 || a === 127 || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 100 && b >= 64 && b <= 127) || a >= 224)
-      throw new Error(`Blocked private address: ${host}`);
-  } else if (v === 6) {
-    if (host === "::" || host === "::1" || /^f[cd]/.test(host) || /^fe[89ab]/.test(host) || host.startsWith("::ffff:")) throw new Error(`Blocked private address: ${host}`);
+    return a === 0 || a === 10 || a === 127 || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 100 && b >= 64 && b <= 127) || a >= 224;
   }
-  return u;
+  if (v === 6) return host === "::" || host === "::1" || /^f[cd]/i.test(host) || /^fe[89ab]/i.test(host) || host.toLowerCase().startsWith("::ffff:");
+  return false;
+}
+
+/**
+ * Resolve the hostname and refuse it if ANY answer is private. Closes the "public-looking name that
+ * points at 127.0.0.1 / 192.168.x.x" gap. Not a full DNS pin: a name that changes its answer between
+ * this check and the connection (rebinding) can still slip through.
+ */
+export async function assertPublicHost(
+  u: URL,
+  resolve: (host: string) => Promise<{ address: string }[]> = host => lookup(host, { all: true }),
+): Promise<void> {
+  const host = u.hostname.replace(/^\[|\]$/g, "");
+  if (isIP(host)) return;
+  let answers: { address: string }[];
+  try {
+    answers = await resolve(host);
+  } catch {
+    return; // unresolvable: fetch will fail on its own
+  }
+  const bad = answers.find(a => isPrivateAddress(a.address));
+  if (bad) throw new Error(`Blocked: ${host} resolves to private address ${bad.address}`);
 }
 
 /** fetch() with redirects followed by hand so every hop is checked with assertPublicUrl. */
 async function safeFetch(url: string, init: RequestInit & { signal: AbortSignal }): Promise<Response> {
   let current = url;
   for (let hop = 0; hop < 6; hop++) {
-    assertPublicUrl(current);
+    await assertPublicHost(assertPublicUrl(current));
     const res = await fetch(current, { ...init, redirect: "manual" });
     const loc = res.status >= 300 && res.status < 400 ? res.headers.get("location") : null;
     if (!loc) {
