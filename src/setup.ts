@@ -6,9 +6,24 @@ import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
+import { VERSION } from "./index.js";
 
 const NAME = "reverse-engineer-marketing";
-const SERVER = ["npx", "-y", "reverse-engineer-marketing", "mcp"];
+
+/**
+ * The command an agent will run on every start, so it should be the code the user already has,
+ * not whatever the package name resolves to later. A built install (git clone, `npm i -g`)
+ * registers its own cli.js by path. A one-off `npx` run lives in a cache that gets cleaned, so
+ * it registers `npx` pinned to this exact version instead.
+ */
+export function serverCommand(self = fileURLToPath(import.meta.url), version = VERSION): string[] {
+  const cli = join(dirname(self), "cli.js");
+  const oneOff = /[\\/]_npx[\\/]/.test(self);
+  if (!oneOff && existsSync(cli)) return ["node", cli, "mcp"];
+  return ["npx", "-y", `${NAME}@${version}`, "mcp"];
+}
+
+const SERVER = serverCommand();
 
 interface Step {
   client: string;

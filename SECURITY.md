@@ -19,8 +19,12 @@ REM runs on your machine and reads public data. Here is what it can and cannot t
 
 ## Fetching
 
-- Server-side fetches only go to public `http(s)` hosts. Loopback, private, link-local and `.local` addresses are blocked, and redirects are followed by hand so every hop is checked. (Hostnames that resolve to private IPs are not blocked; there is no DNS pinning.)
+- Server-side fetches only go to public `http(s)` hosts. Loopback, private, link-local and `.local` addresses are blocked, and redirects are followed by hand so every hop is checked. Hostnames are resolved before each hop and refused if any answer is a private address. (This is a pre-flight check, not DNS pinning: a name that changes its answer between the check and the connection can still get through.)
 - Same-site key pages only; sitemaps are size-limited; requests time out.
+
+## Agent setup (`rem setup`)
+
+- The MCP command it registers is run by your agent on every start, so it points at code you already have: a built install (git clone or `npm i -g`) registers its own `cli.js` by path. A one-off `npx` run registers `npx` pinned to the exact version you ran, never a floating "latest".
 
 ## Reporting a vulnerability
 
