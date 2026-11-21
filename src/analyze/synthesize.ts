@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { loadHarness, systemPrompt } from "../harness.js";
 import type { EvidenceBundle } from "../index.js";
+import { fence, injectionWarning, scanInjection } from "../untrusted.js";
 
 export const DEFAULT_MODEL = "claude-opus-5";
 
@@ -55,12 +56,14 @@ export function userPrompt(bundle: EvidenceBundle): string {
     unknowns: bundle.unknowns,
     sourcesFailed: bundle.sources.filter(s => s.status !== "ok"),
   };
+  // The brand name comes from the page, so it stays inside the fence with the rest of the evidence.
   return [
-    `Reverse engineer the marketing of ${bundle.brand} (${bundle.target.domain ?? bundle.target.input}).`,
+    `Reverse engineer the marketing of ${bundle.target.domain ?? bundle.target.input}.`,
     `Today is ${bundle.generatedAt.slice(0, 10)}.`,
     "Here is the evidence bundle. Write the report in the required format, citing evidence ids for every fact.",
-    "```json",
-    JSON.stringify(compact, null, 1),
-    "```",
-  ].join("\n");
+    injectionWarning(scanInjection(bundle)),
+    fence(["```json", JSON.stringify(compact, null, 1), "```"].join("\n")),
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
