@@ -149,7 +149,7 @@ export function startWeb(port: number): Promise<string> {
       if (req.method === "POST" && path === "/api/runs") {
         const body = await readBody(req);
         if (typeof body.url !== "string" || !body.url.trim()) return json(res, 400, { error: "url is required" });
-        if (!["claude-code", "codex", "anthropic-api", "none"].includes(body.engine)) return json(res, 400, { error: "bad engine" });
+        if (!["claude-code", "codex", "anthropic-api", "aimlapi", "none"].includes(body.engine)) return json(res, 400, { error: "bad engine" });
         const job = await startJob(body);
         return json(res, 200, { jobId: job.id });
       }
