@@ -75,10 +75,11 @@ The **Posts & ads** tab is a review library of everything collected: Meta ads (a
 |---|---|---|
 | **Claude Code** | your installed `claude` CLI, headless, no tools | your Claude subscription |
 | **Codex** | your installed `codex exec`, read-only sandbox | your ChatGPT subscription |
+| AI/ML API | `AIMLAPI_API_KEY` ([get a key](https://aimlapi.com/app/keys)), OpenAI-compatible, default `anthropic/claude-opus-5`, override with `AIMLAPI_MODEL` | per token |
 | Anthropic API | `ANTHROPIC_API_KEY` | per token |
 | Evidence only | no AI | free |
 
-Subscription engines run the CLI you're already logged into. REM strips `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` from their environment so your plan is used, not an API key, and runs them in a scratch folder with your MCP servers and hooks disabled. The server listens on `127.0.0.1` only and rejects other hosts and origins. Add your Scrape Creators key from the top-right pill; it's saved to `~/.config/reverse-engineer-marketing/config.json` (mode 600). Past runs are listed on the home page.
+Subscription engines run the CLI you're already logged into. REM strips `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` / `AIMLAPI_API_KEY` from their environment so your plan is used, not an API key, and runs them in a scratch folder with your MCP servers and hooks disabled. The server listens on `127.0.0.1` only and rejects other hosts and origins. Add your Scrape Creators key from the top-right pill; it's saved to `~/.config/reverse-engineer-marketing/config.json` (mode 600). Past runs are listed on the home page.
 
 ## What it finds
 

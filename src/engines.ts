@@ -1,16 +1,18 @@
 // Report writers. "claude-code" and "codex" run the locally installed CLIs,
 // so the report is billed to the user's Claude or ChatGPT subscription, not an
 // API key. API keys are stripped from their env so the subscription login wins.
+// "anthropic-api" and "aimlapi" are billed per token to an API key.
 import { spawn } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createInterface } from "node:readline";
+import { aimlapiKey, synthesizeAimlapi } from "./analyze/aimlapi.js";
 import { synthesize, userPrompt } from "./analyze/synthesize.js";
 import { loadHarness, systemPrompt } from "./harness.js";
 import type { EvidenceBundle } from "./index.js";
 
-export type EngineId = "claude-code" | "codex" | "anthropic-api" | "none";
+export type EngineId = "claude-code" | "codex" | "anthropic-api" | "aimlapi" | "none";
 
 export interface EngineInfo {
   id: EngineId;
@@ -22,9 +24,13 @@ export interface EngineInfo {
 export async function detectEngines(): Promise<EngineInfo[]> {
   const [claude, codex] = await Promise.all([version("claude"), version("codex")]);
   const api = Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
+  const aiml = Boolean(aimlapiKey());
+  // Order = what the web app picks when nothing is saved (first available).
+  // Subscription engines first; among per-token APIs, AI/ML API leads (opt-in via its key).
   return [
     { id: "claude-code", label: "Claude Code", available: Boolean(claude), detail: claude ? `${claude} · uses your Claude subscription` : "not installed (npm i -g @anthropic-ai/claude-code)" },
     { id: "codex", label: "Codex", available: Boolean(codex), detail: codex ? `${codex} · uses your ChatGPT subscription` : "not installed (npm i -g @openai/codex)" },
+    { id: "aimlapi", label: "AI/ML API", available: aiml, detail: aiml ? "AIMLAPI_API_KEY · billed per token" : "set AIMLAPI_API_KEY" },
     { id: "anthropic-api", label: "Anthropic API", available: api, detail: api ? "ANTHROPIC_API_KEY · billed per token" : "set ANTHROPIC_API_KEY" },
     { id: "none", label: "Evidence only", available: true, detail: "no AI, raw evidence report" },
   ];
@@ -57,6 +63,10 @@ export async function writeReport(engine: EngineId, bundle: EvidenceBundle, opts
     const res = await synthesize(bundle, { model: opts.model, onText: opts.onText });
     return { markdown: res.markdown, model: res.model };
   }
+  if (engine === "aimlapi") {
+    const res = await synthesizeAimlapi(bundle, { model: opts.model, onText: opts.onText, signal: opts.signal });
+    return { markdown: res.markdown, model: res.model };
+  }
   throw new Error(`Engine ${engine} does not write reports`);
 }
 
@@ -87,7 +97,7 @@ function claudeCode(bundle: EvidenceBundle, opts: WriteOptions): Promise<{ markd
   ];
   if (opts.model) args.push("--model", opts.model);
   return new Promise((resolve, reject) => {
-    const p = spawn("claude", args, { cwd: scratchDir(), env: envWithout("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN"), signal: opts.signal });
+    const p = spawn("claude", args, { cwd: scratchDir(), env: envWithout("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "AIMLAPI_API_KEY"), signal: opts.signal });
     let text = "";
     let model: string | undefined;
     let final: string | undefined;
@@ -137,7 +147,7 @@ function codex(bundle: EvidenceBundle, opts: WriteOptions): Promise<{ markdown: 
     "Do not run shell commands or read files: everything you need is above. Reply with only the Markdown report.",
   ].join("\n");
   return new Promise((resolve, reject) => {
-    const p = spawn("codex", args, { cwd: scratchDir(), env: envWithout("OPENAI_API_KEY"), signal: opts.signal });
+    const p = spawn("codex", args, { cwd: scratchDir(), env: envWithout("OPENAI_API_KEY", "AIMLAPI_API_KEY"), signal: opts.signal });
     let last = "";
     let failure: string | undefined;
     let stderr = "";
