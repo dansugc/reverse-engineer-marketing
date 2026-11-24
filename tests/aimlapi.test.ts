@@ -69,3 +69,13 @@ describe("AI/ML API engine", () => {
     expect(aiml).toMatchObject({ available: false, detail: "set AIMLAPI_API_KEY" });
   }, 20_000);
 });
+
+describe("engine order", () => {
+  afterEach(() => vi.unstubAllEnvs());
+  it("puts AI/ML API after the subscription engines and before Anthropic API", async () => {
+    vi.stubEnv("AIMLAPI_API_KEY", KEY);
+    vi.stubEnv("ANTHROPIC_API_KEY", "test-anthropic");
+    const ids = (await detectEngines()).map(e => e.id);
+    expect(ids).toEqual(["claude-code", "codex", "aimlapi", "anthropic-api", "none"]);
+  }, 20_000);
+});

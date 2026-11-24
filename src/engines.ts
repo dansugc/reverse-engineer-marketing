@@ -25,11 +25,13 @@ export async function detectEngines(): Promise<EngineInfo[]> {
   const [claude, codex] = await Promise.all([version("claude"), version("codex")]);
   const api = Boolean(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
   const aiml = Boolean(aimlapiKey());
+  // Order = what the web app picks when nothing is saved (first available).
+  // Subscription engines first; among per-token APIs, AI/ML API leads (opt-in via its key).
   return [
     { id: "claude-code", label: "Claude Code", available: Boolean(claude), detail: claude ? `${claude} · uses your Claude subscription` : "not installed (npm i -g @anthropic-ai/claude-code)" },
     { id: "codex", label: "Codex", available: Boolean(codex), detail: codex ? `${codex} · uses your ChatGPT subscription` : "not installed (npm i -g @openai/codex)" },
-    { id: "anthropic-api", label: "Anthropic API", available: api, detail: api ? "ANTHROPIC_API_KEY · billed per token" : "set ANTHROPIC_API_KEY" },
     { id: "aimlapi", label: "AI/ML API", available: aiml, detail: aiml ? "AIMLAPI_API_KEY · billed per token" : "set AIMLAPI_API_KEY" },
+    { id: "anthropic-api", label: "Anthropic API", available: api, detail: api ? "ANTHROPIC_API_KEY · billed per token" : "set ANTHROPIC_API_KEY" },
     { id: "none", label: "Evidence only", available: true, detail: "no AI, raw evidence report" },
   ];
 }
