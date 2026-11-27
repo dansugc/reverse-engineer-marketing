@@ -6,7 +6,7 @@
 
 **Paid ads · organic social · SEO & AI search · founders · funnel · positioning history, with the evidence for every claim.**
 
-<code>npx reverse-engineer-marketing notion.so</code>
+<code>npx github:dansugc/reverse-engineer-marketing notion.so</code>
 
 [Quick start](#quick-start) · [Web app](#web-app-use-your-claude-code-or-codex-plan) · [What it finds](#what-it-finds) · [Use it from your agent (MCP)](#use-it-from-your-agent-mcp) · [Example report](examples/calai.app.md) · [How it works](#how-it-works)
 
@@ -27,14 +27,17 @@ Inspired by [REA (Reverse Engineer Anything)](https://github.com/morluto/rea), b
 
 Try it with zero setup, no keys: a recorded Cal AI teardown opens in the web app.
 
+> [!NOTE]
+> REM isn't on npm yet. Until it's published, run it straight from the repo with `npx github:dansugc/reverse-engineer-marketing` (needs Node >= 22; the first run builds from source). Or clone it — see [Develop](#develop).
+
 ```bash
-npx reverse-engineer-marketing demo
+npx github:dansugc/reverse-engineer-marketing demo
 ```
 
 Then run it on any company:
 
 ```bash
-npx reverse-engineer-marketing linear.app
+npx github:dansugc/reverse-engineer-marketing linear.app
 ```
 
 That works with **no API keys**: website, tracking pixels (including pixels hidden inside Google Tag Manager containers), SEO/sitemaps, AI-crawler stance, Wayback positioning history, App Store/Google Play and Hacker News.
@@ -44,7 +47,7 @@ Add keys to unlock the rest:
 ```bash
 export SCRAPECREATORS_API_KEY=...   # ad libraries, social stats, founders, Reddit (~25–50 credits per run)
 export ANTHROPIC_API_KEY=...        # the written strategy report (Claude)
-npx reverse-engineer-marketing calai.app
+npx github:dansugc/reverse-engineer-marketing calai.app
 ```
 
 Output goes to `./rem-reports/<domain>-<date>/`: `report.md` plus `evidence.json` (the raw evidence bundle).
@@ -64,7 +67,7 @@ rem mcp              # run the MCP server
 ## Web app: use your Claude Code or Codex plan
 
 ```bash
-npx reverse-engineer-marketing web
+npx github:dansugc/reverse-engineer-marketing web
 ```
 
 Opens a local web app at `http://localhost:4321`. Paste a link, pick who writes the report, and watch the evidence come in and the playbook stream out. Every `E12` citation opens the raw evidence behind it.
@@ -118,18 +121,18 @@ REM is an MCP server, so Claude Code, Codex, Cursor, or any MCP client can run i
 One command, with a plan you approve first (it backs up anything it replaces):
 
 ```bash
-npx reverse-engineer-marketing setup        # detects Claude Code / Codex, shows the plan, asks
-npx reverse-engineer-marketing setup --dry-run
+npx github:dansugc/reverse-engineer-marketing setup        # detects Claude Code / Codex, shows the plan, asks
+npx github:dansugc/reverse-engineer-marketing setup --dry-run
 ```
 
 Or by hand:
 
 ```bash
 # Claude Code
-claude mcp add reverse-engineer-marketing -e SCRAPECREATORS_API_KEY=... -- npx -y reverse-engineer-marketing mcp
+claude mcp add reverse-engineer-marketing -e SCRAPECREATORS_API_KEY=... -- npx -y github:dansugc/reverse-engineer-marketing mcp
 
 # Codex
-codex mcp add reverse-engineer-marketing --env SCRAPECREATORS_API_KEY=... -- npx -y reverse-engineer-marketing mcp
+codex mcp add reverse-engineer-marketing --env SCRAPECREATORS_API_KEY=... -- npx -y github:dansugc/reverse-engineer-marketing mcp
 ```
 
 Any other client:
